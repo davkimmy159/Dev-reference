@@ -1,10 +1,10 @@
-State structure
+* State structure
  - 2 states control → 1 state control
  - No prop mirroring  → initial || default
  - Keep ID or index in state instead of object itself
  - Flat state (No nested object)
 
-Preserving & Resetting State
+* Preserving & Resetting State
  - Same component at the same position preserves state (Not JSX, tree position)
  - Different components at the same position reset state
    (should not nest component function definitions)
@@ -15,7 +15,7 @@ Preserving & Resetting State
    - {  flag ? (<C key=1 props="..." />) : (<C key=2 props="..." />)} Same & Reset
  - Resetting a form with a key
 
-Extracting State Logic into a Reducer
+* Extracting State Logic into a Reducer
  - "what the user did" rather than "how you want the state to change"
 
 Passing Data Deeply with Context
@@ -28,4 +28,27 @@ Passing Data Deeply with Context
    - Routing
    - Managing state
 
-Scaling Up with Reducer and Context
+* Scaling Up with Reducer and Context
+
+* Referencing Values with Refs
+Simple null check
+ex) function Video() {
+      const playerRef = useRef(null);
+      if (playerRef.current === null) {
+        playerRef.current = new VideoPlayer();
+      }
+      // ...
+    }
+Avoiding simple null check
+ex) function Video() {
+      const playerRef = useRef(null);
+
+      function getPlayer() {
+        if (playerRef.current !== null) {
+          return playerRef.current;
+        }
+        const player = new VideoPlayer();
+        playerRef.current = player;
+        return player;
+      }
+      // ...
