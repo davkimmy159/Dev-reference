@@ -118,9 +118,11 @@ function len(x: any[] | string) { return x.length; }
 
 const obj = {
   a: false,
- (fn1: function ())
-  fn1: function (): void {}
-  fn2: () => {}
+  fn1: function () {},
+  fn2: function (): void {},
+  fn3() {},
+  fn4: () => {},
+  fn5: () => ()  // 소괄호에는 값만 들어갈 수 있음, return문 X (ex - number, obj literal 등)
 };
 
 // 화살표 함수일 경우에 this 는 전역객체 가리킴
