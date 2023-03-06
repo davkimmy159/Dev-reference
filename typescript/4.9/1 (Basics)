@@ -1,0 +1,587 @@
+let l = "Hello World";   // let l: string;
+l = "Olá Mundo";
+const c = "Hello World"; // const c: "Hello World";
+c = "Olá Mundo";         // error
+
+type A = { a: string }
+type B = A & { b: boolean }
+interface I1 { I1: string }
+interface I2 extends I1 { I2: boolean }
+
+Array.isArray(a)
+
+a.get(b) as Type
+<Type>a.get(b) // JSX (No use)
+
+(expr as any) as Type
+
+a!
+a!!
+a?
+a??
+
+typeof:
+ - string
+ - number
+ - boolean
+ - undefined
+ - symbol
+ - object
+ - function
+
+null === object
+
+if()
+ - 0
+ - NaN
+ - ""
+ - null
+ - undefined
+
+loose(==. !=)
+ - null
+ - undefined
+
+if ("method" in A)
+if (x instanceof Date)
+function isA(x: A | B): x is A {
+  return (x as A).method !== undefined;
+}
+const flag: A[] = obj.filter((x): x is A => {
+  if (x.name === "other") return false;
+  return isA(x);
+});
+
+Math.PI * a.num! ** 2;
+
+function do(fn: (a: string) => void) {}   // return 화살표
+type do = (a: string) => void;            // return 화살표
+type desFunc = { // function has property
+  description: string;
+  (someArg: number): boolean;
+};
+function do(fn: desFunc) {
+  console.log(fn.description + fn(6));
+}
+
+type AConstructor = {
+  new (s: string): AObject;
+};
+function fn(ctor: AConstructor) {
+  return new ctor("param");
+}
+interface CallOrConstruct {
+  new (s: string): Date;
+  (n?: number): number;
+}
+
+// return the same kind of object as was passed in
+function fn<T extends { length: number }>(a: T, b: T)
+
+function combine<T>(arr1: T[], arr2: T[]): T[]
+const arr = combine<string | number>([1, 2, 3], ["hello"]);
+
+// F doesn’t relate two values
+function filter2<T, F extends (arg: T) => boolean>(
+  arr: T[],
+  func: F
+): T[] {
+  return arr.filter(func);
+}
+
+function greet<S extends string>(s: S)
+
+function f(x?: number) {
+function f(x = 10) {}
+f(undefined);
+
+// function body can’t be “seen” from the outside
+function makeDate(a: number): Date;
+function makeDate(a: number, b: number, c: number): Date;
+function makeDate(a: number, b?: number, c?: number): Date {}
+
+// Wrong param type
+function fn(x: boolean): void;
+function fn(x: string): void;
+function fn(x: boolean) {}
+
+// Wrong return type
+function fn(x: string): string;
+function fn(x: number): boolean;
+function fn(x: string | number) {}
+
+// Prefer union over overload
+function len(s: string): number;
+function len(arr: any[]): number;
+function len(x: any) { return x.length; }
+function len(x: any[] | string) { return x.length; }
+
+const obj = {
+  a: false,
+ (fn1: function ())
+  fn1: function (): void {}
+  fn2: () => {}
+};
+
+// 화살표 함수일 경우에 this 는 전역객체 가리킴
+interface DB {
+  filterUsers(filter: (this: User) => boolean): User[];
+}
+const db = getDB();
+const admins = db.filterUsers(function (this: User) {
+  return this.flag;
+});
+
+undefined != void
+
+primitives:
+ - string
+ - number
+ - boolean
+ - symbol
+ - null
+ - undefined
+otherwise:
+ - object (!= {})
+
+unknown (safer)
+any
+function safer(s: string): unknown {}
+
+never
+ - return type : throws an exception || terminates execution
+ - there’s nothing left in a union.
+
+Function
+ - global type 
+ - properties like bind, call, apply, and others present on all function values in JavaScript
+return type == any 
+function do(f: Function) {
+  return f(1, 2, 3);
+}
+() => void (safer arbitrary function)
+
+function fn(n: number, ...m: number[]) {}
+inplicitly any[]
+type annotation : Array<T> || T[]
+
+function fn(a: number, b: number) {}
+const arr = [8, 5];
+fn(...args); // error
+const arr = [8, 5] as const; // 2-length tuple
+fn(...args); // OK
+
+let x, y, z, pop, push, a, b;
+[x, y]                   = [1, 2];
+[x, y]                   = [1];         // 1 undefined
+[x, y]                   = [1, 2, 3];   // 1 2
+[x, , z]                 = [1, 2, 3];   // 1 3
+[x, y, z = 3]            = [1, 2];      // 1 2 3
+[x, y = 10, z = 3]       = [1, 2];      // 1 2 3
+[x, ...y]                = [1, 2, 3];   // 1 [ 2, 3 ]
+[x, y, ...{ pop, push }] = array;
+[x, y, ...[a, b]]         = array;
+
+const { x, y } = { x: 'a', y: 1 };
+const { x, y, z = true } = { x: 'a', y: 1 };
+const { x, y, ...z } = { z: 'a', y: 1 };
+const { x: xx, y: yy } = { x: 'a', y: 1 };
+const { x: xx, y: yy }: { x: string, y: number } = { x: 'a', y: 1 };
+const xKey = "z", yKey = "y";
+const { [xKey]: xx, [yKey]: yy } = { z: 'a', y: 1 };
+
+// brackets are required
+let x, y, z;
+({ x, y } = obj);
+({ x: xx, y: yy } = obj);
+({ x: xx = aDefault, y = bDefault } = obj);
+({ x, y, ...z } = obj);
+({ x: xx, y: yy, ...z } = obj);
+
+const arr = [
+  { a: 1, b: 'str1', c: true },
+  { a: 2, b: 'str2', c: false },
+  { a: 3, b: 'str3', c: false }
+];
+const cArr = arr.filter(({ c }) => c);
+// [ { a: 1, b: 'str1', c: true } ]
+const obj = {
+  a: 'stringA',
+  nObj: {
+    na: 'nStringA',
+    nb: 2
+  }
+};
+const { nObj: { na } } = obj;
+console.log(na); // 'nStringA'
+
+type T = { a: string; b?: number };
+function f({ a, b }: T): void {}
+function f({ a = "", b = 0 } = {}): void {}
+f();
+function f({ a, b = 0 } = { a: "" }): void {}
+f({ a: "a" });
+f(); //
+f({}); // error
+
+let x = { x1: "x1", x2: "x2", x3: "x3" };
+let y = { ...x, x1: "y1" }; // x1: "y1" → x1 is overwritten
+let x = { x1: "x1", x2: "x2", x3: "x3" };
+let y = { x1: "y1", ...x }; // x1: "x1"
+
+const obj1 = {
+  n: 1,
+  nobj1: {
+    ns: "aa"
+  }
+}
+const obj2 = {
+  ...obj1,
+  b: true
+}
+// obj1 !== obj2
+
+class spread loses method properties
+class C {
+  c1 = 12;
+  c2() {}
+}
+let c = new C();
+let clone = { ...c };
+clone.c1;
+clone.c2(); // error!
+
+const arr1 = ['a', 'b', 'c'];
+const arr2 = [...arr1];
+// arr1 !== arr
+
+const arr1 = ['a', 'b', 'c'];
+const obj1 = {...arr};
+// {0: "a", 1: "b", 2: "c"}
+
+// comma or semicolon
+function do({ a, b }: { a: number; b: string; }) {}
+type Params = { a: number, b: string; };
+function do({ a, b }: Params) { }
+
+function fn({ obj, a = 0, b = 0 }: Params) {}
+
+interface I {
+  a: number;
+  b: string;
+}
+interface ROI {
+  readonly a: number;
+  readonly b: string;
+}
+const i: I = {
+  a: 1,
+  b: "b",
+};
+const roi: ROI = i;
+i.a++;
+
+string, number, symbol, template string patterns, union
+interface I {
+  [i: string]: number;
+  a: number;
+  b: string; // error
+}
+interface I {
+  [i: string]: number | string;
+  a: number;
+  b: string;
+}
+interface ROI {
+  readonly [i: number]: string;
+}
+
+interface I1 { a: string; }
+interface I2 { b: number; }
+type I12 = I1 & I2;
+
+type OrNull<Type> = Type | null;
+type OneOrMany<Type> = Type | Type[];
+type OneOrManyOrNull<Type> = OrNull<OneOrMany<Type>>;
+type OneOrManyOrNull<Type> = OneOrMany<Type> | null
+type OneOrManyOrNullStrings = OneOrManyOrNull<string>;
+type OneOrManyOrNullStrings = OneOrMany<string> | null
+
+ReadonlyArray<T>
+readonly T[]
+const roa: ReadonlyArray<number> = [1, 2 ,3];
+const roa: readonly number[] = [1, 2 ,3];
+const a: number[];
+a = roa;
+roa = a;   // error
+
+Tuple == another sort of Array
+knows
+ - how many
+ - which types
+ - at specific positions
+function fn(tuple: [string, number]) {
+  const [a, b] = tuple;
+}
+fn(["a", 1]);
+
+type T2or3 = [number, number, number?];
+function fn(tuple: T2or3) {
+  const [x, y, z] = tuple; // z: number | undefined
+                           // length: 2 | 3
+}
+
+// No length
+type tuple1 = [string, number, ...boolean[]];
+type tuple2 = [string, ...number[], boolean];
+type tuple3 = [...string[], number, boolean];
+
+function fn1(...args: [string, number, ...boolean[]]) {
+  const [a, b, ...c] = args;
+}
+function fn2(a: string, b: number, ...c: boolean[]) { }
+
+function fn1(tuple: readonly [string, number]) {}
+let arr = [1, 2] as const;
+function fn2([x, y]: [number, number]) {}
+fn2(point);
+
+// can override fields & methods
+class Class {
+  name1!: string;
+  readonly name2: string;
+  
+  // Overloads
+  constructor(a: string);
+  constructor(a: number, b: string);
+  constructor(a: string | number, b?: string) {}
+
+  _a = 0;
+  get a()  { // Additional logics... return this._a; }
+  set a(v) { // Additional logics... this._a = v; }
+  // Only getter === readonly
+  // No setter param type → inferred from getter
+  // Must same member visibility
+  _b = 0;
+  get b(): number { return this._b; } 
+  set b(v): string | number | boolean { this._b = v; }
+  
+  // Not useful for class
+  [s: string]: boolean | ((s: string) => boolean);
+}
+
+class Base {
+  protected prot = 10; // protected
+  ovMethod1(): number | string {
+    return 1;
+  }
+}
+
+// Follow base class contract
+class Derived extends Base {
+  prot = 15;  // protected → public
+  constructor() {
+    console.log("a"); // error
+    super();
+    console.log("a");
+  }
+  
+  ovMethod1(param?: number) {
+    return "str";
+  }
+}
+
+// target >= ES2022 || useDefineForClassFields: true
+Interface I {};
+Interface II extends I {};
+class A {
+  a: I;
+  constructor(a: I) {
+    this.a = a;
+  }
+}
+class B extends A {
+  declare a: II; // enable init of overrided field through super class
+  constructor(a: II) {
+    super(II);
+  }
+}
+
+// Init order
+ 1. Base class fields
+ 2. Base class constructor
+ 3. Derived class fields
+ 4. Derived class constructor
+
+class B {
+  protected x: number = 1;
+}
+class D1 extends B {
+  protected x: number = 5;
+}
+class D2 extends B {
+  f1(o: D2) {
+    o.x = 10;
+  }
+  f2(o: B) {
+    o.x = 10; // error
+  }
+}
+
+// closures, WeakMaps, private fields (performance issues)
+class Class {
+  #a = 0; // hard private
+  b = "happy";
+}
+
+Static members are inherited
+
+class StaticClass { static doSomething() {} } // Unnecessary 
+function fn() {}                              // Preferred 1
+const obj = { dosomething() {} };             // Preferred 2
+
+class Class {
+    static #a = 0;
+    get count() { return Class.#a; }
+    static {
+        try {
+            const instances = getInstances();
+            Class.#a += instances.length;
+        } catch {}
+    }
+}
+
+calling this.field correctly
+1. this.a in arrow function
+   - guaranteed correct
+   - more memory
+   - can't call super in
+2. method(this: Class) {}
+   - other callers without realizing it
+   - one function per class def rather than one per instance
+   - can call super
+
+return this;
+ - inferred (in extends)
+class A { method() { return this; } }
+class B extends A {}
+const a = new A();
+const b = a.method();
+
+class A {
+  a = 1;
+  method(o: this) { }
+}
+class B extends A {
+  ba = 11;
+}
+const a = new A();
+const b = new B();
+a.method(b); // base takes derived : ok
+b.method(a); // derived takes base : error
+
+this-based type guards
+export class S {
+  isA(): this is A { return this instanceof A; }
+  isB(): this is B { return this instanceof B; }
+  isI(): this is I & this { return this.s2; }
+  constructor(public s1: string, private s2: boolean) {}
+}
+class A extends S { constructor(a1: string, public a2: string) { super(a1, false); } }
+class B extends S {b: S[] = []; }
+interface I { i: string; }
+const obj: S = new A("b1", "b2");
+if (obj.isA()) {        // obj: A
+  console.log(obj.a2); 
+} else if (obj.isB()) { // obj: B
+  console.log(obj.b);
+} else if (obj.isI()) { // obj: I & A
+  console.log(obj.i);
+}
+
+export class Class<T> {
+  v?: T;
+  method(): this is { v: T } {
+    return this.v !== undefined;
+  }
+}
+const obj = new Class();
+obj.v = "Gameboy";
+obj.v; // Class<unknown>.v?: unknown
+if (obj.method()) {
+  obj.v; // value: unknown
+}
+
+visibility to constructor args === class properties
+ class A {
+   constructor(
+     public readonly x: number,
+     protected y: number,
+     private z: number
+  ) { }
+
+const Class = class<Type> {
+  a: Type;
+  constructor(v: Type) { this.a = v; }
+};
+const obj = new Class("a"); // const a: A<string>;
+
+/* Construct Signatures */
+abstract class A  { abstract method(): string; }
+class B extends A { method() { return "string" } }
+function fn1(ctor: typeof A) {
+  const i = new ctor(); // Cannot create an instance of an abstract class.
+  i.method();
+}
+fn1(A); // Bad!
+function fn2(ctor: new () => A) {
+  const i = new ctor();
+  i.method();
+}
+fn2(A); //error
+fn2(B);
+
+class A { x = 1; y = 2; }
+class B { x = 3; y = 4; }
+const a: A = new B();
+
+class A {
+  x1: string = "a1";
+  x2: number = 1;
+}
+class B {
+  x1: string = "b2";
+  x2: number = 2;
+  x3: boolean = true;
+}
+const a: A = new B();
+const b: B = new A(); // error
+
+class Empty { }
+function fn(x: Empty) {}
+fn(window);
+fn({});
+fn(fn);
+
+/* Modules */
+import "./maths.js";
+ - import a file & not include any variables
+ - code evaluated & trigger side-effects
+
+import type
+ - import only types
+ - ex) import type { Cat, Dog } from "./animal.js";
+
+inline import type
+ - ex) import { createCatName, type Cat, type Dog } from "./animal.js";
+
+ES Module Syntax with CommonJS Behavior
+ - 1 to 1 match
+ - ex) import fs = require("fs");
+
+CommonJS Syntax
+ - module.exports = {
+     pi: 3.14,
+     absolute,
+   };
+   const { squareTwo } = require("maths");
