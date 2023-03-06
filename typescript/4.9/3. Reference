@@ -1,0 +1,816 @@
+/* Utility Types */
+Awaited<Type>
+Partial<Type>
+Required<Type>
+Readonly<Type>
+Record<Keys, Type>
+Pick<Type, Keys> (keys- string literal || union of string literals)
+Omit<Type, Keys> (keys- string literal || union of string literals)
+Exclude<UnionType, ExcludedMembers> (union(s), union(s))
+Extract<Type, Union> () (union(s), union(s))
+NonNullable<Type> (unions)
+Parameters<Type> (function, tuple)
+ConstructorParameters<Type> (constructor fn, tuple || array)
+ReturnType<Type> (function)
+InstanceType<Type> (constructor fn)
+ThisParameterType<Type> (function)
+OmitThisParameter<Type> (function)
+ThisType<Type>
+Uppercase<StringType>
+Lowercase<StringType>
+Capitalize<StringType>
+Uncapitalize<StringType>
+
+/* Declaration Merging */
+Declaration Type      Namespace      Type      Value
+------------------------------------------------------
+Namespace                 X                      X
+------------------------------------------------------
+Class                                 X          X
+------------------------------------------------------
+Enum                                  X          X
+------------------------------------------------------
+Interface                             X
+------------------------------------------------------
+Type Alias                            X
+------------------------------------------------------
+Function                                         X
+------------------------------------------------------
+Variable                                         X
+------------------------------------------------------
+
+* Merging Interfaces
+interface I {
+  i1: number;
+  i2: number;
+}
+interface I {
+  i3: number;
+}
+let box: I = { i1: 5, i2: 6, i3: 10 };
+
+overload order: Later goes upside
+class A { }
+class B extends A { }
+class C extends A { }
+class D extends A { }
+interface I {
+  i(x: A): A;
+}
+interface I {
+  i(x: B): B;
+}
+interface I {
+  i(x: C): C;
+  i(x: D): D;
+}
+// interface I {
+//   i(x: C): C;
+//   i(x: D): D;
+//   i(x: B): B;
+//   i(x: A): A;
+// }
+
+overload order
+ 1. Later goes upside
+ 2. string literals bubble toward the top
+interface I {
+  i(x: any): number;
+}
+interface I {
+  i(x: "a"): string;
+  i(x: "b"): boolean;
+}
+interface I {
+  i(x: string): boolean;
+  i(x: "c"): number;
+}
+interface I {
+  i(x: "c"): number;
+  i(x: "a"): string;
+  i(x: "b"): boolean;
+  i(x: string): boolean;
+  i(x: any): number;
+}
+
+* Merging Namespaces
+namespace N {
+  let n = true;
+  export function fn1() {
+    return n1;
+  }
+}
+namespace N {
+  export function fn2() {
+    return n; // Error, n1 is not accessible here
+  }
+}
+
+* Merging Namespaces with Classes
+class A {
+  a: A.B;      // inner class
+  b = class {} // inner class
+}
+namespace A {
+  export class B {}
+}
+
+function fn(x: string): string {
+  return fn.a + x + fn.b;
+}
+namespace fn {
+  export let a = "a";
+  export let b = "b";
+}
+console.log(fn("x"));
+
+enum E {
+  e1 = 1,
+  e2 = 2,
+  e3 = 4,
+}
+namespace E {
+  export function fn(x: string) {
+    if (x == "w") {
+      return E.e1 + E.e2;
+    } else if (x == "x") {
+      return E.e1 + E.e2 + E.e3;
+    } else if (x == "y") {
+      return E.e1 + E.e3;
+    } else if (x == "z") {
+      return E.e2 + E.e3;
+    }
+  }
+}
+
+* Disallowed Merges
+* Module Augmentation
+* Global augmentation
+
+/* Enums */
+enum Direction {
+  Up = 1, // auto-incremented
+  Down,
+  Left,
+  Right,
+}
+enum Direction {
+  Up // 0
+  Down,
+  Left,
+  Right,
+}
+enum Direction { // All must be initialized
+  Up = "UP",
+  Down = "DOWN",
+  Left = "LEFT",
+  Right = "RIGHT",
+}
+enum Hetero { // not recommended
+  No = 0,
+  Yes = "YES",
+}
+
+enum E { X, Y, Z }
+function f(o: { X: number }) { // member type match needs
+  return o.X;
+}
+
+* keyof typeof
+enum Enum { A, B, C, D }
+type KTEnum = keyof typeof Enum; // 'ERROR' | 'WARN' | 'INFO' | 'DEBUG';
+function fn(key: KTEnum, m: string) {
+  const num = Enum[key];
+  if (num <= Enum.B) { /* logic */ }
+}
+fn("A", "This is a message");
+
+* Reverse mappings (Applied Only numeric)
+enum Enum { A }
+let a = Enum.A;
+let nameOfA = Enum[a]; // nameOfA === "A"
+
+* Ambient enums (describe already existing enum types)
+declare enum Enum {
+  A = 1,
+  B,
+  C = 2,
+}
+
+* Objects vs Enums (object with as const
+const enum EDirection {
+  Up,
+  Down,
+  Left,
+  Right,
+}
+const ODirection = {
+  Up: 0,
+  Down: 1,
+  Left: 2,
+  Right: 3,
+} as const;
+EDirection.Up; (enum member) EDirection.Up = 0
+ODirection.Up; (property) Up: 0
+
+// Using the enum as a parameter
+function walk(dir: EDirection) {}
+walk(EDirection.Left);
+
+// It requires an extra line to pull out the values
+type Direction = typeof ODirection[keyof typeof ODirection];
+function run(dir: Direction) {}
+run(ODirection.Right);
+
+/* Iterators and Generators */
+for..in : Any object
+for..of : only iterable
+
+let s = new Set(["a", "b", "c"]);
+s["d"] = "d";
+for (let i in s) { console.log(i); // "d" }
+for (let i of s) { console.log(i); // "a", "b", "c" }
+
+/* JSX */
+const a = <a>b;   (X)
+const a = b as a; (O)
+
+* Type Checking
+Intrinsic elements
+ - type: string
+ - attributes: intrinsically known
+ - lowercase letter
+ - JSX.IntrinsicElements interface
+ - declare namespace JSX {
+     interface IntrinsicElements {
+       foo: any;
+     }
+   }
+Value-based elements (component)
+ - type: not string
+ - attributes: own set
+ - uppercase letter
+ - first try FC, then CC
+
+class Component { render() {} }
+const c1  = new Component();
+ // use a construct signature
+ // element class type => Component
+ // element instance type => { render: () => void }
+ 
+function FactoryFunction() { return { render: () => {}, }; }
+const c2 = FactoryFunction();
+ // use a call signature
+ // element class type => FactoryFunction
+ // element instance type => { render: () => void }
+
+element instance must be assignable to JSX.ElementClass
+declare namespace JSX {
+  interface ElementClass {
+    render: any;
+  }
+}
+class C { render() {} }
+function FF() { return { render: () => {} }; }
+<C />; // ok
+<FF />; // ok
+class NVC {}
+function NVFF() { return {}; }
+<NVC />; // error
+<NVFF />; // error
+
+* Attribute type checking
+Intrinsic elements
+declare namespace JSX {
+  interface IntrinsicElements {
+    foo: { requiredProp: string; optionalProp?: number };
+  }
+}
+
+Value-based elements
+declare namespace JSX {
+  interface ElementAttributesProperty {
+    props; // specify the property name to use
+  }
+}
+class Component {
+  // specify the property on the element instance type
+  props: {
+    foo?: string;
+  };
+}
+// element attributes type for 'Component' is '{foo?: string}'
+<MyComponent foo="bar" />;
+
+Spread operator
+const props = { requiredProp: "bar" };
+<foo {...props} />;
+
+Children Type Checking
+declare namespace JSX {
+  interface ElementChildrenAttribute {
+    children: {}; // specify children name to use
+  }
+}
+
+Children Type Checking
+interface P {
+  children: JSX.Element // override default type
+  name: string
+}
+class C extends React.Component<P, {}> {
+  render() {
+    return (
+      <h2>
+        {this.props.children}
+      </h2>
+    )
+  }
+}
+<C name="foo">
+  <h1>Hello World</h1>
+</C>
+<C name = "foo" > // Error: children !== JSX.Element[]
+  <h1>Hello World</h1>
+  <h2>Hello World</h2>
+</C>
+<C name="foo"> // Error: children JSX.Element|string[]
+  <h1>Hello</h1>
+  World
+< /Component>
+
+The JSX result type : any
+tpye information : black box
+
+Embedding Expressions
+const a = (
+  <div>
+    {["foo", "bar"].map((i) => (
+      <span>{i / 2}</span> // error
+    ))}
+  </div>
+);
+
+/* Modules */
+* Export statements
+export { e };
+export { e as ex };
+export { e as re } from "./a-module.ts"; (re-exports)
+ - import it locally
+ - introduce a local variable
+ - no "import" statement
+export * as all from "./a-module";
+
+* Default exports
+export default A;      (a.ts)
+import A from "./a";   (c.ts) // No brackets
+import B from "./a";   (c.ts) // Other name
+export default "1";    (b.ts) // can export values (not variables or etc)
+import num from "./b"; (c.ts) // No brackets
+console.log(num);             // "1"
+
+* Import
+import { A, A as B } from "./a-module";
+import * as C from "./a-module";
+import "./a-module.js";                // Import for side-effects only (not recommended)
+import type { A } from "./a-module";   // importing types
+import { a, type A} from "./a-module"; // importing types
+
+* Working with Other JavaScript Libraries
+ - .d.ts (Only declarations, no implementations)
+// node.d.ts
+declare module "a-module" {
+  export interface A {
+    a1?: string;
+    a2?: string;
+  }
+  export function fn(fn1: string, fn2?: number, fn3?: boolean): A;
+}
+declare module "b-module" {
+  export function b1(p: string): string;
+  export function b2(...p: any[]): string;
+  export var b3: string;
+}
+/// <reference path="node.d.ts"/>
+import * as AModule from "a-module";
+let x = AModule.fn("string");
+
+Shorthand (All imports from a shorthand module : any type)
+ - declare module "hot-new-module";
+ - import x, { y } from "hot-new-module";
+
+* Guidance for structuring modules
+Export
+ - Export as close to top-level as possible (avoid nesting - namespace. statc methods, etc)
+ - Use export default
+ - Multiple objects : Put them all at top-level
+Import
+ - Namespace import pattern for many things (ex- import * as A from ".file.ts
+Re-export to extend
+
+Red Flags
+ - A file whose only top-level declaration is export namespace Foo { ... } 
+   → Remove Foo and move everything ‘up’ a level
+ - Multiple files that have the same export namespace Foo { at top-level
+   → Don’t think that these are going to combine into one Foo!
+
+/* Module Resolution */
+
+* Relative vs. Non-relative module imports
+relative import
+ - /    (import "/mod";)
+ - ./   (import A from "./a/A";)
+ - ../  (import { B } from "../b/b";)
+ - Can't ambient module declaration
+non-relative (Any other import is considered)
+ - import * as $ from "jquery";
+ - import { Component } from "@angular/core";
+ - relative to "baseUrl"
+ - through path mapping
+ - Can ambient module declaration
+ - Use when importing external dependencies
+
+* baseURL
+non-relative is relative to the baseUrl
+
+* Path mapping (mapping is relative to "baseUrl")
+{
+  "compilerOptions": {
+    "baseUrl": ".", // This must be specified if "paths" is.
+    "paths": {
+      "jquery": ["node_modules/jquery/dist/jquery"] // This mapping is relative to "baseUrl"
+    }
+  }
+}
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "*": ["*", "generated/*"]  // <moduleName> => <baseUrl>/generated/<moduleName>
+    }
+  }
+}
+
+* rootDirs
+src
+ └── views
+     └── view1.ts (imports './template1')
+     └── view2.ts
+ generated
+ └── templates
+         └── views
+             └── template1.ts (imports './view2')
+{
+  "compilerOptions": {
+    "rootDirs": ["src/views", "generated/templates/views"]
+  }
+}
+{
+  "compilerOptions": {
+    "rootDirs": ["src/zh", "src/de", "src/#{locale}"]
+  }
+}
+
+* Tracing module resolution (diagnosing)
+traceResolution
+
+/* Namespace */ (Previous internal module)
+namespace N {
+  export interface I { i(s: string): boolean; }
+  export class A implements I { i(s: string) { return true; } }
+  export class B implements I { i(s: string) { return false; } }
+}
+const a: N.I = new N.A();
+const b: N.I = new N.B();
+
+/* Multi-file namespaces
+I.ts
+namespace N {
+  export interface I { i(s: string): boolean; }
+}
+A.ts
+/// <reference path="I.ts" />
+namespace N {
+  export class A implements I { i(s: string) { return true; } }
+}
+B.ts
+/// <reference path="I.ts" />
+namespace N {
+  export class B implements I { i(s: string) { return false; } }
+}
+C.ts
+/// <reference path="I.ts" />
+/// <reference path="A.ts" />
+/// <reference path="B.ts" />
+const a: N.I = new N.A();
+const b: N.I = new N.B();
+
+Compile
+1. tsc --outFile sample.js Test.ts
+2. <script src="I.js" type="text/javascript" />
+   <script src="A.js" type="text/javascript" />
+   <script src="B.js" type="text/javascript" />
+   <script src="C.js" type="text/javascript" />
+
+/* Aliases
+namespace O {
+  export namespace I {
+    export class A {}
+    export class B {}
+  }
+}
+import Alias = O.I;
+let a = new Alias.A(); // Same as 'new O.I.A()'
+
+/* Ambient Namespaces (Other JavaScript Libraries)
+// D3.d.ts (simplified excerpt)
+declare namespace D3 {
+  export interface I1 {
+    i: {
+      (p1: string): Selection;
+      (p2: EventTarget): Selection;
+    };
+  }
+  export interface E { x: number; y: number; }
+  export interface I2 extends I1 { e: E; }
+}
+declare var d3: D3.I2;
+
+/* Namespaces and Modules */
+* /// <reference ... >
+ - module    : /// <reference path="file.d.ts" />
+ - namespace : /// <reference path="file.ts" />
+
+* Needless Namespacing
+// n.ts
+export namespace Namespace {
+  export class A {}
+  export class B {}
+}
+// m.ts
+import * as all from "./n";
+let a = new all.Namespace.A();
+
+// n.ts
+export class A {}
+export class B {}
+// m.ts
+import * as all from "./n";
+let a = new all.A();
+
+/* Symbols */
+* Immutable & Unique
+let s1 = Symbol();
+let s2 = Symbol("key"); // optional string key
+
+let s3 = Symbol("key");
+let s4 = Symbol("key");
+s3 === s4; // false, symbols are unique
+
+* Keys for object properties
+const sym = Symbol();
+let obj = {
+  [sym]: "value",
+};
+console.log(obj[sym]); // "value"
+
+* Class members
+const sym = Symbol();
+class A { [sym]() { return "A"; } }
+let a = new A();
+let name = a[sym](); // "A"
+
+* Unique symbol
+ - Subtype of symble
+ - Symbol() || Symbol.for()
+ - Explicit type annotation
+ - Only const & readonly static
+ - for reference : typeof
+ 
+declare const sym1: unique symbol;
+let sym2: unique symbol = Symbol(); // sym2 can only be a constant reference.
+let sym11: typeof sym1 = sym1;
+class A { static readonly StaticSymbol: unique symbol = Symbol(); }
+const sym3 = Symbol();
+const sym4 = Symbol();
+if (sym3 === sym4) { } // always 'false'
+
+
+Symbol.hasInstance        (instanceof)
+Symbol.isConcatSpreadable
+Symbol.iterator           (for-of)
+Symbol.match              (regexp)
+Symbol.replace            (regexp)
+Symbol.search             (regexp)
+Symbol.species            (derived objects)
+Symbol.split              (regexp)
+Symbol.toPrimitive        (ToPrimitive)
+Symbol.toStringTag
+Symbol.unscopables
+
+/* Triple-Slash Directives */
+Only valid at the top of file
+
+* /// <reference path="..." />
+ - declaration of dependency between files
+ - compiler to include additional files in the compilation process
+ - order the output when using "out" or "outFile"
+ - --noResolve : ignored
+
+* /// <reference types="..." />
+ - declare dependency
+ - similar to import
+ - only for authoring .d.ts file by hand
+ - added if & only if the resulting file uses any declarations from the referenced package
+
+/* Type Compatibility */
+interface I { x: string; }
+class A { x: string; }
+let i: I;
+i = new A();
+
+interface I { x: string; }
+let i: I;
+let o = { x: "x", y: "y" };
+i = o;
+function fn(p: I) { return p.x; }
+fn(o);
+
+* Comparing two functions
+let x = (a: number) => 0;
+let y = (b: number, c: string) => 0;
+y = x; // OK
+x = y; // Error
+
+let x = () => ({ a: "Alice" });
+let y = () => ({ a: "Alice", b: "Seattle" });
+x = y; // OK
+y = x; // Error, because x() lacks a "b" property
+
+* Function Parameter Bivariance (strictFunctionTypes: false)
+enum Enum {
+  A,
+  B,
+}
+interface I {
+  i: number;
+}
+interface IA extends I {
+  ia1: number;
+  ia2: number;
+}
+interface IB extends I {
+  ib1: number;
+}
+function fn(fn1: Enum, fn2: (i: I) => void) {}
+
+// Unsound, but useful and common
+fn(Enum.A, (i: IA) => console.log(i.ia1 + "," + i.ia2));
+
+// Undesirable alternatives in presence of soundness
+fn(Enum.A, (i: I) => console.log((i as IA).ia1 + "," + (i as IA).ia2));
+fn(Enum.A, ((i: IA) => console.log(i.ia1 + "," + i.ia2)) as (fn1: I) => void);
+
+// Still disallowed (clear error). Type safety enforced for wholly incompatible types
+fn(Enum.A, (i: number) => console.log(i));
+
+* Optional Parameters and Rest Parameters
+function fn(args: any[], callback: (...args: any[]) => void) {}
+
+// Unsound - invokeLater "might" provide any number of arguments
+fn([1, 2], (x, y) => console.log(x + ", " + y));   // x == [1, 2], y == undefined
+
+// Confusing (x and y are actually required) and undiscoverable
+fn([1, 2], (x?, y?) => console.log(x + ", " + y)); // x == [1, 2], y == undefined
+
+* Enums
+ - Enums are compatible with numbers, vice versa
+ - Enum values from different enum are incompatible
+
+* Classes
+ - Similar to object literal, interface
+ - Comparing two objects of a class, only members of the instance
+  (No static members & constructors)
+class A {
+  x: number = 1;
+  constructor(a: string, b: number) {}
+}
+class B {
+  x: number = 3;
+  constructor(a: number) {}
+}
+let a: A = new A("a", 1);
+let s: B = new B(3);
+a = s; // OK
+s = a; // OK
+
+* Private and protected members in classes
+ - Affects for compatibility
+
+* Generics
+interface I<T> {}
+let x: I<number>;
+let y: I<string>;
+x = y; // OK, because y matches structure of x
+
+interface I<T> {
+  i: T;
+}
+let x: I<number>;
+let y: I<string>;
+x = y; // Error, because x and y are not compatible
+
+
+let fn1 = function <T>(x: T): T { return x };
+let fn2 = function <U>(y: U): U { return y };
+fn1 = fn2; // OK, because (x: any) => any matches (y: any) => any
+
+* Subtype vs Assignment (-X- : strictNullChecks on)
+           any      unknown      object      void      undefined      null      never
+---------------------------------------------------------------------------------------
+any                    O            O          O           O            O         X
+---------------------------------------------------------------------------------------
+unknown     O                       X          X           X            X         X
+---------------------------------------------------------------------------------------
+object      O          O                       X           X            X         X
+---------------------------------------------------------------------------------------
+void        O          O            X                      X            X         X
+---------------------------------------------------------------------------------------
+undefined   O          O           -X-         O                       -X-        X
+---------------------------------------------------------------------------------------
+null        O          O           -X-        -X-         -X-                     X
+---------------------------------------------------------------------------------------
+never       O          O            O          O           O            O
+---------------------------------------------------------------------------------------
+ - any & unknown
+ - unknown & never : almost inverses
+ - void & undefined & null : almost the same
+
+* Type Inference
+ - Best common type is applied
+
+interface I { }
+class A implements I{ }
+class B implements I{ }
+class C implements I{ }
+
+const a = new A();
+const b = new B();
+const c = new C();
+const arr = [a, b, c] // const arr: (A | B | C)[]
+
+const a: I = new A();
+const b = new B();
+const c = new C();
+const arr = [a, b, c] // const arr: I[]
+
+* Contextual Typing
+interface I { }
+class A implements I{ }
+class B implements I{ }
+class C implements I{ }
+
+// return type : (A | B | C)[]
+function fn() {
+  return [new A(), new B(), new C()];
+}
+
+// return type : I[]
+function fn() {
+  return [new A() as I, new B(), new C()];
+}
+
+/* Variable Declaration */
+* Scoping rules
+"var" accessible anywhere (var-scoping || function-scoping)
+ - containing function
+ - module
+ - namespace
+ - global scope
+
+IIFE (Immediately Invoked Function Expression)
+for (var i = 0; i < 10; i++) {
+  // capture the current state of 'i' by invoking a function with its current value
+  // shadow i in for loop
+  (function (i) {
+    setTimeout(function () {
+      console.log(i);
+    }, 100 * i);
+  })(i);
+}
+
+* Block-scoping
+ - "let" (lexical-scoping or block-scoping)
+ - Shadowing not recommended for clearer code
+
+* Block-scoped variable capturing
+function fn() {
+  let captured;
+  if (true) {
+    let x = "Captured";
+    captured = function () {
+      return x;
+    };
+  }
+  return captured();
+}
