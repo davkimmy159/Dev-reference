@@ -1,0 +1,36 @@
+- Ctrl + Enter : 새로운 줄 위에 삽입
+- Ctrl + G : 라인이동
+- Ctrl + O : 심볼이동
+- Ctrl + L : 라인선택
+- Ctrl + P : 빠른파일열기
+- Ctrl + W : 창 닫기
+- Ctrl + F2 : 변수명 동시변경
+( Ctrl + Shift + L : 같은 단어 전체선택)
+- Ctrl + Alt + L : console.log
+- Ctrl + Alt + N : Run Code
+- Ctrl + Alt + ↑↓ : 수직선택
+- Ctrl + Alt + ←→ : 분할된 창 양옆 이동
+- Ctrl + Alt + Shift + V : JSON To TS (Clipboard)
+- Ctrl + Alt + Shift + S : JSON To TS (Selection)
+- Ctrl + Alt + Shift + / : Comments
+- Ctrl + Shift + R : Refactoring
+- Ctrl + Shift + T : Surround with
+- Ctrl + Shift + Enter : 새로운 아래에에 삽입
+- Alt + A | Z : Bracket select
+- Alt + W : HTML 블록 감싸는 새 tag 생성
+- Alt + F12 : 정의 보여줌
+- Alt + ↑↓ : 줄내용 순서 이동
+- Alt + ←→ : Expand | Shrink selection
+- Alt + Shift + F : 자동정렬
+- Alt + Shift + ↑↓ : 줄내용 복사
+- Alt + Shift + Mouse : 수직선택
+- F1 + "random" : 테스트 데이터 생성
+- F1 + "project tree" : 프로젝트 트리 텍스트 추출
+- F1 + "Constructor" || "Getter" | Setter" : 자동생성
+- F1 + "diff" : 파일 비교
+- F1 + cdnjs : cdn 바로 적용
+- F1 + autoprefix : css vendor prefix 입력
+- F1 + "jsonHelper: Show JSON outline" : json 탐색
+- F1 + "TS interface from class" : Interface from class
+- F2 : Raname Symbol
+- /** + Enter : 메소드 인자 주석포맷
