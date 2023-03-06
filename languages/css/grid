@@ -1,0 +1,73 @@
+Grid Container : Grid 전체 영역
+Grid Item      : 자식
+Grid Track     : 행 또는 열
+Grid Cell      : 한 칸 (Grid Item 들어감, 가상의 틀)
+Grid Line      : 셀 구분선
+Grid Number    : Grid 라인 번호
+Grid Gap       : 셀 사이 간격
+Grid Area      : 라인으로 둘러싸인 사각형 (셀의 집합)
+
+display
+ - grid
+ - inline-grid
+
+grid-template-columns
+grid-template-rows
+ + Grid 트랙 크기 지정
+ + fr : 비율
+ + repeat(반복횟수, 반복값)
+   ex) repeat(3, 1fr 4fr 2fr)
+ + minmax(최솟값, 최댓값)
+   ex) minmax(100px, auto) : 최소한 100px, 최대는 자동으로(auto) 늘어나게
+ + auto-fill & auto-fit
+   column 개수를 미리 정하지 않고 설정된 너비가 허용하는 한 최대한 셀을 채움
+   ex) repeat(auto-fill, minmax(20%, auto)) : 1개 row에 5개, 5개 이하면 비움 (auto-fit은 채움)
+ - 200px 200px 500px
+ - 1fr 1fr 1fr 
+ - repeat(3, 1fr)
+ - 200px 1fr
+ - 100px 200px auto
+ - 100px 2fr 1fr
+
+row-gap
+column-gap
+ - 10px
+
+gap
+ - 10px 20px;
+  (row-gap: 10px;  column-gap: 20px;)
+ - gap: 20rem;
+  (row-gap: 20rem; column-gap: 20rem;)
+
+grid-auto-columns
+grid-auto-rows
+ + 그리그 형태 자동정의
+ - grid-auto-rows: minmax(100px, auto)
+   횟수 지정 반복 X
+   "알아서" 처리
+
+grid-column-start
+grid-column-end
+grid-column
+grid-row-start
+grid-row-end
+grid-row
+ + 각 셀 영역 지정
+ + Grid 라인 번호, span (칸)
+ - 1
+ - 3
+ - 1 / 3
+ ex) .item:nth-child(1) {
+   	   grid-column-start: 1;
+   	   grid-column-end:   3;
+   	   grid-row-start:    1;
+   	   grid-row-end:      2;
+     }
+     .item:nth-child(1) {
+     	 grid-column: 1 / 3;
+   	   grid-row:    1 / 2;
+     }
+ ex) .item:nth-child(1) {
+    	 grid-column: 1 / span 2; // 1번 라인에서 2칸
+    	 grid-row:    1 / span 3; // 1번 라인에서 3칸
+     }
