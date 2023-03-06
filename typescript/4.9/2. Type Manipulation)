@@ -1,0 +1,367 @@
+Type Manipulation
+
+/* Generics */
+function fn1<T>(a: T): T { return a; }
+let fn2: <U>(a: U) => U = fn1;
+let fn3: { <V>(a: V): V } = fn1; // object literal type
+
+interface GI<T> { (a: T): T; }
+function fn1<U>(a: U): U { return a; }
+let fn2: GI<number> = fn1; // specific type
+
+
+class C<T> {
+  constructor(x: T) {
+    this.c = x;
+  }
+  c: T;
+  method(x: T, y: T): T {
+    return x - y; // error
+  }
+}
+let a = new C<number>(1);
+a.c = 0;
+a.method = function (x, y) {
+  return x + y;
+};
+let b = new C<string>("b");
+b.c = "bb";
+a.method = function (x, y) {
+  return x + y;
+};
+
+interface I { i: number; }
+function fn<T extends I>(a: T): T {
+  console.log(a.i);
+  return a;
+}
+fn(3); // error
+fn({ i: 10, v: 3 });
+
+function fn<T, Key extends keyof T>(obj: T, key: Key) {
+  return obj[key];
+}
+let x = {
+  a: 1,
+  b: 2,
+  c: 3,
+  d: 4,
+};
+fn(x, "a");
+fn(x, "m"); // error
+
+function create<T>(ctor:   new () => T): T {
+function create<T>(ctor: { new (): T }): T {
+  return new ctor();
+}
+
+class InA { inA: boolean = true; }
+class InB { inB: string = "inB"; }
+class S { s: number = 1; }
+class A extends S { x: InA = new InA(); }
+class B extends S { y: InB = new InB(); }
+function create<T extends S>(ctor: new () => T): T {
+  return new ctor();
+}
+console.log(create(A).x.inA);
+console.log(create(B).y.inB);
+
+/* Keyof */
+string or numeric literal union
+
+type Type = { x: number; y: number };
+type T = keyof Type; // type T = "x"|"y"
+
+type Arrayish = { [n: number]: unknown };
+type A = keyof Arrayish; // type A = number;
+type Mapish = { [k: string]: boolean };
+type M = keyof Mapish;   // type M = string | number;
+const a: A = 2;
+const m: M = "string";
+
+/* typeof */
+let s = "s";
+let ss: typeof s; // let n: string;
+
+type Predicate = (x: unknown) => boolean;
+type K = ReturnType<Predicate>; // type K = boolean;
+
+function f() { return { x: 10, y: 3 }; }
+type P1 = ReturnType<f>; //error
+type P2 = ReturnType<typeof f>; // type P2 = { x: number; y: number; };
+
+function g(s: string) { return s; }
+let a: typeof g("string"); // error
+let b: ReturnType<typeof g>
+
+/* Indexed access types */
+The indexing type is itself a type
+
+type A = { a: number; b: string; c: boolean };
+type AA = A["c"];       // type AA = boolean
+type A1 = A["a" | "b"]; // type A1 = number | string
+type A2 = A[keyof A];   // type A2 = number | string | boolean
+type AorC = "a" | "c";
+type A3 = A[AorC];      // type A3 = number | boolean
+
+const arr = [
+  { a: "a", b: 1 },
+  { a: "b", b: 2 },
+  { a: "c", b: 3 },
+];
+type A  = typeof arr[number];       // type A  = { a: string; b: number; };
+type B1 = typeof arr[number]["b"];  // type B1 = number;
+type B2 = A["b"];                   // type B2 = number;
+const key1 = "b";
+type B3    = A[key];  // error
+type key2  = "b";
+type Age   = A[key2];
+
+/* Conditional Types */
+SomeT extends OtherT ? TrueT : FalseT;
+
+interface BI { bi(): void; }
+interface DI extends BI { do(): void; }
+type Type1 = DI extends BI ? number : string; // type Type1 = number
+type Type2 = XI extends BI ? number : string; // type Type2 = string
+
+
+interface I1 { i1: number; }
+interface I2 { i2: string; }
+function fn1(i1: number): I1;
+function fn1(i2: string): I2;
+function fn1(i1Ori2: string | number): I1 | I2;
+function fn1(i1Ori2: string | number): I1 | I2 {}
+
+interface N { n: number; }
+interface S { s: string; }
+function fn1(i1: number): N;
+function fn1(i2: string): S;
+function fn1(i1Ori2: string | number): N | S;
+function fn1(i1Ori2: string | number): N | S { return { n: 1 }; }
+
+type NorS<T extends number | string> = T extends number ? N : S;
+function fn2<T extends number | string>(x: T): NorS<T> { throw "unimplemented"; }
+let a = fn2(1);                       // let a: N;
+let b = fn2("s");                     // let b: S;
+let c = fn2(Math.random() ? "s" : 1); // let c: N | S;
+
+type Type1<T> = T["x"]; // error
+type Type1<T extends { x: unknown }> = T["x"];
+interface Type2 { x: string; }
+type TypeX = Type1<Type2>; // type TypeX = string
+
+type Type1<T> = T extends { x: unknown } ? T["x"] : never;
+interface Type2 { x: string; }
+interface Type3 { y(): void; }
+type TypeX = Type1<Type2>; // type TypeX = string;
+type TypeY = Type1<Type3>; // type TypeY = never;
+
+
+type Flatten<T> = T extends any[] ? T[number] : T; // fetching out
+type S = Flatten<string[]>; // type S = string;
+type N = Flatten<number>;   // type N = number;
+
+type Flatten<Type> = Type extends Array<infer Item> ? Item : Type;
+
+type GetReturnType<Type> = Type extends (...args: never[]) => infer Return ? Return : never;
+type N = GetReturnType<() => number>;                          // type N = number;
+type S = GetReturnType<(x: string) => string>;                 // type S = string;
+type B = GetReturnType<(a: boolean, b: boolean) => boolean[]>; // type B = boolean[];
+
+declare function fn(x: number): string;
+declare function fn(x: string): number;
+declare function fn(x: boolean): null;
+declare function fn(x: number | string | boolean): number | string | boolean | null;
+type T = ReturnType<typeof fn>; // type T = string | number | boolean | null;
+
+type ToArrayD<Type> = Type extends any ? Type[] : never;
+type SorNarrayD = ToArrayD<string | number>; // type SorNarrayD = string[] | number[]
+ 1. string | number;
+ 2. ToArrayD<string> | ToArrayD<number>;
+ 3. string[] | number[];
+
+type ToArrayND<Type> = [Type] extends [any] ? Type[] : never; // no longer a union.
+type SorNarrayND = ToArrayND<string | number>; // type SorNarrayND = (string | number)[];
+
+/* Mapped types */
+type Mapper<T> = {
+  [P in keyof T]: boolean;
+};
+type Target = {
+  t1: () => void;
+  t2: () => void;
+};
+type Mapped = Mapper<Target>;
+type Mapped = {
+  t1: boolean;
+  t2: boolean;
+}
+
+type ToMutable<T> = {
+  -readonly [P in keyof T]: T[P];
+};
+type Locked = {
+  readonly a: number;
+  readonly b: string;
+};
+type Unlocked = ToMutable<Locked>;
+// type Unlocked = {
+//   a: string;
+//   b: string;
+// };
+
+type ToRequired<T> = {
+  [P in keyof T]-?: T[P];
+};
+type Optional = {
+  a:  number;
+  b?: string;
+  c?: boolean;
+};
+type RfromO = ToRequired<Optional>;
+// type RfromO = {
+//   a: number;
+//   b: string;
+//   c: boolean;
+// };
+
+
+type MappedTypeWithNewProp<T> = {
+  [P in keyof T as NewKeyType]: T[P];
+};
+
+type Getters<T> = {
+  [P in keyof T as `get${Capitalize<string & P>}`]: () => T[P];
+};
+interface Target {
+  a: number;
+  b: string;
+  c: boolean;
+}
+type BecameGetters = Getters<Target>;
+// type ToGetters = {
+//   getA: () => number;
+//   getB: () => string;
+//   getC: () => boolean;
+// };
+
+// Remove the 'kind' property
+type RemoveKindField<T> = {
+    [P in keyof T as Exclude<P, "kind">]: T[P]
+};
+interface Target {
+    kind: "circle";
+    name: number;
+}
+type Removed = RemoveKindField<Target>;
+// type Removed = {
+//     name: number;
+// }
+
+type Mapper<Targets extends { kind: string }> = {
+  [T in Targets as T["kind"]]: (arg: T) => void;
+};
+type Target1 = { kind: "square"; x: number; y: number };
+type Target2 = { kind: "circle"; radius: number };
+type Mapped = Mapper<Target1 | Target2>;
+// type Mapped = {
+//   square: (arg: Target1) => void;
+//   circle: (arg: Target2) => void;
+// };
+
+
+type Flag<T> = {
+  [P in keyof T]: T[P] extends { pi: true } ? true : false;
+};
+type Target = {
+  a: { format: "incrementing" };
+  b: { type: string; pi: true };
+};
+type Flagged = Flag<Target>;
+// type Flagged = {
+//   a: false;
+//   b: true;
+// };
+
+/* Template Literal Types */
+type A = "world";
+type B = `hello ${A}`; // type B = "hello world";
+
+type A = "a1" | "a2";
+type B = "b1" | "b2";
+type X = `${A | B}_x`;
+// type X = "a1_x"
+//        | "a2_x"
+//        | "b1_x"
+//        | "b2_x";
+
+type C = `${A | B}_c`;
+type D = "d1" | "d2" | "d3";
+type X = `${D}_${C}`;
+// type X =
+//   | "d1_a1_c"
+//   | "d1_a2_c"
+//   | "d1_b1_c"
+//   | "d1_b2_c"
+//   | "d2_a1_c"
+//   | "d2_a2_c"
+//   | "d2_b1_c"
+//   | "d2_b2_c"
+//   | "d3_a1_c"
+//   | "d3_a2_c"
+//   | "d3_b1_c"
+//   | "d3_b2_c";
+
+type ToMethod<Type> = {
+  method(arg: `${string & keyof Type}Added`, callback: (newValue: any) => number): void;
+};
+declare function fn<Type>(obj: Type): Type & ToMethod<Type>;
+const result = fn({
+  field1: 1,
+  field2: "field2",
+  field3: true,
+});
+result.method("field1Added", () => { return 1 });
+result.method("field1Added", (newValue: string) => { console.log(newValue); return 1 });
+result.method("field1",     () => { return 1 }); // error → key name (not first arg name)
+result.method("field1Adde", () => { return 1 }); // error → typo-resistant
+
+
+type ToMethod<Type> = {
+  method<Key extends string & keyof Type>(arg: `${Key}Added`, callback: (newValue: Type[Key]) => number): void;
+};
+declare function fn<Type>(obj: Type): Type & ToMethod<Type>;
+const result = fn({
+  field1: 1,
+  field2: "field2",
+  field3: true,
+});
+result.method("field1Added", (newField1) => { // (parameter) newField1: number
+  if (newField1 < 0) { console.warn("warning! negative number"); }
+  return 1;
+});
+result.method("field2Added", (newField2) => { // (parameter) newField2: string
+  console.log(`new field2 is ${newField2.toUpperCase()}`);
+  return 1;
+});
+
+Uppercase<StringType>;
+type S = "Hello, world";
+type US = Uppercase<S>; // type US = "HELLO, WORLD";
+type A<StringType extends string> = `ID-${Uppercase<StringType>}`;
+type B = A<"my_app">;   // type B = "ID-MY_APP";
+
+Lowercase<StringType>
+type S = "Hello, world"
+type LS = Lowercase<S> // type LS = "hello, world"
+type A<StringType extends string> = `id-${Lowercase<StringType>}`
+type B = A<"MY_APP">   // type B = "id-my_app"
+
+Capitalize<StringType>
+type S = "hello, world";
+type CS = Capitalize<S>; // type CS = "Hello, world"
+
+Uncapitalize<StringType>
+type S = "HELLO WORLD";
+type US = Uncapitalize<S>; // type US = "hELLO WORLD"
