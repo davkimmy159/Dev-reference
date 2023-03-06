@@ -1,0 +1,31 @@
+State structure
+ - 2 states control → 1 state control
+ - No prop mirroring  → initial || default
+ - Keep ID or index in state instead of object itself
+ - Flat state (No nested object)
+
+Preserving & Resetting State
+ - Same component at the same position preserves state (Not JSX, tree position)
+ - Different components at the same position reset state
+   (should not nest component function definitions)
+   - {  flag && <C props="..." /> } // Different & Reset
+     { !flag && <C props="..." /> } // Different & Reset
+   - {  flag ? (<C props="..." />) : (<C props="..." />)} // Same & No reset
+ - Resetting state in the same component with a key
+   - {  flag ? (<C key=1 props="..." />) : (<C key=2 props="..." />)} Same & Reset
+ - Resetting a form with a key
+
+Extracting State Logic into a Reducer
+ - "what the user did" rather than "how you want the state to change"
+
+Passing Data Deeply with Context
+ - Before using context, try 
+   - passing props
+   - passing JSX as children
+ - Use cases for context
+   - Theming
+   - Current account
+   - Routing
+   - Managing state
+
+Scaling Up with Reducer and Context
