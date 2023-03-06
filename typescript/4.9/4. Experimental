@@ -1,0 +1,89 @@
+/* Mixin */ // Only for study, never apply to work from this page
+class A {
+  name = "";
+  x = 0;
+  y = 0;
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+type Ctor = new (...args: any[]) => {};
+function Mixin<TBase extends Ctor>(Base: TBase) {
+  return class B extends Base {
+    _b = 1;
+    setB(b: number) { this._b = b; }
+    get b(): number { return this._b; }
+  };
+}
+const BFromMixin = Mixin(A);
+const instance = new BFromMixin("Bird");
+instance.setB(0.8);
+console.log(instance.b);
+
+type GCtor<T = {}> = new (...args: any[]) => T;
+type GCtor1 = GCtor<{ c1: (x: number, y: number) => void }>;
+type GCtor2 = GCtor<A>;
+type GCtor3 = GCtor<{ c3: () => void }>;
+function GMixin<TBase extends GCtor1>(Base: TBase) {
+  return class D extends Base {
+    d() {
+      // This mixin will only work if it is passed a base
+      // class which has c1 defined because of the
+      // Positionable constraint.
+      this.c1(0, 20);
+    }
+  };
+}
+
+class X { x() {} }
+class Y { y() {} }
+class A { a1 = 0; a2 = 0; }
+interface A extends X, Y {}
+mixins(A, [X, Y]);
+let a = new A();
+a.x();
+console.log(a.a1, a.a2);
+function mixins(dCtor: any, bCtors: any[]) {
+  bCtors.forEach((baseCtor) => {
+    Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
+      Object.defineProperty(
+        dCtor.prototype,
+        name,
+        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) || Object.create(null)
+      );
+    });
+  });
+}
+
+// A decorator function which replicates the mixin pattern:
+const A = (target: typeof B) => {
+  return class A extends target {
+    a = false;
+  };
+};
+@A
+class B {
+  b1 = 0;
+  b2 = 0;
+}
+const b = new B(); // The B class does not have the decorator's type merged:
+b.a; // Property 'a' does not exist on type 'B'.
+type BB = B & { a: boolean };
+const bb = (new B() as unknown) as BB;
+bb.a;
+
+function b<T>() {
+  class B {
+    static b: T;
+  }
+  return B;
+}
+function d<T>() {
+  class D extends b<T>() {
+    static d: T;
+  }
+  return D;
+}
+class X extends d<string>() {}
+X.b; // string
+X.d; // string
