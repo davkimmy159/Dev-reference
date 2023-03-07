@@ -4,7 +4,7 @@
    - pnpm create react-app project-name --template typescript
 3. Delete node_modules, package-lock.json
 4 -1. Create a file ".npmrc"
-  -2. add "auto-install-peers=true"
+  -2. add  " auto-install-peers=true "
 /* -3. remove node_modules               */
 /* -4. reinstall packages (pnpm install) */
 5. Install Packages using pnpm
