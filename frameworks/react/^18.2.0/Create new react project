@@ -13,13 +13,11 @@
    - pnpm add -D @types/testing-library__jest-dom
 7. tsconfig.json
    {
-     "compilerOptions": { ... },
      "exclude": ["node_modules", ".next"]
    }
 
 * package.json ($npm_package_)
 "scripts": {
-  ...
   "add-extras": "pnpm add %npm_package_my_a_mui%"
   },
   "my": {
