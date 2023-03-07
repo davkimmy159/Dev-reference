@@ -27,5 +27,4 @@
       "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
     }
   },
-
 pnpm add-extras
