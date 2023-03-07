@@ -9,7 +9,7 @@
 /* -4. reinstall packages (pnpm install) */
 5. Install Packages using pnpm
    - pnpm install
-6. Property 'toBeInTheDocument' does not exist on type 'JestMatchers<HTMLElement>'.
+6. When running dev server : Property 'toBeInTheDocument' does not exist on type 'JestMatchers<HTMLElement>'.
    - pnpm add -D @types/testing-library__jest-dom
 7. // tsconfig.json
    {
@@ -27,3 +27,5 @@
       "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
     }
   },
+
+pnpm add-extras
