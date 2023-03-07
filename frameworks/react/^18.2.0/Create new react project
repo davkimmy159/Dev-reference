@@ -11,7 +11,7 @@
    - pnpm install
 6. When running dev server : Property 'toBeInTheDocument' does not exist on type 'JestMatchers<HTMLElement>'.
    - pnpm add -D @types/testing-library__jest-dom
-7. // tsconfig.json
+7. tsconfig.json
    {
      "compilerOptions": { ... },
      "exclude": ["node_modules", ".next"]
