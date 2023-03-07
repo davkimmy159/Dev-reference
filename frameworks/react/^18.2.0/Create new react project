@@ -1,8 +1,8 @@
 1. Install pnpm
    - npm install -g pnpm
-2. Create a React project using create-react-app.
+2. Create a React project
    - pnpm create react-app project-name --template typescript
-3. Delete node_modules, package-lock.json.
+3. Delete node_modules, package-lock.json
 4 -1. Create a file ".npmrc"
   -2. add "auto-install-peers=true"
 /* -3. remove node_modules               */
