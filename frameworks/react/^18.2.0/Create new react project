@@ -23,7 +23,7 @@
   "add-extras": "pnpm add %npm_package_my_a_mui%"
   },
   "my": {
-    "a: {
+    "a": {
       "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
     }
   },
