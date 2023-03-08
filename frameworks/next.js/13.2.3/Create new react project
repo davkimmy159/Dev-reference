@@ -1,7 +1,7 @@
 1. Install pnpm
    - npm install -g pnpm
 2. Create a React project
-   - pnpm create next-app project-name --typescript
+   - pnpm create next-app project-name --typescript --eslint
 3. tsconfig.json
 {
  "exclude": ["node_modules", ".next"]
@@ -9,16 +9,21 @@
 
 * package.json ($npm_package_)
 "scripts": {
-  "add-extras": "pnpm add %npm_package_my_d_mui% %npm_package_my_d_etc% %npm_package_my_d_dd%"
+  ...
+  "add-etc": "pnpm add %npm_package_my_d_etc%",
+  "add-twc": "pnpm add %npm_package_my_d_twc%",
+  "add-mui": "pnpm add %npm_package_my_d_mui%"
 },
 "my": {
- "d": {
-   "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material",
-   "etc": "sass clsx date-fns",
-   "dd": "-D jest"
+  "d": {
+   "etc": "sass clsx date-fns -D jest",
+   "twc": "-D tailwindcss postcss autoprefixer",
+   "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
  }
 },
-pnpm add-extras
+
+* Tailwindcss
+ - Follow the instructions (https://tailwindcss.com/docs/installation)
 
 * Sass
 1. pnpm add sass
@@ -32,4 +37,3 @@ pnpm add-extras
        prependData: `@import "src/styles/_variables.scss"; @import "src/styles/_mixins.scss";`
      },
    };
-
