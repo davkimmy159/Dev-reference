@@ -23,3 +23,25 @@ HTML is generated on each request
 
 
 /* Data Fetching */
+
+/* getServerSideProps */
+If don't need to render the data during the request, considerclient side || getStaticProps
+
+* Fetching data on the client side
+page contains frequently updating data
+don’t need to pre-render the data
+ 1. immediately show the page without data
+   (Parts of the page can be pre-rendered using Static Generation)
+   (You can show loading states for missing data)
+ 2. fetch the data on the client side and display it when ready
+   (ex - user dashboard)
+
+/* getStaticProps */ (gets called at build time on server-side)
+pre-render at build time using the props returned by getStaticProps
+no access to the incoming request(query parameters || HTTP headers) as it generates static HTML
+if need, consider  Middleware with getStaticProps
+
+Preview Mode
+temporarily bypass static generation
+render the page at request time instead of build time
+want to preview drafts before published
