@@ -4,6 +4,7 @@
 - Ctrl + L : 라인선택
 - Ctrl + P : 빠른파일열기
 - Ctrl + W : 창 닫기
+- Ctrl + ' : Toggle quotes
 - Ctrl + F2 : 변수명 동시변경
 ( Ctrl + Shift + L : 같은 단어 전체선택)
 - Ctrl + Alt + L : console.log
