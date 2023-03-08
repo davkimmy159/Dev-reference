@@ -21,8 +21,8 @@
 pnpm add-extras
 
 * Sass
-1. converts all .css to .scss
-2. pnpm add sass
+1. pnpm add sass
+2. converts all .css to .scss
 3 ._variables.scss, _mixins.scss
 4. next.config.js
  - const path = require('path');
