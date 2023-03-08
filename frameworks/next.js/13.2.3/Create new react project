@@ -19,3 +19,17 @@
   "dd": "-D jest"
 },
 pnpm add-extras
+
+* Sass
+1. converts all .css to .scss
+2. pnpm add sass
+3 ._variables.scss, _mixins.scss
+4. next.config.js
+ - const path = require('path');
+   const nextConfig = {
+     sassOptions: {
+       includePaths: [path.join(__dirname, 'styles')],
+       prependData: `@import "src/styles/_variables.scss"; @import "src/styles/_mixins.scss";`
+     },
+   };
+
