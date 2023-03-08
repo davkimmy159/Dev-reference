@@ -17,12 +17,4 @@
    }
 
 * package.json ($npm_package_)
-"scripts": {
-  "add-extras": "pnpm add %npm_package_my_a_mui%"
-  },
-  "my": {
-    "a": {
-      "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
-    }
-  },
-pnpm add-extras
+// reference to next.js version
