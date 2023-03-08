@@ -45,3 +45,10 @@ Preview Mode
 temporarily bypass static generation
 render the page at request time instead of build time
 want to preview drafts before published
+
+/* getStaticPaths */
+dynamic Routes & getStaticProps
+only run during build in production
+runs on every request in development
+can defer generating all pages on-demand by returning an empty array for paths (useful for preview)
+
