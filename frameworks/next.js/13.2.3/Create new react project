@@ -1,7 +1,7 @@
 1. Install pnpm
    - npm install -g pnpm
 2. Create a React project
-   - pnpm create next-app project-name --template typescript
+   - pnpm create next-app project-name --typescript
 3. tsconfig.json
 {
  "exclude": ["node_modules", ".next"]
