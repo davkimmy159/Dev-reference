@@ -9,11 +9,12 @@
 
 * package.json ($npm_package_)
 "scripts": {
-  "add-extras": "pnpm add %npm_package_my_a_mui%"
+  "add-extras": "pnpm add %npm_package_my_d_mui% %npm_package_my_dd%"
+},
+"my": {
+  "d": {
+    "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
   },
-  "my": {
-    "a": {
-      "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
-    }
-  },
+  "dd": "-D jest"
+},
 pnpm add-extras
