@@ -11,15 +11,17 @@
 "scripts": {
   ...
   "add-etc": "pnpm add %npm_package_my_d_etc%",
+  "add-etc-d": "pnpm add %npm_package_my_d_etc-d%",
   "add-twc": "pnpm add %npm_package_my_d_twc%",
   "add-mui": "pnpm add %npm_package_my_d_mui%"
 },
 "my": {
   "d": {
-   "etc": "sass clsx date-fns -D jest",
-   "twc": "-D tailwindcss postcss autoprefixer",
-   "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
- }
+    "etc": "sass clsx date-fns",
+    "etc-d": "-D jest",
+    "twc": "-D tailwindcss postcss autoprefixer",
+    "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
+  }
 },
 
 * Tailwindcss
