@@ -14,7 +14,7 @@
 "my": {
  "d": {
    "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material",
-   "etc": "clsx sass",
+   "etc": "sass clsx date-fns",
    "dd": "-D jest"
  }
 },
