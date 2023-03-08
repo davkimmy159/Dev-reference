@@ -1,0 +1,25 @@
+/* Pages */
+* Pre-rendering
+By default, Next.js pre-renders every page
+
+Static Generation (Recommended)
+ - generated at build time & reused
+Server-side Rendering
+ - generated on each request
+
+Static Generation with data
+ - getStaticProps(async): content from external data
+ - getStaticPaths(async): Paths from external data
+
+Priority
+ 1. Static Generation
+ // if user's request (frequently updated data || content changes on every request)
+ 2 - a. Static Generation & Client-side data fetching
+     b. Use Server-Side Rendering
+
+* Server-side Rendering
+HTML is generated on each request
+ - getServerSideProps(async)
+
+
+/* Data Fetching */
