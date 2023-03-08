@@ -4,7 +4,14 @@
    - pnpm create next-app project-name --typescript --eslint
 3. tsconfig.json
 {
- "exclude": ["node_modules", ".next"]
+  "compilerOptions": {
+    ...
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+  "exclude": ["node_modules", ".next"]
 }
 
 * package.json ($npm_package_)
@@ -30,7 +37,8 @@
 * Sass
 1. pnpm add sass
 2. converts all .css to .scss
-3 ._variables.scss, _mixins.scss
+  (except for "globals.css" for Tailwindcss)
+3 . _variables.scss, _mixins.scss
 4. next.config.js
  - const path = require('path');
    const nextConfig = {
