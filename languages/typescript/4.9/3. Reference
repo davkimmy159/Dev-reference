@@ -363,10 +363,13 @@ export * as all from "./a-module";
 
 * Default exports
 export default A;      (a.ts)
-import A from "./a";   (c.ts) // No brackets
-import B from "./a";   (c.ts) // Other name
+export B;              (a.ts)
+import A  from "./a";          // No brackets
+import AA from "./a";         // Other name
+imoprt A, { B } from "./a";   // Import default with other exports
+
 export default "1";    (b.ts) // can export values (not variables or etc)
-import num from "./b"; (c.ts) // No brackets
+import num from "./b";        // No brackets
 console.log(num);             // "1"
 
 * Import
