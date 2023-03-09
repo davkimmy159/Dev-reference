@@ -73,3 +73,14 @@ Client-side data fetching with SWR
  - SWR hook highly recommended if fetching data on the client-side
  - handles caching, revalidation, focus tracking, refetching on intervals, and more
 
+/* Image Component and Image Optimization */
+fill
+ - parent element "position: relative"
+ - parent element "display: block"
+
+/* Optimizing Fonts */
+ - variable fonts recommended
+ - if load the same font function in multiple files, multiple instances of the same font are hosted.
+   1. Call the font loader function in one shared file
+   2. Export it as a constant
+   3. Import the constant in each file
