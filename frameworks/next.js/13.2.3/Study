@@ -58,3 +58,18 @@ can defer generating all pages on-demand by returning an empty array for paths (
 3. after time, cached(tale)
 4. trigger regeneration in bg
 5. invalidate cache and show updated (old if failed)
+
+* Client-side data fetching
+useful when
+ - your page doesn't require SEO indexing
+ - you don't need to pre-render your data
+ - the content of your pages needs to update frequently
+ - unlike server-side rendering APIs, can use at the component level
+ - data is not cached
+at the component level
+ - the data is fetched at the component mount
+
+Client-side data fetching with SWR
+ - SWR hook highly recommended if fetching data on the client-side
+ - handles caching, revalidation, focus tracking, refetching on intervals, and more
+
