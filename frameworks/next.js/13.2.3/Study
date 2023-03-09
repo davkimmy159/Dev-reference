@@ -24,7 +24,7 @@ HTML is generated on each request
 
 /* Data Fetching */
 
-/* getServerSideProps */
+* getServerSideProps
 If don't need to render the data during the request, considerclient side || getStaticProps
 
 * Fetching data on the client side
@@ -36,7 +36,7 @@ don’t need to pre-render the data
  2. fetch the data on the client side and display it when ready
    (ex - user dashboard)
 
-/* getStaticProps */ (gets called at build time on server-side)
+* getStaticProps (gets called at build time on server-side)
 pre-render at build time using the props returned by getStaticProps
 no access to the incoming request(query parameters || HTTP headers) as it generates static HTML
 if need, consider  Middleware with getStaticProps
@@ -46,9 +46,15 @@ temporarily bypass static generation
 render the page at request time instead of build time
 want to preview drafts before published
 
-/* getStaticPaths */
+* getStaticPaths
 dynamic Routes & getStaticProps
 only run during build in production
 runs on every request in development
 can defer generating all pages on-demand by returning an empty array for paths (useful for preview)
 
+* Incremental Static Regeneration
+1. when a request made, show cached
+2. any requests in revalidate time, show cached
+3. after time, cached(tale)
+4. trigger regeneration in bg
+5. invalidate cache and show updated (old if failed)
