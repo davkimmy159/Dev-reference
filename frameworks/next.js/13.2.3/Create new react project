@@ -35,15 +35,15 @@
  - Follow the instructions (https://tailwindcss.com/docs/installation)
 
 * Sass
-1. pnpm add sass
-2. converts all .css to .scss
-  (except for "globals.css" for Tailwindcss)
-3 . _variables.scss, _mixins.scss
-4. next.config.js
- - const path = require('path');
-   const nextConfig = {
-     sassOptions: {
-       includePaths: [path.join(__dirname, 'styles')],
-       prependData: `@import "src/styles/_variables.scss"; @import "src/styles/_mixins.scss";`
-     },
-   };
+ - Follow the instructions (https://nextjs.org/docs/basic-features/built-in-css-support#sass-support)
+Additionally
+ 1. converts all .css to .scss
+   (except for "globals.css" for Tailwindcss)
+ 2. " _variables.scss ", " _mixins.scss " in styles folder
+ 3. next.config.js
+    const nextConfig = {
+      sassOptions: {
+        ...
+        prependData: `@import "src/styles/_variables.scss"; @import "src/styles/_mixins.scss";`
+      },
+    };
