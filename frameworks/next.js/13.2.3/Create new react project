@@ -36,8 +36,8 @@
 
 * Sass
  - Follow the instructions (https://nextjs.org/docs/basic-features/built-in-css-support#sass-support)
-Additionally
- 1. converts all .css to .scss
+After instruction
+ 1. convert all .css to .scss
    (except for "globals.css" for Tailwindcss)
  2. " _variables.scss ", " _mixins.scss " in styles folder
  3. next.config.js
@@ -47,3 +47,10 @@ Additionally
         prependData: `@import "src/styles/_variables.scss"; @import "src/styles/_mixins.scss";`
       },
     };
+
+/* Layout */
+ - per-page layout pattern
+ - can fetch data on the client-side using SWR || useEffect inside layout
+ - can't use "getStaticProps" || "getServerSideProps"
+
+/*  */
