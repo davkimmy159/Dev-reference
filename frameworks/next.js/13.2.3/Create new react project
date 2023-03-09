@@ -24,8 +24,8 @@
 },
 "my": {
   "d": {
-    "etc": "sass clsx date-fns",
-    "etc-d": "-D jest",
+    "etc": "clsx date-fns",
+    "etc-d": "-D sass jest",
     "twc": "-D tailwindcss postcss autoprefixer",
     "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
   }
