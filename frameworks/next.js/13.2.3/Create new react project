@@ -2,7 +2,9 @@
    - npm install -g pnpm
 2. Create a React project
    - pnpm create next-app project-name --typescript --eslint
-3. tsconfig.json
+3 -1. Create a file ".npmrc"
+  -2. add " auto-install-peers=true "
+4. tsconfig.json
 {
   "compilerOptions": {
     ...
