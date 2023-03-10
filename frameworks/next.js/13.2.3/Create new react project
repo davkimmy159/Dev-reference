@@ -5,33 +5,38 @@
 3 -1. Create a file ".npmrc"
   -2. add " auto-install-peers=true "
 4. tsconfig.json
-{
-  "compilerOptions": {
-    ...
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
-  "exclude": ["node_modules", ".next"]
-}
+ - {
+     "compilerOptions": {
+       ...
+       "baseUrl": ".",
+       "paths": {
+          "@/*": ["./src/*"]
+       }
+     }
+     "exclude": ["node_modules", ".next"]
+   }
+5. next.config.js
+ - const nextConfig = {
+     ...
+     swcMinify: true;
+   }
 
-* package.json ($npm_package_)
-"scripts": {
-  ...
-  "add-etc": "pnpm add %npm_package_my_d_etc%",
-  "add-etcd": "pnpm add %npm_package_my_d_etcd%",
-  "add-twc": "pnpm add %npm_package_my_d_twc%",
-  "add-mui": "pnpm add %npm_package_my_d_mui%"
-},
-"my": {
-  "d": {
-    "etc": "clsx date-fns",
-    "etcd": "-D styled-components @types/styled-components sass jest",
-    "twc": "-D tailwindcss postcss autoprefixer",
-    "mui": "@mui/material @mui/styled-engine-sc styled-components @fontsource/roboto @mui/icons-material"
-  }
-},
+6. package.json ($npm_package_)
+ - "scripts": {
+     ...
+     "add-etc": "pnpm add %npm_package_my_d_etc%",
+     "add-etcd": "pnpm add %npm_package_my_d_etcd%",
+     "add-twc": "pnpm add %npm_package_my_d_twc%",
+     "add-mui": "pnpm add %npm_package_my_d_mui%"
+   },
+   "my": {
+     "d": {
+       "etc": "clsx date-fns",
+       "etcd": "-D styled-components @types/styled-components sass jest",
+       "twc": "-D tailwindcss postcss autoprefixer",
+       "mui": "@mui/material @mui/styled-engine-sc styled-components @fontsource/roboto @mui/icons-material"
+     }
+   },
 
 * Sass (https://nextjs.org/docs/basic-features/built-in-css-support#sass-support)
  1. convert all .css to .scss
