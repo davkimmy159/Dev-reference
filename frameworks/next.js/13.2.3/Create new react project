@@ -78,5 +78,3 @@
  - per-page layout pattern
  - can fetch data on the client-side using SWR || useEffect inside layout
  - can't use "getStaticProps" || "getServerSideProps"
-
-/*  */
