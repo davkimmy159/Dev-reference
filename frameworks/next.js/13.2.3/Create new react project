@@ -31,7 +31,7 @@
        "etc": "styled-components @types/styled-components clsx date-fns",
        "etcd": "-D sass jest",
        "twc": "-D tailwindcss postcss autoprefixer",
-       "mui": "@mui/material @mui/styled-engine-sc @fontsource/roboto @mui/icons-material"
+       "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
      }
    },
 
@@ -74,13 +74,6 @@
     },
  2. 기본 element 에서 css prop 에러 발생 시
    - ex) <div css={` ... `} />  // Type '{ css: string; }' is not assignable to ...
-   - tsconfig.json
-     {
-       "compilerOptions": {
-         ...
-         "types": ["@types/styled-components/cssprop"]
-       }
-     }
 
 * Jest
  - https://nextjs.org/docs/advanced-features/compiler#jest
