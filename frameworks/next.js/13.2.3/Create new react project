@@ -47,25 +47,16 @@
     };
 
 * Tailwindcss (https://tailwindcss.com/docs/installation)
- 1. tailwind.config.js
+ 1. npx tailwindcss init -p
+ 2. tailwind.config.js
    - /** @type {import('tailwindcss').Config} */
      module.exports = {
        content: [
          "./pages/*.{js,ts,jsx,tsx}",
          "./components/*.{js,ts,jsx,tsx}"
        ],
-       theme: {
-         extend: {},
-       },
-       plugins: [],
+       ...
      };
- 2. postcss.config.js
-   - module.exports = {
-       plugins: {
-       tailwindcss: {},
-       autoprefixer: {},
-     },
-};
  3. globals.css
    - /** This injects Tailwind's base styles and any base styles registered by plugins. */
      @tailwind base;
