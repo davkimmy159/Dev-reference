@@ -24,14 +24,16 @@
      "add-etc": "pnpm add %npm_package_my_d_etc%",
      "add-etcd": "pnpm add %npm_package_my_d_etcd%",
      "add-twc": "pnpm add %npm_package_my_d_twc%",
+     "add-emo": "pnpm add %npm_package_my_d_emo%",
      "add-mui": "pnpm add %npm_package_my_d_mui%"
    },
    "my": {
      "d": {
-       "etc": "styled-components @types/styled-components clsx date-fns",
+       "etc": "clsx date-fns",
        "etcd": "-D sass jest",
        "twc": "-D tailwindcss postcss autoprefixer",
-       "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
+       "emo": "@emotion/react @emotion/styled @emotion/css",
+       "mui": "@mui/material @fontsource/roboto @mui/icons-material"
      }
    },
 
@@ -67,18 +69,22 @@
      /** This injects Tailwind's utility classes and any utility classes registered by plugins. */
      @tailwind utilities;
 
+* Emotion
+ 1. next.config.js
+   - compiler: {
+       emotion: true
+    },
+
+/*
 * Styled-components
  1. next.config.js
    - compiler: {
-      styledComponents: true
+       styledComponents: true
     },
- 2. 기본 element 에서 css prop 에러 발생 시
+ 2. mui style overriding : && 선택자 쓰기
+ 3. 기본 element 에서 css prop 에러 발생 시
    - ex) <div css={` ... `} />  // Type '{ css: string; }' is not assignable to ...
+*/
 
 * Jest
  - https://nextjs.org/docs/advanced-features/compiler#jest
-
-/* Layout */
- - per-page layout pattern
- - can fetch data on the client-side using SWR || useEffect inside layout
- - can't use "getStaticProps" || "getServerSideProps"
