@@ -10,7 +10,7 @@
        ...
        "baseUrl": ".",
        "paths": {
-          "@/*": ["./src/*"]
+          "@/*": ["./*"]
        }
      }
      "exclude": ["node_modules", ".next"]
@@ -18,7 +18,7 @@
 5. next.config.js
  - const nextConfig = {
      ...
-     swcMinify: true;
+     swcMinify: true,
    }
 
 6. package.json ($npm_package_)
@@ -74,7 +74,7 @@
  1. next.config.js
    - compiler: {
       styledComponents: true
-    }
+    },
   
 * Jest
  - https://nextjs.org/docs/advanced-features/compiler#jest
