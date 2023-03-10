@@ -20,35 +20,68 @@
 "scripts": {
   ...
   "add-etc": "pnpm add %npm_package_my_d_etc%",
-  "add-etc-d": "pnpm add %npm_package_my_d_etc-d%",
+  "add-etcd": "pnpm add %npm_package_my_d_etcd%",
   "add-twc": "pnpm add %npm_package_my_d_twc%",
   "add-mui": "pnpm add %npm_package_my_d_mui%"
 },
 "my": {
   "d": {
     "etc": "clsx date-fns",
-    "etc-d": "-D sass jest",
+    "etcd": "-D styled-components sass jest",
     "twc": "-D tailwindcss postcss autoprefixer",
     "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
   }
 },
 
-* Tailwindcss
- - Follow the instructions (https://tailwindcss.com/docs/installation)
+* Styled-components
+ - https://styled-components.com/docs/basics#installation
+ - https://nextjs.org/docs/advanced-features/compiler#styled-components
 
-* Sass
- - Follow the instructions (https://nextjs.org/docs/basic-features/built-in-css-support#sass-support)
-After instruction
+* Sass (https://nextjs.org/docs/basic-features/built-in-css-support#sass-support)
  1. convert all .css to .scss
    (except for "globals.css" for Tailwindcss)
  2. " _variables.scss ", " _mixins.scss " in styles folder
  3. next.config.js
+  - const path = require('path')
     const nextConfig = {
       sassOptions: {
-        ...
+        includePaths: [path.join(__dirname, 'styles')],
         prependData: `@import "src/styles/_variables.scss"; @import "src/styles/_mixins.scss";`
       },
     };
+ 4. tailwind.config.js
+   - /** @type {import('tailwindcss').Config} */
+     module.exports = {
+       content: ["./**/*.{js,ts,jsx,tsx}"],
+       theme: {
+         extend: {},
+       },
+       plugins: [],
+     };
+
+ 
+* Tailwindcss (https://tailwindcss.com/docs/installation)
+ 1. tailwind.config.js
+   - /** @type {import('tailwindcss').Config} */
+     module.exports = {
+       content: ["./**/*.{js,ts,jsx,tsx}"],
+       theme: {
+         extend: {},
+       },
+       plugins: [],
+     };
+2. globals.css
+   - /** This injects Tailwind's base styles and any base styles registered by plugins. */
+     @tailwind base;
+
+     /** This injects Tailwind's component classes and any component classes registered by plugins. */
+     @tailwind components;
+
+     /** This injects Tailwind's utility classes and any utility classes registered by plugins. */
+     @tailwind utilities;
+
+* Jest
+ - https://nextjs.org/docs/advanced-features/compiler#jest
 
 /* Layout */
  - per-page layout pattern
