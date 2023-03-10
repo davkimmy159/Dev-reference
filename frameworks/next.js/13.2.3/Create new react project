@@ -32,7 +32,7 @@
    "my": {
      "d": {
        "etc": "styled-components @types/styled-components clsx date-fns",
-       "etcd": "sass jest",
+       "etcd": "-D sass jest",
        "twc": "-D tailwindcss postcss autoprefixer",
        "mui": "@mui/material @mui/styled-engine-sc @fontsource/roboto @mui/icons-material"
      }
