@@ -29,7 +29,7 @@
     "etc": "clsx date-fns",
     "etcd": "-D styled-components @types/styled-components sass jest",
     "twc": "-D tailwindcss postcss autoprefixer",
-    "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
+    "mui": "@mui/material @mui/styled-engine-sc styled-components @fontsource/roboto @mui/icons-material"
   }
 },
 
