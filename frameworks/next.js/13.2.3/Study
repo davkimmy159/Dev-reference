@@ -78,12 +78,12 @@ Client-side data fetching with SWR
  - can fetch data on the client-side using SWR || useEffect inside layout
  - can't use "getStaticProps" || "getServerSideProps"
 
-/* Image Component and Image Optimization */
+/* Image Optimization */
 fill
  - parent element "position: relative"
  - parent element "display: block"
 
-/* Optimizing Fonts */
+/* Font Optimization */
  - variable fonts recommended
  - if load the same font function in multiple files, multiple instances of the same font are hosted.
    1. Call the font loader function in one shared file
