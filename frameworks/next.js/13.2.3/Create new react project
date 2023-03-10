@@ -66,9 +66,11 @@
      @tailwind utilities;
 
 * Styled-components
- - https://styled-components.com/docs/basics#installation
- - https://nextjs.org/docs/advanced-features/compiler#styled-components
-
+ 1. next.config.js
+   - compiler: {
+      styledComponents: true
+    }
+  
 * Jest
  - https://nextjs.org/docs/advanced-features/compiler#jest
 
