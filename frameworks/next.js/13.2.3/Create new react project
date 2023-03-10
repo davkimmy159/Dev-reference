@@ -27,7 +27,7 @@
 "my": {
   "d": {
     "etc": "clsx date-fns",
-    "etcd": "-D styled-components sass jest",
+    "etcd": "-D styled-components @types/styled-components sass jest",
     "twc": "-D tailwindcss postcss autoprefixer",
     "mui": "@mui/material @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material"
   }
