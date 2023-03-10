@@ -73,6 +73,11 @@ Client-side data fetching with SWR
  - SWR hook highly recommended if fetching data on the client-side
  - handles caching, revalidation, focus tracking, refetching on intervals, and more
 
+/* Layout */
+ - per-page layout pattern
+ - can fetch data on the client-side using SWR || useEffect inside layout
+ - can't use "getStaticProps" || "getServerSideProps"
+
 /* Image Component and Image Optimization */
 fill
  - parent element "position: relative"
