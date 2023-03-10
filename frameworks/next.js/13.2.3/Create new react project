@@ -74,6 +74,14 @@
    - compiler: {
        emotion: true
     },
+ 2. tsconfig.json
+   - {
+       "compilerOptions": {
+         ...
+         "jsx": "react-jsx",
+         "jsxImportSource": "@emotion/react",
+       }
+     }
 
 /*
 * Styled-components
