@@ -31,8 +31,8 @@
    },
    "my": {
      "d": {
-       "etc": "clsx date-fns",
-       "etcd": "styled-components @types/styled-components sass jest",
+       "etc": "styled-components @types/styled-components clsx date-fns",
+       "etcd": "sass jest",
        "twc": "-D tailwindcss postcss autoprefixer",
        "mui": "@mui/material @mui/styled-engine-sc @fontsource/roboto @mui/icons-material"
      }
