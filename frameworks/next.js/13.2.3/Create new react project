@@ -78,7 +78,7 @@
    - {
        "compilerOptions": {
          ...
-         "jsx": "react-jsx",
+         "jsx": "react-jsx", // "preserve" 에서도 잘 작동
          "jsxImportSource": "@emotion/react",
        }
      }
