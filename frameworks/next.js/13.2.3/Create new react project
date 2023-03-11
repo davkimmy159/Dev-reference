@@ -32,7 +32,7 @@
        "etc": "clsx date-fns",
        "etcd": "-D sass jest",
        "twc": "-D tailwindcss postcss autoprefixer",
-       "emo": "@emotion/react @emotion/styled @emotion/css",
+       "emo": "@emotion/react @emotion/styled",
        "mui": "@mui/material @fontsource/roboto @mui/icons-material"
      }
    },
