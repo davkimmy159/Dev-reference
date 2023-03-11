@@ -83,7 +83,7 @@
        }
      }
 
-/*
+/* Not used */
 * Styled-components
  1. next.config.js
    - compiler: {
@@ -92,7 +92,6 @@
  2. mui style overriding : && 선택자 쓰기
  3. 기본 element 에서 css prop 에러 발생 시
    - ex) <div css={` ... `} />  // Type '{ css: string; }' is not assignable to ...
-*/
 
 * Jest
  - https://nextjs.org/docs/advanced-features/compiler#jest
