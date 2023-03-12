@@ -16,6 +16,7 @@
  - const nextConfig = {
      ...
      swcMinify: true,
+     // pageExtensions: ["page.tsx", "page.ts", "page.jsx", "page.js"],
    }
 
 6. package.json ($npm_package_)
