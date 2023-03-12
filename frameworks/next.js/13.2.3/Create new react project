@@ -30,7 +30,7 @@
    },
    "my": {
      "d": {
-       "etc": "clsx date-fns",
+       "etc": "clsx date-fns @fortawesome/react-fontawesome",
        "etcd": "-D sass jest",
        "twc": "-D tailwindcss postcss autoprefixer",
        "emo": "@emotion/react @emotion/styled",
@@ -83,6 +83,7 @@
          "jsxImportSource": "@emotion/react",
        }
      }
+ 3. 사용할 각 페이지 최상단에 /** @jsxImportSource @emotion/react */
 
 /* Not used */
 * Styled-components
