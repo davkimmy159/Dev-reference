@@ -30,7 +30,7 @@
    },
    "my": {
      "d": {
-       "etc": "clsx date-fns",
+       "etc": "clsx date-fns material-icons",
        "etcd": "-D sass jest",
        "twc": "-D tailwindcss postcss autoprefixer",
        "emo": "@emotion/react @emotion/styled",
