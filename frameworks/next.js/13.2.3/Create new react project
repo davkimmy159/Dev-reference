@@ -85,6 +85,9 @@
      }
  3. 사용할 각 페이지 최상단에 /** @jsxImportSource @emotion/react */
 
+* Material Icons
+ 1. @import 'material-icons/iconfont/material-icons.css'; // in global.css
+
 /* Not used */
 * Styled-components
  1. next.config.js
