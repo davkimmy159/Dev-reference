@@ -18,8 +18,8 @@
      swcMinify: true,
      pageExtensions: ["page.tsx", "page.ts", "page.jsx", "page.js"],
    }
-
-6. package.json ($npm_package_)
+6. pages 폴더 내 전부 .page 붙이기
+7. package.json ($npm_package_)
  - "scripts": {
      ...
      "add-etc": "pnpm add %npm_package_my_d_etc%",
