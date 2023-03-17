@@ -1,0 +1,4 @@
+* 삭제
+ 1. 관리자권한 command
+ 2. bin 폴더
+ 3 ./mysqld --remove 서비스명
