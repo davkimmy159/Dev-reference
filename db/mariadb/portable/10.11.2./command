@@ -33,3 +33,4 @@ CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
    3byte->4byte로 변환되어 컬럼의 데이터를 수정 가능성 있음
  - varchar의 일부 길이를 변경하거나, TEXT로 변환 필요
   (약 VARCHAR 65,535를 할 경우 16,380길이가 가능)
+
