@@ -2,3 +2,17 @@
  1. 관리자권한 command
  2. bin 폴더
  3 ./mysqld --remove 서비스명
+
+* utf8mb4 설정
+ - my.ini
+[mysqld]
+character-set-server=utf8mb4
+collation-server=utf8mb4_unicode_ci
+skip-character-set-client-handshake
+[client]
+default-character-set = utf8mb4
+[mysql]
+default-character-set = utf8mb4
+[mysqldump]
+default-character-set = utf8mb4
+
