@@ -1,1 +1,10 @@
-asd
+* Migration
+ - DB와 prisma 동기화
+ - Snapshot 같이 실행
+ - schema.prisma 에 table 생성 및 수정 후 실행
+npx prisma migrate dev --name snapshot-name
+
+* Studio
+ - table data 보여줌
+npx prisma studio
+
