@@ -16,3 +16,20 @@ default-character-set = utf8mb4
 [mysqldump]
 default-character-set = utf8mb4
 
+* 데이터베이스 문자셋 변경
+ALTER DATABASE {database} CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+* 기존 테이블 문자셋 변경
+ - 기존에 사용하던 테이블의 문자셋을 변경의 경우 CONVERT TO 명령어로 진행하는 경우로 할 경우 해당 테이블 및 컬럼의 속성까지 함께 변경
+ALTER TABLE tbl_name
+CONVERT TO CHARACTER SET charset_name [COLLATE collation_name];
+
+ - 컬럼의 문자셋의 변경을 하지 않고 테이블에 대한 문자셋 변경만을 진행할 경우
+ALTER TABLE tbl_name 
+CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+* 문제점 총 ROW SIZE 65535Byte 초과
+ - 문자열을 변경 하는 경우 MySQL, MariaDB의 경우 한 ROW의 길이 제한이 존재하여,
+   3byte->4byte로 변환되어 컬럼의 데이터를 수정 가능성 있음
+ - varchar의 일부 길이를 변경하거나, TEXT로 변환 필요
+  (약 VARCHAR 65,535를 할 경우 16,380길이가 가능)
