@@ -9,7 +9,7 @@ ES5 변경사항 적용 (모던 자바스크립트)
 
 변수와 상수
 ==========
-```
+```javascript
 let m1;
 m1 = 'Hello!';
 let m2 = 'Hello!';
