@@ -13,14 +13,21 @@
 let m1;
 m1 = 'Hello!';
 let m2 = 'Hello!';
-let m3 = 'John', m4 = 25, m5 = 'Hello'; (권장X)
-let m6 = 'John';  (권장)
-let m7 = 25;      (권장)
-let m8 = 'Hello'; (권장)
-let m9 = 'John',  (취향)
+let m3 = 'John', m4 = 25, m5 = 'Hello'; // (권장X)
+let m6 = 'John';  // (권장)
+let m7 = 25;      // (권장)
+let m8 = 'Hello'; // (권장)
+let m9 = 'John',  // (취향)
   m10 = 25,
   m11 = 'Hello';
-let m12 = 'John'  (취향)
+let m12 = 'John'  // (취향)
   , m13 = 25
   , m14 = 'Hello';
 ```
+#### 변수 명명 규칙
+ - 변수명
+   - 문자
+   - 숫자
+   - $
+   - _
+ - 첫 글자 숫자 X
