@@ -31,4 +31,9 @@ let m12 = 'John'  // (취향)
    + $
    + _
  - 첫 글자 숫자 X
-ssasd
+
+#### 잘못된 변수명 예시
+```javascript
+let 1a;      // 변수명 숫자 시작 X
+let my-name; // 변수명 '-' 사용 X
+```
