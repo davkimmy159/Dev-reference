@@ -8,8 +8,9 @@ ES5 변경사항 적용 (모던 자바스크립트)
 클래스 or 모듈 사용 시 "use strict" 생략 가능
 
 변수와 상수
-=============
-let m1;   
+==========
+```
+let m1;
 m1 = 'Hello!';
 let m2 = 'Hello!';
 let m3 = 'John', m4 = 25, m5 = 'Hello'; (권장X)
@@ -22,3 +23,4 @@ let m9 = 'John',  (취향)
 let m12 = 'John'  (취향)
   , m13 = 25
   , m14 = 'Hello';
+```
