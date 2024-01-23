@@ -9,6 +9,8 @@
 
 ### 클래스 or 모듈 사용 시 "use strict" 생략 가능
 
+<br />
+
 # 변수와 상수
 
 ```javascript
@@ -79,6 +81,8 @@ let color = COLOR_ORANGE;
  - 읽을 수 있는 이름
  - 줄임말 or 짧은 이름 X
  - 최대한 서술적 & 간결
+
+<br />
 
 # 오래된 var
 
@@ -153,7 +157,7 @@ function same4() {
   var phrase = "Hello";
 }
 same4();
-↓↓↓↓
+↓↓↓
 function same4() {
   var phrase;       // 선언 함수 시작 시 처리
   alert(phrase);    // undefined
@@ -208,5 +212,152 @@ function go() {
 }();
 ```
 
+<br />
+
 # 자료형
 
+ - 동적 타입 (dynamically typed)
+   - 변수는 자료형 관계없이 모든 데이터일 수 있음
+   - 어떤 순간에 문자열, 다른 순간엔 숫자
+```javascript
+// no error
+let message = "hello";
+message = 123456;
+```
+
+### 숫자형
+ - 정수, 부동소수점 숫자 (floating point number)
+```javascript
+let n = 123;
+n = 12.345;
+```
+#### Infinity : 무한대 (∞)
+ - 어느 숫자든 0으로 나누면 무한대
+```javascript
+alert( 1 / 0 ); // 무한대
+```
+ - Infinity 직접 참조
+```javascript
+alert(Infinity); // 무한대
+```
+#### NaN
+ - 계산 중 에러 발생 (부정확 or 미정의 수학 연산 사용 시 에러 발생)
+   - NaN 반환
+```javascript
+alert( "숫자가 아님" / 2 ); // NaN, 문자열 숫자로 나누면 오류 발생
+```
+ - NaN 여간해선 안바뀜
+ - NaN에 어떤 추가 연산 : NaN 반환
+```javascript
+alert( "숫자가 아님" / 2 + 5 ); // NaN
+```
+ - 연산 과정 어디선가 NaN 반환 시, 모든 결과에 영향
+
+#### 수학 연산 안전
+ - 자바스크립트 행해지는 수학 연산 '안전’
+ - 이례적인 연산 자바스크립트에서 가능
+   - 0으로 나누기, 비숫자가 문자열 숫자로 취급 등
+ - 불가능 연산 실행 시 에러 X → NaN 반환 & 종료
+
+#### BigInt
+ - 숫자형 사용 불가 (내부 표현 방식 문제)
+   - (253-1)(9007199254740991) 보다 큰 정수
+   - -(253-1) 보다 작은 정수
+ - 아주 큰 숫자 필요한 상황(암호 관련 작업) or 아주 높은 정밀도 작업
+ - 길이 상관없이 정수 표현
+ - 정수 리터럴 끝에 n
+```javascript
+// 끝에 'n' 붙으면 BigInt형 자료
+const bigInt = 1234567890123456789012345678901234567890n;
+```
+
+### 문자형
+ - 따옴표
+   - 큰따옴표  ("Hello")
+   - 작은따옴표 ('Hello')
+   - 백틱    (`Hello`)
+```javascript
+let str1 = "Hello";
+let str2 = 'Single quotes are ok too';
+let phrase = `can embed another ${str}`;
+```
+ - 큰따옴표 & 작은따옴표 : ‘기본적인’ 따옴표
+   - 차이 X
+ - 백틱 ${…} : 변수, 표현식 (무엇이든)
+   - 평가 후 문자열 일부
+```javascript
+let name = "John";
+// 변수 문자열 중간에 삽입
+alert( `Hello, ${name}!` ); // Hello, John!
+// 표현식 문자열 중간에 삽입
+alert( `the result is ${1 + 2}` ); // the result is 3
+```
+
+### 글자형 (char) X
+
+### 불린형
+ - true
+ - false
+<br /><br />
+ - 비교 결과 저장
+```javascript
+let isGreater = 4 > 1;
+alert(isGreater); // true (비교 결과: "yes")
+```
+
+### ‘null’ 값
+ - null 값만 포함하는 별도 자료형
+```javascript
+let age = null;
+```
+#### 타 언어 null
+ - 미존재 객체 참조
+ - 널 포인터 (null pointer)
+#### 자바스크립트 null
+ - ‘존재하지 않는’ 값 (nothing)
+ - ‘비어 있는’ 값   (empty)
+ - ‘알 수 없는’ 값   (unknown)
+```javascript
+let age = null; // 나이(age) 알 수 없음 or 값 비어있음
+```
+
+### ‘undefined’ 값
+ - ‘undefined’ 값만 포함하는 별도 자료형
+ - 값 미할당 상태
+ - 변수 선언 & 값 미할당 : undefined 자동 할당
+```javascript
+let age;
+alert(age); // 'undefined'
+```
+ - 명시적 할당
+```javascript
+let age = 100;
+age = undefined; // undefined 값 명시적으로 할당
+alert(age); // 'undefined'
+```
+ - undefined 직접 할당 권장 X
+ - ‘비어있거나’ ‘알 수 없는’ 상태 : null
+
+### 객체 & 심볼
+#### 객체 (object)
+ - 데이터 컬렉션
+ - 복잡한 개체 (entity)
+#### 심볼 (symbol)
+ - 객체 고유 식별자 (unique identifier)
+
+### typeof 연산자
+ - 인수 자료형 반환
+ - 형태
+   - 연산자 : typeof x
+   - 함수  : typeof(x)
+```javascript
+typeof 0            // "number"
+typeof 10n          // "bigint"
+typeof "foo"        // "string"
+typeof true         // "boolean"
+typeof Math         // "object"   - 내장 객체
+typeof alert        // "function" - 함수형 미존재, 함수 = 객체형 (하위 호환성 : 언어 자체의 오류)
+typeof Symbol("id") // "symbol"
+typeof undefined    // "undefined"
+typeof null         // "object"   - null ≠ object, (하위 호완성 : 언어 자체의 오류)
+```
