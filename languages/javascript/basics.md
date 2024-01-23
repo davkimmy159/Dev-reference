@@ -356,8 +356,10 @@ typeof 10n          // "bigint"
 typeof "foo"        // "string"
 typeof true         // "boolean"
 typeof Math         // "object"   - 내장 객체
-typeof alert        // "function" - 함수형 미존재, 함수 = 객체형 (하위 호환성 : 언어 자체의 오류)
+typeof alert        // "function" - 함수형 미존재, 함수 = 객체형
+                    //             (하위 호환성 : 언어 자체의 오류)
 typeof Symbol("id") // "symbol"
 typeof undefined    // "undefined"
-typeof null         // "object"   - null ≠ object, (하위 호완성 : 언어 자체의 오류)
+typeof null         // "object"   - null ≠ object
+                    //             (하위 호완성 : 언어 자체의 오류)
 ```
