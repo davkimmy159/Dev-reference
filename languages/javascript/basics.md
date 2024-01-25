@@ -664,3 +664,129 @@ for (a = 1, b = 3, c = a * b; a < 10; a++) {
   // ...
 }
 ```
+
+# 비교 연산자
+ - a > b
+ - a < b
+ - a >= b
+ - a <= b
+ - a == b (동등)
+ - a != b (부동)
+
+### 불린형 반환
+ - 불린형값 반환
+ - true : ‘긍정’, ‘참’, '사실’
+ - false : ‘부정’, ‘거짓’, '사실이 아님’
+```javascript
+alert( 2 > 1 );  // true
+alert( 2 == 1 ); // false
+alert( 2 != 1 ); // true
+
+// 비교 결과를 변수에 할당
+let result = 5 > 4;
+alert( result ); // true
+```
+### 문자열 비교
+ - ‘사전’ 순 문자열 비교
+   - 사전편집(lexicographical)
+ - 사전 앞쪽 문자열 < 사전 뒤쪽 문자열
+```javascript
+alert( 'A' < 'Z' );       // true
+alert( 'Glee' < 'Glow' ); // true
+alert( 'Be' < 'Bee' );    // true
+```
+
+1. 두 문자열 첫 글자 비교
+2. 첫 번째 문자열 첫 글자 다른 문자열 첫 글자보다 크면(작으면),<br />첫 번째 문자열 두 번째 문자열보다 크다고(작다고) 결론,<br />비교 종료
+3. 두 문자열 첫 글자 같으면 두 번째 글자 같은 방식 비교
+4. 글자 간 비교 끝날 때까지 과정 반복
+5. 비교 종료,<br />문자열 길이 같으면 두 문자열 동일 결론,<br />비교 종료 후 두 문자열 길이 다르면 길이 긴 문자열 더 크다고 결론
+ - 정확히 유니코드 순 O, 사전 순 X
+ - 대·소문자 구별
+   - 'A' < 'a'
+
+### 다른 형 값 간 비교
+ - 자료형 다르면 숫자형 변환
+```javascript
+alert( '2' > 1 );   // true (문자열 '2'  숫자 2 변환 후 비교)
+alert( '01' == 1 ); // true (문자열 '01' 숫자 1 변환 후 비교)
+
+// 불린값
+alert( true == 1 );  // true (true  : 1 변환 후 비교)
+alert( false == 0 ); // true (false : 0 변환 후 비교)
+```
+
+#### 흥미로운 상황
+ - 동등 비교 연산자 '==' 피연산자 : 숫자형 변환 O
+ - 'Boolean’ 명시적 변환 : 숫자형 변환 X
+```javascript
+let a = 0;
+alert( Boolean(a) ); // false
+
+let b = "0";
+alert( Boolean(b) ); // true
+
+alert(a == b);       // true!
+```
+
+### 일치 연산자
+ - 동등 연산자 '==' : '0' & 'false' & '빈 문자열' 구별 X
+ - 형 다른 피연산자 비교 시 숫자형 변환 때문
+   - '빈 문자열' & 'false' 숫자형 변환 : 0
+```javascript
+alert( 0 == false );  // true
+alert( '' == false ); // true
+```
+ - 일치 연산자 '===' 형 변환 없이 값 비교
+ - 자료형 동등 여부까지 검사
+```javascript
+alert( 0 === false ); // false (피연산자 형 다름)
+```
+ - 불일치 연산자 '!=='
+ - 비교 결과 명확 → 에러 발생 확률 ↓
+
+### 'null' or 'undefined'와 비교
+ - 일치 연산자 '===' 사용하여 'null' & 'undefined' 비교
+   - 두 값 자료형 다르기 때문에 거짓 반환
+```javascript
+alert( null === undefined ); // false
+```
+ - 동등 연산자 == 사용하여 'null' & 'undefined' 비교
+   - 특별한 규칙 적용하여 참 반환
+   - 'null' & 'undefined' → '각별한 커플’ 취급
+   - 두 값 자기들끼리 잘 어울리지만 다른 값들과는 X
+
+```javascript
+alert( null == undefined ); // true
+```
+#### 산술 연산자 or 기타 비교 연산자 (<, >, <=, >=) 사용하여 'null' & 'undefined' 비교
+- 'null & 'undefined' 숫자형 변환
+  - null → 0
+  - undefined → NaN
+#### null vs 0
+- 동등 연산자 '==' & 기타 비교 연산자 (<, >, <=, >=) 동작 방식 다름
+  - (1), (3)
+    - (기타 비교 연산자 동작 원리 따라) 'null' 숫자형 변환되어 0 되기 때문
+  - (2)
+    - 동등 연산자 '==' 피연산자 'null' or 'undefined' 형 변환 X
+    - 'null' & 'undefined' 비교 시만 true 반환,<br />그 이외 경우('null' or 'undefined' 다른 값과 비교) 무조건 false 반환
+```javascript
+alert( null > 0 );  // (1) false
+alert( null == 0 ); // (2) false
+alert( null >= 0 ); // (3) true
+```
+
+#### 비교 불가능한 undefined
+- undefined 다른 값과 비교 금지
+- (1), (2) : undefined → NaN 변환 (숫자형 변환)
+  - NaN 피연산자 경우 비교 연산자 항상 false 반환
+- (3) : undefined는 'null' or 'undefined' 일치, 그 이외 값 일치 X
+```javascript
+alert( undefined > 0 );  // false (1)
+alert( undefined < 0 );  // false (2)
+alert( undefined == 0 ); // false (3)
+```
+#### 함정 피하기
+- 일치 연산자 '===' 제외 비교 연산자 피연산자에 'null' or 'undefined' 사용 X
+- 'null' or 'undefined' 가능성 있는 변수 '<, >, <=, >=' 피연산자 되지 않도록 주의
+  - 'null' or 'undefined' 가능성 있는 변수 따로 처리 코드 추가
