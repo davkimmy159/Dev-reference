@@ -17,14 +17,20 @@
 let m1;
 m1 = 'Hello!';
 let m2 = 'Hello!';
-let m3 = 'John', m4 = 25, m5 = 'Hello'; // (권장X)
-let m6 = 'John';  // (권장)
-let m7 = 25;      // (권장)
-let m8 = 'Hello'; // (권장)
-let m9 = 'John',  // (취향)
+
+// (권장 X)
+let m3 = 'John', m4 = 25, m5 = 'Hello';
+
+// (권장)
+let m6 = 'John';
+let m7 = 25;
+let m8 = 'Hello';
+
+// (취향)
+let m9 = 'John',
   m10 = 25,
   m11 = 'Hello';
-let m12 = 'John'  // (취향)
+let m12 = 'John'
   , m13 = 25
   , m14 = 'Hello';
 ```
@@ -46,7 +52,7 @@ let my-name; // 변수명 '-' 사용 X
  - apple ≠ AppLE
 
 ### 비 라틴계 언어 사용 OK, 권장 X
- - 영어 변수명 사용 국제적인 관습
+ - 영어 변수명 사용 (국제적 관습)
 ```javascript
 let имя = '...';
 let 我 = '...';
@@ -109,7 +115,7 @@ function sayHi() {
   alert(phrase); // 제대로 출력
 }
 sayHi();
-alert(phrase); // Error: phrase is not defined
+alert(phrase);   // Error: phrase is not defined
 ```
 
 ### 변수 중복 선언 허용
@@ -130,6 +136,7 @@ function Same1() {
   var phrase;
 }
 Same1();
+
 function Same2() {
   var phrase;
   phrase = "Hello";
@@ -157,7 +164,9 @@ function same4() {
   var phrase = "Hello";
 }
 same4();
+
 ↓↓↓
+
 function same4() {
   var phrase;       // 선언 함수 시작 시 처리
   alert(phrase);    // undefined
@@ -167,7 +176,7 @@ same4();
 ```
 
 ### 즉시 실행 함수 표현식
- - 개발자들 var도 블록 레벨 스코프 가질 수 있게 방안을 고려
+ - 개발자들 "var"도 블록 레벨 스코프 가질 수 있게 방안을 고려
    - '즉시 실행 함수 표현식
    - immediately-invoked function expressions (IIFE)
 ```javascript
@@ -201,12 +210,15 @@ function go() {
 (function() {
   alert("함수를 괄호로 둘러싸기");
 })();
+
 (function() {
   alert("전체를 괄호로 둘러싸기");
 }());
+
 !function() {
   alert("표현식 앞에 비트 NOT 연산자 붙이기");
 }();
+
 +function() {
   alert("표현식 앞에 단항 덧셈 연산자 붙이기");
 }();
@@ -287,8 +299,10 @@ let phrase = `can embed another ${str}`;
    - 평가 후 문자열 일부
 ```javascript
 let name = "John";
+
 // 변수 문자열 중간에 삽입
-alert( `Hello, ${name}!` ); // Hello, John!
+alert( `Hello, ${name}!` );        // Hello, John!
+
 // 표현식 문자열 중간에 삽입
 alert( `the result is ${1 + 2}` ); // the result is 3
 ```
@@ -333,7 +347,7 @@ alert(age); // 'undefined'
 ```javascript
 let age = 100;
 age = undefined; // undefined 값 명시적으로 할당
-alert(age); // 'undefined'
+alert(age);      // 'undefined'
 ```
  - undefined 직접 할당 권장 X
  - ‘비어있거나’ ‘알 수 없는’ 상태 : null
@@ -362,4 +376,291 @@ typeof Symbol("id") // "symbol"
 typeof undefined    // "undefined"
 typeof null         // "object"   - null ≠ object
                     //             (하위 호완성 : 언어 자체의 오류)
+```
+
+# 형변환
+### 문자형 변환
+ - 문자형 값 필요 시 자동 변환
+ - String(value) 함수
+```javascript
+let value = true;
+alert(typeof value);   // boolean
+
+value = String(value); // 변수 value 문자열 "true" 저장
+alert(typeof value);   // string
+```
+
+### 숫자형 변환
+ - 수학 관련 함수·표현식 자동 변환
+```javascript
+alert( "6" / "2" ); // 3, 문자열 → 숫자형 자동변환 후 연산
+```
+ - Number(value) 함수
+```javascript
+let str = "123";
+alert(typeof str);     // string
+
+let num = Number(str); // 문자열 "123" → 숫자 123 변환
+alert(typeof num);     // number
+```
+ - 숫자형 값 문자 기반 폼(form) 통해 입력받는 경우 명시적 형 변환 필수
+ - 숫자 이외 글자 있는 문자열 숫자형 변환 시 : NaN
+```javascript
+let age = Number("임의의 문자열 123");
+alert(age); // NaN, 형 변환이 실패합니다.
+```
+ - 숫자형 변환 규칙
+ - ※ null & undefined 숫자형 변환 시 결과 다름
+
+|값|형 변환 후|
+|---|---|
+|undefined|NaN|
+|null|0|
+|true & false|1 & 0|
+|string| ① 문자열 처음 & 끝 공백 제거<br /> ② 공백 제거 후 문자열 없으면 0 or 문자열에서 숫자 읽음<br /> ③ 변환 실패 시 : NaN|
+
+```javascript
+alert( Number("   123   ") ); // 123
+alert( Number("123z") );      // NaN ("z" 숫자 변환 실패)
+alert( Number(true) );        // 1
+alert( Number(false) );       // 0
+```
+### 불린형 변환
+ - 논리 연산 수행 시 발생
+ - Boolean(value) 함수
+ - 불린형 변환 규칙
+
+|값|형 변환 후|
+|---|---|
+|직관적으로 “비어있는” 값<br />ex)<br /> - 0 (숫자)<br /> - 빈 문자열<br /> - null <br /> - undefined<br /> - NaN 등 |false|
+|그 외의 값|true|
+
+```javascript
+alert( Boolean(1) );       // 숫자 1 (true)
+alert( Boolean(0) );       // 숫자 0 (false)
+alert( Boolean("hello") ); // 문자열 (true)
+alert( Boolean("") );      // 빈 문자열 (false)
+```
+ #### ※ 문자열 "0" : true
+ - PHP 등 일부 언어 문자열 "0" : false
+ - 자바스크립트 비어있지 않은 문자열 언제나 true
+```javascript
+alert( Boolean("0") ); // true
+alert( Boolean(" ") ); // 공백 있는 문자열 : 비어있지 않은 문자열
+```
+
+# 기본 연산자와 수학
+
+ - operand(피연산자) : 연산 수행 대상
+   - = 인수(argument)
+ - unary(단항) : 피연산자 1개 받는 연산자
+ - binary(이항) : 피연산자 2개 받는 연산자
+
+### 수학 연산자
+- 덧셈 연산자   : +
+- 뺄셈 연산자   : -
+- 곱셈 연산자   : *
+- 나눗셈 연산자  : /
+- 나머지 연산자  : %
+- 거듭제곱 연산자 : **
+
+### 나머지 연산자 '%'
+ - 나눈 후 나머지 정수 반환
+```javascript
+alert( 5 % 2 ); // 5 / 2 나머지 : 1
+alert( 8 % 3 ); // 8 / 3 나머지 : 2
+```
+
+### 거듭제곱 연산자 '**'
+ - a를 b번 곱한 값
+```javascript
+alert( 2 ** 2 ); // 4  (2 * 2)
+alert( 2 ** 3 ); // 8  (2 * 2 * 2)
+alert( 2 ** 4 ); // 16 (2 * 2 * 2 * 2)
+```
+ - 정수 아닌 숫자 가능
+ - 제곱근 : 분수 이용
+```javascript
+alert( 4 ** (1/2) ); // 2 (1/2 거듭제곱 : 제곱근)
+alert( 8 ** (1/3) ); // 2 (1/3 거듭제곱 : 세제곱근)
+```
+
+### 이항 연산자 '+' & 문자열 연결
+ - 이항 연산자 + 피연산자로 문자열 전달 시 문자열 병합(연결)
+```javascript
+let s = "my" + "string";
+alert(s);             // mystring
+alert( '1' + 2 );     // "12"
+alert( 2 + '1' );     // "21"
+alert( 2 + 2 + '1' ); // '41' (연산 : 왼쪽 → 오른쪽 순차적 진행)
+alert( 6 - '2' );     // 4 ('2' 숫자 변환 후 연산)
+alert( '6' / '2' );   // 3 (두 피연산자 숫자로 변환 후 연산)
+```
+
+### 단항 연산자 '+' & 숫자형 변환
+ - 피연산자 숫자 아닌 경우 숫자형 변환
+ - Number(...) 함수 동일
+```javascript
+// 숫자 영향 X
+let x = 1;
+alert( +x );    // 1
+let y = -2;
+alert( +y );    // -2
+
+// 숫자형 아닌 피연산자 숫자형 변환
+alert( +true ); // 1
+alert( +"" );   // 0
+```
+ - 단항 덧셈 연산자로 피연산자 숫자형 변환 후 연산 진행
+```javascript
+let apples = "2";
+let oranges = "3";
+
+// 이항 덧셈 연산자 적용 전 두 피연산자 숫자형 변환
+alert( +apples + +oranges );               // 5
+alert( Number(apples) + Number(oranges) ); // 5
+```
+
+### 연산자 우선순위
+
+|순위|기호|연산자 이름|
+|:---:|:---:|---|
+|17|+|단항 덧셈|
+|17|-|단항 부정|
+|16|**|지수|
+|15|*|곱셈|
+|15|/|나눗셈|
+|13|+|덧셈|
+|13|-|뺄셈|
+|…|…|…|
+|3|=|할당|
+|…|…|…|
+
+### 할당 연산자 '='
+ - 할당(assignment) 연산자
+ - 'x = value' → value가 x에 쓰여진 후, value 반환
+ - 비권장 트릭 (명확성·가독성 ↓)
+```javascript
+let a = 1;
+let b = 2;
+let c = 3 - ( a = b + 1 );
+alert( a ); // 3 ( a = b + 1 );
+alert( c ); // 0
+```
+
+### 할당 연산자 체이닝
+ - 여러 개 연결
+ - 평가 우측부터 진행
+ - 모든 변수 단일 값 공유
+ - 비권장 (명확성·가독성 ↓)
+```javascript
+let a, b, c;
+
+// 비권장
+a = b = c = 2 + 2;
+alert( a ); // 4
+alert( b ); // 4
+alert( c ); // 4
+
+// 권장
+c = 2 + 2;
+b = c;
+a = c;
+```
+### 복합 할당 연산자
+```javascript
+// 할당
+let n = 2;
+n = n + 5;
+n = n * 2;
+
+// 복합 할당
+let n = 2;
+n += 5; // n == 7  (n = n + 5)
+n *= 2; // n == 14 (n = n * 2)
+```
+ - 산술 연산자, 비트 연산자 적용
+   - /=
+   - -= 등
+ - 우선순위 할당 연산자 동일
+```javascript
+let n = 2;
+n *= 3 + 5;
+alert( n ); // 16 (*= 우측 먼저 평가)
+```
+
+### 증가·감소 연산자 '++', '--'
+ - 숫자 하나 증가 or 감소
+```javascript
+let counter = 2;
+counter++; // 3 (counter = counter + 1)
+let counter = 2;
+counter--; // 1 (counter = counter - 1)
+```
+ - 변수에만 적용
+ - 값에 사용 시 에러
+   - ex) 5++
+ - 전위형(prefix form) &nbsp;&nbsp;: ++counter
+   - 증가·감소 후 새로운 값 반환
+ - 후위형(postfix form) : counter++
+   - 증가·감소 전 기존 값 반환
+```javascript
+let counter = 0;
+alert( ++counter ); // 1
+let counter = 0;
+alert( counter++ ); // 0
+```
+#### 다른 연산자 사이 증가·감소 연산자
+ - ++ / -- 연산자 표현식 중간 사용
+ - 증가·감소 연산자의 우선순위 : 다른 대부분 산술 연산자보다 ↑ (평가 먼저 실행)
+ - 가독성 ↓
+```javascript
+// 비권장
+let counter1 = 1;
+alert( 2 * ++counter1 ); // 4
+let counter2 = 1;
+alert( 2 * counter2++ ); // 2 (counter++ '기존'값 반환)
+
+// 권장
+let counter3 = 1;
+alert( 2 * counter3 );
+counter3++;
+```
+
+### 비트 연산자
+ - 32비트 정수 변환 후 이진 연산
+ - 저수준(2진 표현) 연산
+<br /><br />
+ - 비트 AND   : &
+ - 비트 OR&nbsp;&nbsp;&nbsp;   : |
+ - 비트 XOR&nbsp;   : ^
+ - 비트 NOT    : ~
+ - 왼쪽 시프트&nbsp;  : <<<br />(LEFT SHIFT)
+ - 오른쪽 시프트&nbsp; : >><br />(RIGHT SHIFT)
+ - 부호 없는 오른쪽 시프트 : >>><br />(ZERO-FILL RIGHT SHIFT)
+
+### 쉼표 연산자 ','
+ - 여러 표현식 코드 한 줄 평가
+ - 표현식 각각 모두 평가, 마지막 표현식 평가 결과만 반환
+```javascript
+let a = (1 + 2, 3 + 4);
+alert( a ); // 7 (3 + 4의 결과, 앞 결과는 버려짐)
+```
+ - 쉼표 우선순위 매우 ↓ (할당 연산자 '=' 보다 더 ↓)
+ - 괄호 중요한 역할
+ - 가독성 ↓
+```javascript
+let a = 1 + 2, 3 + 4;
+// 괄호 없이 진행 순서
+// ① a = 3, 7
+// ② a = 3
+// ③ 7 무시
+alert( a ); // 3
+```
+ - 사용처 : 여러 동작 하나의 줄 처리
+```javascript
+// 한 줄 세 개 연산 수행
+for (a = 1, b = 3, c = a * b; a < 10; a++) {
+  // ...
+}
 ```
