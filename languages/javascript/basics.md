@@ -48,7 +48,7 @@ let m12 = 'John'
 let 1a;      // 변수명 숫자 시작 X
 let my-name; // 변수명 '-' 사용 X
 ```
-### 대·소문자 구별
+### 대 · 소문자 구별
 - apple ≠ AppLE
 
 ### 비 라틴계 언어 사용 OK, 권장 X
@@ -74,7 +74,7 @@ const m1 = '18.04.1982';
 ```
 
 ### 대문자 상수
-- 대문자 & 밑줄
+- 대문자, 밑줄
   - 기억 용이
   - 오타 확률 ↓
   - 가독성 ↑
@@ -86,7 +86,7 @@ let color = COLOR_ORANGE;
 ### 바람직한 변수명
 - 읽을 수 있는 이름
 - 줄임말 or 짧은 이름 X
-- 최대한 서술적 & 간결
+- 최대한 서술적 · 간결
 
 <br />
 
@@ -293,7 +293,7 @@ let str1 = "Hello";
 let str2 = 'Single quotes are ok too';
 let phrase = `can embed another ${str}`;
 ```
-- 큰따옴표 & 작은따옴표 : ‘기본적인’ 따옴표
+- 큰따옴표 · 작은따옴표 : ‘기본적인’ 따옴표
   - 차이 X
 - 백틱 ${…} : 변수, 표현식 (무엇이든)
   - 평가 후 문자열 일부
@@ -352,7 +352,7 @@ alert(age);      // 'undefined'
 - undefined 직접 할당 권장 X
 - ‘비어있거나’ ‘알 수 없는’ 상태 : null
 
-### 객체 & 심볼
+### 객체, 심볼
 #### 객체 (object)
 - 데이터 컬렉션
 - 복잡한 개체 (entity)
@@ -378,7 +378,10 @@ typeof null         // "object"   - null ≠ object
                     //             (하위 호완성 : 언어 자체의 오류)
 ```
 
+<br />
+
 # 형변환
+
 ### 문자형 변환
 - 문자형 값 필요 시 자동 변환
 - String(value) 함수
@@ -391,7 +394,7 @@ alert(typeof value);   // string
 ```
 
 ### 숫자형 변환
-- 수학 관련 함수·표현식 자동 변환
+- 수학 관련 함수 · 표현식 자동 변환
 ```javascript
 alert( "6" / "2" ); // 3, 문자열 → 숫자형 자동변환 후 연산
 ```
@@ -410,14 +413,14 @@ let age = Number("임의의 문자열 123");
 alert(age); // NaN, 형 변환이 실패합니다.
 ```
 - 숫자형 변환 규칙
-- ※ null & undefined 숫자형 변환 시 결과 다름
+- ※ null · undefined 숫자형 변환 시 결과 다름
 
 |값|형 변환 후|
 |---|---|
 |undefined|NaN|
 |null|0|
 |true & false|1 & 0|
-|string| ① 문자열 처음 & 끝 공백 제거<br /> ② 공백 제거 후 문자열 없으면 0 or 문자열에서 숫자 읽음<br /> ③ 변환 실패 시 : NaN|
+|string| ① 문자열 처음 · 끝 공백 제거<br /> ② 공백 제거 후 문자열 없으면 0 or 문자열에서 숫자 읽음<br /> ③ 변환 실패 시 : NaN|
 
 ```javascript
 alert( Number("   123   ") ); // 123
@@ -448,6 +451,8 @@ alert( Boolean("") );      // 빈 문자열 (false)
 alert( Boolean("0") ); // true
 alert( Boolean(" ") ); // 공백 있는 문자열 : 비어있지 않은 문자열
 ```
+
+<br />
 
 # 기본 연산자와 수학
 
@@ -485,7 +490,7 @@ alert( 4 ** (1/2) ); // 2 (1/2 거듭제곱 : 제곱근)
 alert( 8 ** (1/3) ); // 2 (1/3 거듭제곱 : 세제곱근)
 ```
 
-### 이항 연산자 '+' & 문자열 연결
+### 이항 연산자 '+' 문자열 연결
 - 이항 연산자 + 피연산자로 문자열 전달 시 문자열 병합(연결)
 ```javascript
 let s = "my" + "string";
@@ -497,7 +502,7 @@ alert( 6 - '2' );     // 4 ('2' 숫자 변환 후 연산)
 alert( '6' / '2' );   // 3 (두 피연산자 숫자로 변환 후 연산)
 ```
 
-### 단항 연산자 '+' & 숫자형 변환
+### 단항 연산자 '+' 숫자형 변환
 - 피연산자 숫자 아닌 경우 숫자형 변환
 - Number(...) 함수 동일
 ```javascript
@@ -539,7 +544,7 @@ alert( Number(apples) + Number(oranges) ); // 5
 ### 할당 연산자 '='
 - 할당(assignment) 연산자
 - 'x = value' → value가 x에 쓰여진 후, value 반환
-- 비권장 트릭 (명확성·가독성 ↓)
+- 비권장 트릭 (명확성 · 가독성 ↓)
 ```javascript
 let a = 1;
 let b = 2;
@@ -552,7 +557,7 @@ alert( c ); // 0
 - 여러 개 연결
 - 평가 우측부터 진행
 - 모든 변수 단일 값 공유
-- 비권장 (명확성·가독성 ↓)
+- 비권장 (명확성 · 가독성 ↓)
 ```javascript
 let a, b, c;
 
@@ -589,7 +594,7 @@ n *= 3 + 5;
 alert( n ); // 16 (*= 우측 먼저 평가)
 ```
 
-### 증가·감소 연산자 '++', '--'
+### 증가 · 감소 연산자 '++', '--'
 - 숫자 하나 증가 or 감소
 ```javascript
 let counter = 2;
@@ -601,18 +606,18 @@ counter--; // 1 (counter = counter - 1)
 - 값에 사용 시 에러
   - ex) 5++
 - 전위형(prefix form) &nbsp;&nbsp;: ++counter
-  - 증가·감소 후 새로운 값 반환
+  - 증가 · 감소 후 새로운 값 반환
 - 후위형(postfix form) : counter++
-  - 증가·감소 전 기존 값 반환
+  - 증가 · 감소 전 기존 값 반환
 ```javascript
 let counter = 0;
 alert( ++counter ); // 1
 let counter = 0;
 alert( counter++ ); // 0
 ```
-#### 다른 연산자 사이 증가·감소 연산자
+#### 다른 연산자 사이 증가 · 감소 연산자
 - ++ / -- 연산자 표현식 중간 사용
-- 증가·감소 연산자의 우선순위 : 다른 대부분 산술 연산자보다 ↑ (평가 먼저 실행)
+- 증가 · 감소 연산자의 우선순위 : 다른 대부분 산술 연산자보다 ↑ (평가 먼저 실행)
 - 가독성 ↓
 ```javascript
 // 비권장
@@ -665,6 +670,8 @@ for (a = 1, b = 3, c = a * b; a < 10; a++) {
 }
 ```
 
+<br />
+
 # 비교 연산자
 - a > b
 - a < b
@@ -702,7 +709,7 @@ alert( 'Be' < 'Bee' );    // true
 4. 글자 간 비교 끝날 때까지 과정 반복
 5. 비교 종료,<br />문자열 길이 같으면 두 문자열 동일 결론,<br />비교 종료 후 두 문자열 길이 다르면 길이 긴 문자열 더 크다고 결론
 - 정확히 유니코드 순 O, 사전 순 X
-- 대·소문자 구별
+- 대 · 소문자 구별
   - 'A' < 'a'
 
 ### 다른 형 값 간 비교
@@ -730,9 +737,9 @@ alert(a == b);       // true!
 ```
 
 ### 일치 연산자
-- 동등 연산자 '==' : '0' & 'false' & '빈 문자열' 구별 X
+- 동등 연산자 '==' : '0', 'false', '빈 문자열' 구별 X
 - 형 다른 피연산자 비교 시 숫자형 변환 때문
-  - '빈 문자열' & 'false' 숫자형 변환 : 0
+  - '빈 문자열' · 'false' 숫자형 변환 : 0
 ```javascript
 alert( 0 == false );  // true
 alert( '' == false ); // true
@@ -746,30 +753,30 @@ alert( 0 === false ); // false (피연산자 형 다름)
 - 비교 결과 명확 → 에러 발생 확률 ↓
 
 ### 'null' or 'undefined'와 비교
-- 일치 연산자 '===' 사용하여 'null' & 'undefined' 비교
+- 일치 연산자 '===' 사용하여 'null', 'undefined' 비교
   - 두 값 자료형 다르기 때문에 거짓 반환
 ```javascript
 alert( null === undefined ); // false
 ```
-- 동등 연산자 == 사용하여 'null' & 'undefined' 비교
+- 동등 연산자 == 사용하여 'null', 'undefined' 비교
   - 특별한 규칙 적용하여 참 반환
-  - 'null' & 'undefined' → '각별한 커플’ 취급
+  - 'null' · 'undefined' → '각별한 커플’ 취급
   - 두 값 자기들끼리 잘 어울리지만 다른 값들과는 X
 
 ```javascript
 alert( null == undefined ); // true
 ```
-#### 산술 연산자 or 기타 비교 연산자 (<, >, <=, >=) 사용하여 'null' & 'undefined' 비교
-- 'null & 'undefined' 숫자형 변환
+#### 산술 연산자 or 기타 비교 연산자 (<, >, <=, >=) 사용하여 'null' · 'undefined' 비교
+- 'null · 'undefined' 숫자형 변환
   - null → 0
   - undefined → NaN
 #### null vs 0
-- 동등 연산자 '==' & 기타 비교 연산자 (<, >, <=, >=) 동작 방식 다름
+- 동등 연산자 '==', 기타 비교 연산자 (<, >, <=, >=) 동작 방식 다름
   - (1), (3)
     - (기타 비교 연산자 동작 원리 따라) 'null' 숫자형 변환되어 0 되기 때문
   - (2)
     - 동등 연산자 '==' 피연산자 'null' or 'undefined' 형 변환 X
-    - 'null' & 'undefined' 비교 시만 true 반환,<br />그 이외 경우('null' or 'undefined' 다른 값과 비교) 무조건 false 반환
+    - 'null' · 'undefined' 비교 시만 true 반환,<br />그 이외 경우('null' or 'undefined' 다른 값과 비교) 무조건 false 반환
 ```javascript
 alert( null > 0 );  // (1) false
 alert( null == 0 ); // (2) false
@@ -790,3 +797,628 @@ alert( undefined == 0 ); // false (3)
 - 일치 연산자 '===' 제외 비교 연산자 피연산자에 'null' or 'undefined' 사용 X
 - 'null' or 'undefined' 가능성 있는 변수 '<, >, <=, >=' 피연산자 되지 않도록 주의
   - 'null' or 'undefined' 가능성 있는 변수 따로 처리 코드 추가
+
+<br />
+
+# 'if'문, '?' 연산자 조건 처리
+
+### 'if’문
+- if (…)문 괄호 안 조건 평가
+- 실행 구문 단 한 줄이어도 중괄호 {} 사용해 코드 블록으로 감싸기
+  - 가독성 ↑
+### 불린형 변환
+- if (…) 문 괄호 안 표현식 평가 후 불린값 변환
+- 0 (숫자), 빈 문자열 (""), null, undefined, NaN : 불린형 변환 시 false
+  - ‘falsy (거짓 같은)’ 값
+- 이 외 값 불린형 변환 시 true
+  - ‘truthy (참 같은)’ 값
+```javascript
+// 절대 실행 X
+if (0) { // 0 : falsy
+  ...
+}
+
+// 절대 실행
+if (1) { // 1 : truthy
+  ...
+}
+
+// 평가 통해 확정된 불린값 if문 전달
+let cond = (year == 2015); // 동등 비교 통해 true/false 여부 결정
+if (cond) {
+  ...
+}
+```
+### 'else’절
+- else 뒤 코드 블록 : 조건 거짓일 때 실행
+
+### 'else if’ 복수 조건 처리
+- 조건 여러 개 처리
+- 마지막  else 필수 X, 선택사항
+```javascript
+if (...) {
+  ...
+} else if (...) {
+  ...
+} else { // 선택사항
+  ...
+}
+```
+
+### 조건부 연산자 ‘?’
+- 더 짧고 간결
+- '삼항(ternary) 연산자’ (피연산자 3개)
+  - 피연산자 3개 받는 유일 연산자
+- condition ? value1 : value2;<br />
+     (true  : false)
+
+```javascript
+let accessAllowed;
+let age = prompt('나이를 입력해 주세요.', '');
+if (age > 18) {
+  accessAllowed = true;
+} else {
+  accessAllowed = false;
+}
+alert(accessAllowed);
+
+// 조건부 연산자 '?'
+let accessAllowed1 = (age > 18) ? true : false;
+
+// 괄호 생략 가능
+// 물음표 연산자 우선순위 ↓
+// 가독성 ↓
+let accessAllowed2 =  age > 18  ? true : false;
+
+// 비교 연산자 자체 true/false 반환
+let accessAllowed3 =  age > 18;
+```
+
+### 다중 ‘?’
+- 복수 조건 처리
+```javascript
+let age = prompt('나이를 입력해주세요.', 18);
+let message =
+  (age < 3)   ? '아기야 안녕?' :
+  (age < 18)  ? '안녕!'       :
+  (age < 100) ? '환영합니다!'  :
+  '나이가 아주 많으시거나, 나이가 아닌 값을 입력 하셨군요!';
+alert( message );
+```
+
+### 부적절한 ‘?’
+- 물음표 연산자 '?' 를 if 대용 사용 종종 有
+- 간결성 ↑, 가독성 ↓
+- 물음표 연산자?
+  - 조건 따라 반환 값 달리하는 목적
+- if문
+  - 여러 분기 처리
+```javascript
+let company = prompt('자바스크립트는 어떤 회사가 만들었을까요?', '');
+
+// 비권장 (가독성 ↓)
+(company == 'Netscape') ?
+   alert('정답입니다!') : alert('오답입니다!');
+
+// 권장 (가독성 ↑)
+if (company == 'Netscape') {
+  alert('정답입니다!');
+} else {
+  alert('오답입니다!');
+}
+```
+
+<br />
+
+# 논리 연산자
+
+- 피연산자 : 모든 타입 값 가능
+- 연산 결과 : 모든 타입 가능
+
+### || (OR)
+```javascript
+let result = a || b;
+```
+- 기본적으로 불린값 조작에 사용
+  - 인수 중 하나라도 true이면 true 반환
+  - 그렇지 않으면 false 반환
+```javascript
+alert( true  || true );  // true
+alert( false || true );  // true
+alert( true  || false ); // true
+alert( false || false ); // false
+```
+- 피연산자 불린형 아니면 불린형 변환
+```javascript
+// 1 → true, 0 → false
+if (1 || 0) { // if( true || false )
+  alert( 'truthy!' );
+}
+```
+- if문에 자주 사용
+- if문 안에 여러 가지 조건 가능
+```javascript
+let hour = 12;
+let isWeekend = true;
+if (hour < 10 || hour > 18 || isWeekend) {
+  alert( '영업시간이 아닙니다.' );
+}
+```
+
+### 첫 번째 truthy 찾는 OR 연산자 ‘||’
+#### 자바스크립트 추가 기능 알고리즘
+- _OR 연산자, 피연산자 여러 개인 경우_
+```javascript
+let result = value1 || value2 || value3;
+```
+1. 가장 왼쪽 피연산자 → 오른쪽 피연산자 평가
+2. 각 피연산자 불린형 변환<br /> 변환 후 값 true이면 평가 중단 후 해당 피연산자 변환 전 원래 값 반환
+3. 피연산자 모두 평가한 경우(모든 피연산자 false 평가), 마지막 피연산자 반환
+※ _**반환 값 : 형 변환 안 된 원래 값**_
+
+```javascript
+alert( 1 || 0 );                 // 1 (1 : truthy)
+alert( null || 1 );              // 1 (1 : truthy)
+alert( null || 0 || 1 );         // 1 (1 : truthy)
+alert( undefined || null || 0 ); // 0 (모두 falsy, 마지막 값 반환)
+```
+
+#### ⓐ 변수 or 표현식 구성 목록에서 첫 번째 truthy 얻기
+- 실제 값 들어있는 변수 찾아 반환
+- 모든 변수에 값 없는 경우 마지막 반환
+
+```javascript
+let firstName = "";
+let lastName = "";
+let nickName = "바이올렛";
+alert( firstName || lastName || nickName || "익명"); // 바이올렛
+// 모든 변수 falsy이면 "익명" 출력
+```
+
+#### ⓑ 단락 평가 (short circuit evaluation)
+- 왼쪽 → 오른쪽 평가 진행 중 truthy 만나면 나머지 값들 건드리지 않은 채 평가 중단
+- 두 번째 피연산자 변수 할당 같은 부수적인 효과(side effect) 가질 때 부각
+- 주사용 : 연산자 왼쪽 조건 falsy일 때만 명령어 실행
+
+```javascript
+true  || alert("not printed"); // true 만나자마자 평가 중단 : alert 실행 X
+false || alert("printed");
+```
+
+### && (AND)
+```javascript
+let result = a && b;
+```
+- 기본적으로 두 피연산자 모두 참일 때 true 반환
+- 그 외 경우 false 반환
+```javascript
+alert( true  && true );  // true
+alert( false && true );  // false
+alert( true  && false ); // false
+alert( false && false ); // false
+```
+- 피연산자 타입 제약 X
+```javascript
+if (1 && 0) { // 피연산자 숫자형 → 논리형 변환 : true && false
+  alert( "if 문 안에 falsy가 들어가 있으므로 alert창은 실행되지 않습니다." );
+}
+```
+
+### 첫 번째 falsy 찾는 AND 연산자 ‘&&’
+#### 자바스크립트 추가 기능 알고리즘
+- _OR 연산자, 피연산자 여러 개인 경우_
+```javascript
+let result = value1 && value2 && value3;
+```
+1. 가장 왼쪽 피연산자 → 오른쪽 피연산자 평가
+2. 각 피연산자 불린형 변환<br /> 변환 후 값 false이면 평가 중단 후 해당 피연산자 변환 전 원래 값 반환
+3. 피연산자 모두 평가한 경우(모든 피연산자 true 평가), 마지막 피연산자 반환
+※ _**반환 값 : 형 변환 안 된 원래 값**_
+
+- AND vs OR
+  - AND (&&) : 첫 번째 falsy 반환
+  - OR　(||) 　: 첫 번째 truthy 반환
+```javascript
+// 첫 번째 피연산자 truthy이면 두 번째 피연산자 반환
+alert( 1 && 0 ); // 0
+alert( 1 && 5 ); // 5
+
+// 첫 번째 피연산자 falsy이면 첫 번째 피연산자 반환, 두 번째 피연산자 무시
+alert( null && 5 ); // null
+alert( 0 && "아무거나 와도 상관없습니다." ); // 0
+```
+- 피연산자 다수 연속 전달 가능
+```javascript
+alert( 1 && 2 && null && 3 ); // null
+```
+- 피연산자 모두 truthy : 마지막 피연산자 반환
+```javascript
+alert( 1 && 2 && 3 ); // 3 (마지막 값)
+```
+
+#### 우선순위
+- && > ||
+
+```javascript
+// 동일
+ a && b  ||  c && d
+(a && b) || (c && d)
+```
+
+#### if문 대체 X
+- 일부 개발자들 if문 ‘짧게’ 줄이는 용도 사용
+  - 명확성 ↓, 가독성 ↓
+```javascript
+let x = 1;
+(x > 0) && alert( '0보다 큽니다!' );
+
+let x = 1;
+if (x > 0) {
+  alert( '0보다 큽니다!' );
+}
+```
+
+### ! (NOT)
+```javascript
+let result = !value;
+```
+- 인수 하나 요구
+1. 피연산자 불린형 변환
+2. 변환 값의 역 반환
+```javascript
+alert( !true ); // false
+alert( !0 );    // true
+```
+- 두 개 연달아 사용 (!!)
+  - 값 불린형 변환
+  - == 내장 함수 Boolean
+```javascript
+// !!
+alert( !!"non-empty string" ); // true
+alert( !!null );               // false
+
+// Boolean
+alert( Boolean("non-empty string") ); // true
+alert( Boolean(null) );               // false
+```
+- 우선순위
+  - ! > && > ||
+
+<br />
+
+# nullish 병합 연산자 '??'
+
+- 여러 피연산자 중 값 ‘확정되어있는’ 변수 찾음
+```javascript
+a ?? b
+```
+1. a가 null, undefined 아니면 a
+2. 그 외 경우 b
+```javascript
+// 동일 구문
+x = a ?? b
+x = (a !== null && a !== undefined) ? a : b;
+```
+```javascript
+let firstName = null;
+let lastName = null;
+let nickName = "바이올렛";
+// null이나 undefined가 아닌 첫 번째 피연산자
+alert(firstName ?? lastName ?? nickName ?? "익명의 사용자"); // 바이올렛
+```
+
+### '??' '||' 차이
+- || : 첫 번째 truthy 값 반환
+- ?? : 첫 번째 정의된(defined) 값 반환
+- null, undefined, 0 구분 시 중요한 차이점
+  - 0 할당될 수 있는 변수 : '??' 적합
+```javascript
+let height1 = height1 ?? 100; // 값 정의되지 않은 경우 100
+
+let height2 = 0;
+alert(height2 || 100); // 100 (0 : falsy)
+alert(height2 ?? 100); // 0   (null, undefined : falsy)
+```
+
+### 우선순위
+- 5 (낮은편)
+- '=', '?' < '??" < 대부분 연산자
+- 복잡한 표현식 괄호 사용
+```javascript
+let height = null;
+let width = null;
+let area = (height ?? 100) * (width ?? 50); // 괄호 사용
+alert(area); // 5000
+```
+- 안정성 관련 이슈
+  - '&&', '||' 함께 사용 X
+```javascript
+let x =  1 && 2  ?? 3; // SyntaxError: Unexpected token '??'
+let x = (1 && 2) ?? 3; // 정상 작동
+```
+
+<br />
+
+# while, for 반복문
+
+### ‘while’ 반복문
+
+```javascript
+while (condition) {
+  // 코드
+  // 반복문 본문 (body)
+}
+```
+```javascript
+let i = 0;
+while (i < 3) {
+  alert( i ); // 0, 1, 2
+  i++;
+}
+```
+- 반복문 본문 한 번 실행 : 반복 (iteration)
+- 반복문 조건
+  - 모든 종류 표현식, 변수 가능
+  - while에 의해 평가, 불린값 변환
+```javascript
+let i = 3;
+
+// while (i != 0)
+while (i) { // (0 : falsy)
+  alert( i );
+i--;
+}
+```
+- 본문 한 줄 : 중괄호 필요 X
+```javascript
+let i = 3;
+while (i) alert(i--);
+```
+
+### ‘do…while’ 반복문
+- 반복문 본문 아래 condition
+- 본문이 먼저 실행, 조건 확인 후 조건 truthy인 동안 본문 계속 실행
+- 본문 최소한 한 번 실행
+```javascript
+do {
+  // 반복문 본문
+} while (condition);
+```
+```javascript
+let i = 0;
+do {
+  alert( i );
+  i++;
+} while (i < 3);
+```
+
+### ‘for’ 반복문
+```javascript
+for (begin; condition; step) {
+  // 반복문 본문
+}
+```
+```javascript
+for (let i = 0; i < 3; i++) {
+  alert(i); // 0, 1, 2
+}
+```
+
+#### 인라인 변수 선언
+- ‘카운터’ 변수 i 반복문 안에서 선언
+- 반복문 안에서만 접근 가능
+```javascript
+for (let i = 0; i < 3; i++) {
+  alert(i); // 0, 1, 2
+}
+alert(i); // Error: i is not defined
+```
+- 기존 정의된 변수 사용 가능
+```javascript
+let i = 0;
+for (i = 0; i < 3; i++) { // 기존 정의된 변수 사용
+  alert(i); // 0, 1, 2
+}
+alert(i); // 3
+```
+
+#### 구성 요소 생략
+```javascript
+let i = 0;
+for (; i < 3; i++) {
+  alert( i ); // 0, 1, 2
+}
+```
+```javascript
+let i = 0;
+for (; i < 3;) { // while (i < 3)
+  alert( i++ );  // 0, 1, 2
+}
+```
+- 모든 구성 요소 생략
+  - 무한 반복문
+```javascript
+for (;;) {
+  // 끊임 없이 본문 실행
+}
+```
+
+### 반복문 빠져나오기
+- break
+```javascript
+let sum = 0;
+while (true) {
+  let value = +prompt("숫자를 입력하세요.", '');
+  if (!value) break; //
+  sum += value;
+}
+alert( '합계: ' + sum );
+```
+
+### 다음 반복으로 넘어가기
+- 전체 반복문 멈추지 않음
+- 현재 실행 중인 이터레이션 멈춤, 다음 이터레이션 강제 실행(조건 통과할 때)
+- 현재 반복 종료, 다음 반복 넘어가고 싶을 때 사용
+```javascript
+for (let i = 0; i < 10; i++) {
+
+  // 조건 참이면 남아있는 본문 실행 X
+  if (i % 2 == 0) continue;
+  alert(i); // 1, 3, 5, 7, 9
+}
+```
+
+#### continue : 중첩 줄이는 데 도움
+```javascript
+for (let i = 0; i < 10; i++) {
+
+  // if (i % 2 == 0) continue;
+  if (i % 2) {
+    alert( i );
+  }
+}
+```
+#### ‘?’ 오른쪽에 'break' or 'continue' 불가능
+- 표현식 아닌 문법 구조 (syntax construct) 삼항 연산자 '?'에 사용 X
+  - 'break' or 'continue' 같은 지시자 삼항 연산자에 사용 X
+```javascript
+if (i > 5) {
+  alert(i);
+} else {
+  continue;
+}
+
+(i > 5) ? alert(i) : continue; // X
+```
+
+### break / continue, 레이블
+- 레이블 (label)
+  - 여러 개의 중첩 반복문 한 번에 빠져나옴
+```javascript
+labelName: for (...) {
+  ...
+}
+```
+```javascript
+outer: for (let i = 0; i < 3; i++) {
+  for (let j = 0; j < 3; j++) {
+    let input = prompt(`(${i},${j})의 값`, '');
+
+    // outer 레이블 붙은 반복문 찾고 해당 반복문 빠져나옴
+    if (!input) break outer;
+    ...
+  }
+}
+alert('완료!');
+```
+- 레이블 별도 줄 가능
+```javascript
+outer:
+for (let i = 0; i < 3; i++) {
+  ...
+}
+```
+- 'continue' · 레이블 함께 사용 가능
+  - 레이블 붙은 반복문의 다음 이터레이션 실행
+
+#### 레이블 마음대로 '점프’ X
+- 'break' · 'continue' 지시자 반복문 안에서만 사용
+- 레이블 반드시 'break' · 'continue' 지시자 위에 위치
+```javascript
+break label; // 아래 for 문으로 점프 X
+label: for (...)
+```
+
+<br />
+
+# switch문
+
+- 복수 if 조건문 → switch문
+- 특정 변수 다양한 상황에서 비교
+- 코드 자체 비교 상황 잘 설명
+
+### 문법
+```javascript
+switch(x) {
+  case 'value1':  // if (x === 'value1')
+    ...
+    [break]
+  case 'value2':  // if (x === 'value2')
+    ...
+    [break]
+  default:        // 선택사항
+    ...
+    [break]
+}
+```
+- case문 안 break문 없으면 조건 부합 여부 상관 없이 다음 case문 실행
+```javascript
+let a = 2 + 2;
+switch (a) {
+  case 3:
+    alert( '비교하려는 값보다 작습니다.' );
+  case 4:
+    alert( '비교하려는 값과 일치합니다.' );       // 실행
+  case 5:
+    alert( '비교하려는 값보다 큽니다.' );         // 실행
+  default:
+    alert( "어떤 값인지 파악이 되지 않습니다." ); // 실행
+}
+```
+
+#### switch/case문 인수 모든 형태 표현식 가능
+```javascript
+let a = "1";
+let b = 0;
+
+switch (+a) {
+  case b + 1:
+    alert("표현식 +a는 1, 표현식 b+1는 1이므로 이 코드가 실행됩니다.");
+    break;
+  default:
+    alert("이 코드는 실행되지 않습니다.");
+}
+```
+
+### 여러 "case"문 묶기
+- 코드 같은 case문 한데 묶음 가능
+```javascript
+let a = 3;
+switch (a) {
+  case 4:
+    alert('계산이 맞습니다!');
+    break;
+  case 3: // 두 case문 묶음
+  case 5:
+    alert('계산이 틀립니다!');
+    alert("수학 수업을 다시 들어보는걸 권유 드립니다.");
+    break;
+  default:
+    alert('계산 결과가 이상하네요.');
+}
+```
+
+### 자료형 중요성
+- 일치 비교 조건 확인
+```javascript
+let arg = prompt("값을 입력해주세요.");
+switch (arg) {
+  case '0':
+  case '1':
+    alert( '0이나 1을 입력하셨습니다.' );
+    break;
+  case '2':
+    alert( '2를 입력하셨습니다.' );
+    break;
+  case 3: // 3 ≠ '3'
+    alert( '이 코드는 절대 실행되지 않습니다!' );
+    break;
+  default:
+    alert( '알 수 없는 값을 입력하셨습니다.' );
+}
+```
+
+<br />
+
+# 함수
+
