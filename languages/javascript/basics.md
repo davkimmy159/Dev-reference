@@ -10,7 +10,6 @@
 
 ### 클래스 or 모듈 사용 시 "use strict" 생략 가능
 
----
 <br />
 
 변수와 상수
@@ -91,7 +90,6 @@ let color = COLOR_ORANGE;
 - 줄임말 or 짧은 이름 X
 - 최대한 서술적 · 간결
 
----
 <br />
 
 오래된 var
@@ -229,7 +227,6 @@ function go() {
 }();
 ```
 
----
 <br />
 
 자료형
@@ -385,7 +382,6 @@ typeof null         // "object"   - null ≠ object
                     //             (하위 호완성 : 언어 자체의 오류)
 ```
 
----
 <br />
 
 형변환
@@ -461,7 +457,6 @@ alert( Boolean("0") ); // true
 alert( Boolean(" ") ); // 공백 있는 문자열 : 비어있지 않은 문자열
 ```
 
----
 <br />
 
 기본 연산자 · 수학
@@ -681,7 +676,6 @@ for (a = 1, b = 3, c = a * b; a < 10; a++) {
 }
 ```
 
----
 <br />
 
 비교 연산자
@@ -812,7 +806,6 @@ alert( undefined == 0 ); // false (3)
 - 'null' or 'undefined' 가능성 있는 변수 '<, >, <=, >=' 피연산자 되지 않도록 주의
   - 'null' or 'undefined' 가능성 있는 변수 따로 처리 코드 추가
 
----
 <br />
 
 'if'문, '?' 연산자 조건 처리
@@ -924,7 +917,6 @@ if (company == 'Netscape') {
 }
 ```
 
----
 <br />
 
 논리 연산자
@@ -1102,7 +1094,6 @@ alert( Boolean(null) );               // false
 - 우선순위
   - ! > && > ||
 
----
 <br />
 
 nullish 병합 연산자 '??'
@@ -1157,7 +1148,6 @@ let x =  1 && 2  ?? 3; // SyntaxError: Unexpected token '??'
 let x = (1 && 2) ?? 3; // 정상 작동
 ```
 
----
 <br />
 
 while, for 반복문
@@ -1351,7 +1341,6 @@ break label; // 아래 for 문으로 점프 X
 label: for (...)
 ```
 
----
 <br />
 
 switch문
@@ -1442,7 +1431,6 @@ switch (arg) {
 }
 ```
 
----
 <br />
 
 함수
@@ -1754,7 +1742,6 @@ function isPrime(n) {
 }
 ```
 
----
 <br />
 
 함수 표현식
@@ -1964,7 +1951,6 @@ welcome(); // 정상 동작
   - 가독성 ↑ (더 눈에 띔)
 - 함수 표현식 필요 시 사용
 
----
 <br />
 
 화살표 함수
