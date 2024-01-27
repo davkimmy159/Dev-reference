@@ -1732,3 +1732,261 @@ function isPrime(n) {
 
 # 함수 표현식
 
+#### 함수 취급 차이
+- 자바스크립트 : "특별한 종류의 값"
+- 타 언어　　　: "특별한 동작을 하는 구조"
+
+#### 함수 선언 (Function Declaration)
+```javascript
+function sayHi() {
+  alert( "Hello" );
+}
+```
+#### 함수 표현식 (Function Expression)
+- 함수 생성 후 변수에 할당<br />(함수 어떤 방식으로 만들어졌는지 관계 X)
+  - 함수 == 값 → 변수 할당<br />(함수 값처럼 취급)
+```javascript
+// 함수 만들고 변수 'sayHi'에 할당
+let sayHi = function() {
+  alert( "Hello" );
+};
+```
+- 함수 == 값 → alert 이용하여 함수 코드 출력<br />(함수 값처럼 취급)
+```javascript
+function sayHi() {
+  alert( "Hello" );
+}
+
+// 함수 코드 출력
+// 함수 괄호 없음 → 함수 실행 X
+alert( sayHi );
+```
+- 함수 호출 가능 : 일반적인 값과 조금 다름 (특별한 종류의 값)
+- ### _본질은 값 → 값에 할 수 있는 일 함수에도 가능_
+- 함수 복사 후 다른 변수 할당
+```javascript
+function sayHi1() {       // (1) 함수 생성 (함수 선언문)
+  alert( "Hello1" );
+}
+let sayHi2 = function() { // (1) 함수 생성 (함수 표현식)
+  alert( "Hello2" );
+};
+let func = sayHi1;        // (2) 함수 복사 (괄호 X)
+func();   // Hello1       // (3) 복사한 함수 실행
+sayHi1(); // Hello1       //     본래 함수도 정상적 실행
+```
+
+#### 끝에 세미 콜론
+- 함수 표현식 끝에 세미콜론 (;)
+- 함수 선언문 : 중괄호 코드 블록　→ 세미콜론 X
+- 함수 표현식 : 값 취급 · 변수 할당 → 세미콜론 O
+```javascript
+function sayHi1() {       // 중괄호 코드 블록
+  ...
+}  // 세미콜론 X
+let sayHi2 = function() { // 값 취급 · 변수 할당
+  ...
+}; // 세미콜론 O
+```
+
+### 콜백 함수
+```javascript
+function ask(question, yes, no) {
+  if (confirm(question)) yes()
+  else no();
+}
+function showOk() {
+  alert( "동의하셨습니다." );
+}
+function showCancel() {
+  alert( "취소 버튼을 누르셨습니다." );
+}
+
+// 함수 showOk · showCancel → ask 함수 인수로 전달
+// 함수 → 함수 인수 : 콜백 함수
+ask("동의하십니까?", showOk, showCancel); //
+```
+- 간결한 버전
+```javascript
+function ask(question, yes, no) {
+  if (confirm(question)) yes()
+  else no();
+}
+
+ask(
+  "동의하십니까?",
+  function() { alert("동의하셨습니다."); },         // 익명 함수
+  function() { alert("취소 버튼을 누르셨습니다."); } // 익명 함수
+);
+```
+
+#### 함수 : "동작" 나타내는 값
+- 일반적인 값 : 데이터
+  - 문자열, 숫자 등
+- 함수 : 하나의 *동작 (action)*
+  - 동작 대변하는 값인 함수 변수 간 전달 후, 동작 필요할 때 이 값 실행
+
+### 함수 선언문 vs 함수 표현식
+#### ① 문법
+- 함수 선언문
+  - 주요 코드 흐름 중간에 독자적인 구문 형태로 존재
+- 함수 표현식
+  - 표현식 or 구문 구성 (syntax construct) 내부에 생성
+```javascript
+// 함수 선언문
+function sum1(a, b) {
+  return a + b;
+}
+
+// 함수 표현식
+// 할당 연산자 '=' 이용해 만든 “할당 표현식” 우측에 생성
+let sum2 = function(a, b) {
+  return a + b;
+};
+```
+
+#### ②자바스크립트 엔진 함수 생성 타이밍
+- 함수 표현식
+  - 실제 실행 흐름 해당 함수 도달했을 때 함수 생성
+  - 실행 흐름 함수 도달했을 때부터 해당 함수 사용 가능
+- 함수 선언문
+  - 함수 선언문 정의 전 호출 가능
+  - 전역 함수 선언문 스크립트 위치 상관없이 어디서든 사용 가능
+- 자바스크립트 내부 알고리즘
+  - 스크립트 진짜 실행 전 "초기화 단계" : 함수 선언 방식의 함수 생성
+  - 모든 함수 선언문 처리 이후 스크립트 실행
+```javascript
+// 함수 선언문
+sayHi1("John"); // Hello1, John
+function sayHi1(name) {
+  alert( `Hello1, ${name}` );
+}
+
+// 함수 표현식
+sayHi2("John"); // error!
+let sayHi2 = function(name) {
+  alert( `Hello2, ${name}` );
+};
+```
+
+#### ③스코프
+- 엄격 모드
+  - 함수 선언문 코드 블록 내 위치
+    - 블록 내부 어디서든 함수 접근 가능
+    - 블록 외부 함수 접근 X
+```javascript
+let age = prompt("나이를 알려주세요.", 18);
+// 조건 따라 함수 선언
+// if문 블록 내부에서만 유효
+if (age < 18) {
+  function welcome() {
+    alert("안녕!");
+  }
+} else {
+  function welcome() {
+    alert("안녕하세요!");
+  }
+}
+// 함수 나중에 호출
+welcome(); // Error: welcome is not defined
+```
+```javascript
+let age = 16;
+if (age < 18) {
+  welcome();               // \   (실행)
+  function welcome() {     //  |
+    alert("안녕!");        //   |  함수 선언 블록 내 어디서든 유효
+  }                        //  |  
+  welcome();               // /   (실행)
+} else {
+  function welcome() {
+    alert("안녕하세요!");
+  }
+}
+// 중괄호 밖 : 중괄호 안 선언 함수 선언문 호출 X
+welcome(); // Error: welcome is not defined
+```
+- 함수 표현식 : 블록 외부에서 블록 내부 함수 접근
+```javascript
+let age = prompt("나이를 알려주세요.", 18);
+let welcome;
+if (age < 18) {
+  welcome = function() {
+    alert("안녕!");
+  };
+} else {
+  welcome = function() {
+    alert("안녕하세요!");
+  };
+}
+welcome(); // 정상 동작
+```
+- 물음표 연산자 '?' : 코드 단순화
+```javascript
+let age = prompt("나이를 알려주세요.", 18);
+let welcome = (age < 18) ?
+  function() { alert("안녕!"); } :
+  function() { alert("안녕하세요!"); };
+welcome(); // 정상 동작
+```
+
+#### 함수 선언문 vs 함수 표현식
+- 함수 선언문 먼저 고려
+  - 함수 선언 전 호출 가능 : 좀 더 자유롭게 구성
+  - 가독성 ↑ (더 눈에 띔)
+- 함수 표현식 필요 시 사용
+
+<br />
+
+# 화살표 함수
+
+- 함수 표현식보다 단순 · 간결
+```javascript
+let func = function(arg1, arg2, ...argN) {
+  return expression;
+};
+↓↓↓
+let func = (arg1, arg2, ...argN) => expression;
+```
+```javascript
+let sum = function(a, b) {
+  return a + b;
+};
+↓↓↓
+let sum = (a, b) => a + b;
+
+alert( sum(1, 2) ); // 3
+```
+- 인수 1개 : 인수 괄호 생략 가능
+```javascript
+let double = function(n) { return n * 2 }
+↓↓↓
+let double = n => n * 2;
+
+alert( double(3) ); // 6
+```
+- 인수 X : 빈 괄호 (괄호 생략 X)
+```javascript
+let sayHi = () => alert("안녕하세요!");
+sayHi();
+```
+- 함수 동적 생성
+```javascript
+let age = prompt("나이를 알려주세요.", 18);
+let welcome = (age < 18) ?
+  () => alert('안녕') :
+  () => alert("안녕하세요!");
+welcome();
+```
+- 함수 본문 한 줄 화살표 함수
+  -  타이핑 ↓
+
+### 본문 여러 줄 화살표 함수
+- 중괄호 · return 지시자 사용해 명시적으로 결과값 반환
+```javascript
+let sum = (a, b) => {  // 중괄호
+  let result = a + b;
+  return result;       // return 지시자 결과값 반환
+};
+alert( sum(1, 2) );    // 3
+```
