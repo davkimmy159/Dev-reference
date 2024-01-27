@@ -1422,3 +1422,313 @@ switch (arg) {
 
 # 함수
 
+### 함수 선언
+#### 함수 선언문
+- function 키워드
+- 함수명
+- (매개변수...)
+```javascript
+function name(param1, param2, ... paramN) {
+  // 함수 본문
+}
+```
+  - 용도 : 중복 코드 피하기
+```javascript
+function showMessage() {
+  alert( '안녕하세요!' );
+}
+showMessage();
+showMessage();
+```
+
+### 지역 변수
+- 함수 내 선언 변수
+- 함수 안에서만 접근
+```javascript
+function showMessage() {
+  let message = "안녕하세요!"; // 지역 변수
+  alert( message );
+}
+showMessage(); // 안녕하세요!
+alert( message ); // ReferenceError: message is not defined
+```
+
+### 외부 변수
+- 함수 외부 변수 접근
+```javascript
+let userName = 'John'; // 외부 변수
+function showMessage() {
+  let message = 'Hello, ' + userName;
+  alert(message);
+}
+showMessage(); // Hello, John
+```
+- 함수 외부 변수 수정
+```javascript
+let userName = 'John';
+function showMessage() {
+  userName = "Bob"; // 외부 변수 수정
+  let message = 'Hello, ' + userName;
+  alert(message);
+}
+alert( userName ); // John (함수 호출 전)
+showMessage();
+alert( userName ); // Bob (함수 호출 후)
+```
+- 지역 변수 없는 경우에만 외부 변수 사용
+- 외부 변수와 동일한 이름 함수 내부 변수 선언 시 내부 변수가 외부 변수 가림
+```javascript
+let userName = 'John';
+function showMessage() {
+  let userName = "Bob"; // 동일한 이름 함수 내부 변수
+  let message = 'Hello, ' + userName; // Bob
+  alert(message);
+}
+showMessage();          // Hello, Bob (내부 변수 userName 사용)
+alert( userName );      // John (외부 변수 접근 X)
+```
+
+#### 전역 변수
+- 함수 외부 선언 변수
+- 모든 함수에서 접근 가능
+- 같은 이름 가진 지역 변수에 가려지면 접근 X
+- 되도록 사용 X
+- 프로젝트 전반 사용 데이터
+
+### 매개변수 (인자)
+- 임의의 데이터 함수 내부에 전달
+```javascript
+function showMessage(who, text) { // 인자: who, text
+  alert(who + ': ' + text);
+}
+showMessage('Ann', 'Hello!');      // Ann: Hello!
+showMessage('Ann', "What's up?");  // Ann: What's up?
+```
+- 복사된 값 사용
+```javascript
+function showMessage(who, text) {
+  who = '*' + who + '*';
+  alert( who + ': ' + text );
+}
+let who = "Ann";
+showMessage(who, "Hello"); // *Ann*: Hello
+alert( who );              // Ann (외부 변수 변화 X : 복사된 값 사용)
+```
+
+#### 매개변수(인자) vs 인수
+- 매개변수　: 함수 선언문 괄호 사이 변수 (선언)
+- 인수　　　: 함수 호출 시 매개변수 전달 값 (호출)
+
+### 기본값
+- 함수 호출 시 매개변수 인수 전달 X : 'undefined'
+```javascript
+function showMessage(who, text) {
+  alert(who + ': ' + text);
+}
+showMessage("Ann"); // "Ann: undefined"
+```
+- 기본값 (default value) 설정
+```javascript
+function showMessage(who, text = "no text given") {
+  alert( who + ": " + text );
+}
+showMessage("Ann");            // Ann: no text given
+showMessage("Ann", undefined); // Ann: no text given (명시적 undefined 값 전달)
+```
+- 복잡한 표현식 기본값
+```javascript
+function showMessage(from, text = anotherFunction()) {
+  // text값 없을 때 : anotherFunction() 호출
+  // text값        : anotherFunction() 반환 값
+}
+```
+
+#### 매개변수 기본값 평가 시점
+- 함수 호출할 때마다 기본값 평가
+  - 해당 매개변수 없을 때만
+
+#### 매개변수 기본값 설정 다른 방법
+- 함수 선언 후 매개변수 기본값 설정
+- 구식 자바스크립트 매개변수 기본값 설정 기존 방법<br />(원래 매개변수 기본값 관련 구문 X)
+```javascript
+function showMessage(who, text) {
+  // if 문
+  if (text === undefined) {
+    text = 'no text given';
+  }
+
+  // 논리 연산자 ||
+  // text 값 falsy : 기본값 할당
+  // 빈문자열("")  : text 값 전달 X 간주
+  text = text || 'no text given';
+
+  alert( who + ": " + text );
+}
+
+function showMessage(who, text) {
+  ...
+}
+```
+- 모던 자바스크립트 다른 방법
+```javascript
+function showCount(count) {
+  alert(count ?? "unknown"); // `undefined` or `null` : 'unknown' 출력
+}
+showCount(0);    // 0
+showCount(null); // unknown
+showCount();     // unknown
+```
+
+### 반환 값
+- 함수 호출한 곳에 특정 값 반환
+```javascript
+function sum(a, b) {
+  return a + b;
+}
+let result = sum(1, 2);
+alert( result ); // 3
+```
+- 지시자 return 함수 내 어디서든 사용 가능
+- 실행 흐름 지시자 return 만나면 함수 실행 즉시 중단, 함수 호출한 곳에 값 반환
+- 함수 하나 여러 return문
+```javascript
+function checkAge(age) {
+  if (age >= 18) {
+    return true;
+  } else {
+    return confirm('보호자의 동의를 받으셨나요?');
+  }
+}
+let age = prompt('나이를 알려주세요', 18);
+if ( checkAge(age) ) {
+  alert( '접속 허용' );
+} else {
+  alert( '접속 차단' );
+}
+```
+- 지시자 return만 명시
+   - 함수 즉시 종료
+```javascript
+function showMovie(age) {
+  if ( !checkAge(age) ) {
+    return;
+  }
+
+  // checkAge(age) false 반환 : 실행 X
+  alert( "영화 상영" );
+}
+```
+
+#### return문 없거나 return 지시자만 있는 함수 : 'undefined' 반환
+```javascript
+function doNothing1() {
+  /* empty */
+}
+alert( doNothing1() === undefined ); // true
+
+function doNothing2() {
+  return; // == return undefined
+}
+alert( doNothing2() === undefined ); // true
+```
+
+#### return과 값 사이 줄 삽입 X
+```javascript
+return
+ (some + long + expression + or + whatever * f(a) + f(b))
+↓↓↓
+return; // 세미콜론 자동 삽입
+ (some + long + expression + or + whatever * f(a) + f(b))
+```
+- 대신 괄호 사용
+```javascript
+return (
+  some + long + expression
+  + or +
+  whatever * f(a) + f(b)
+  )
+```
+### 함수명 짓기
+- 대개 동사 : 어떤 동작 수행 코드
+- 간결 · 명확 : 함수명만 보고도 함수 기능 힌트
+- 관습 : 축약설명해주는 동사 접두어
+  - 팀 내 합의된 접두어
+
+|접두어|의미|
+|:---:|---|
+|get|값 반환함|
+|calc|무언가 계산함|
+|create|무언가 생성함|
+|check|무언가 확인 후 불린값 반환|
+
+- 예시
+
+|함수명|기능|
+|---|---|
+|showMessage(...)|메시지 보여줌|
+|getAge(...)|나이 나타내는 값 얻고 반환|
+|calcSum(...)|합계 계산 후 결과 반환|
+|createForm(...)|form 생성 후 작성된 form 반환|
+|checkPermission(...)|승인 여부 확인 후 'true' or 'false' 반환|
+
+#### 함수는 동작 하나만 담당
+- 함수명에 언급되어 있는 동작 정확히 수행
+- 그 이외 동작 수행 X
+- 독립적인 두 개 동작 : 독립된 함수 두 개 나눠서 수행
+
+#### 빈번한 실수
+- getAge 함수
+  - O : 나이 얻어옴
+  - X : alert 창 나이 출력
+- createForm 함수
+  - O : form 만들고 반환
+  - X " form 문서 추가
+- checkPermission 함수
+  - O : 승인 여부 확인 후 그 결과 반환
+  - X : 승인 여부 보여주는 메시지 띄움
+
+※ 접두어 붙여 만든 모든 함수 : 팀에서 만든 규칙 준수
+
+#### 아주 짧은 이름
+- 빈번히 쓰이는 함수 중 이름 아주 짧은 함수 (예외)
+  - $ : jQuery
+  - _ : Lodash
+
+### 함수 == 주석
+- 함수
+  - 간결
+    - 테스트 · 디버깅 용이
+    - 함수 그 자체 주석 역할
+      - 자기 설명적(self-describing) 코드
+  - 한 가지 기능만 수행
+  - 길어지면 함수 분리
+
+```javascript
+function showPrimes1(n) {
+  nextPrime: for (let i = 2; i < n; i++) {
+    for (let j = 2; j < i; j++) {
+      if (i % j == 0) continue nextPrime;
+    }
+    alert( i ); // 소수
+  }
+}
+
+// 함수 분리
+function showPrimes2(n) {
+  for (let i = 2; i < n; i++) {
+    if (!isPrime(i)) continue;
+    alert(i);  // a prime
+  }
+}
+function isPrime(n) {
+  for (let i = 2; i < n; i++) {
+    if ( n % i == 0) return false;
+  }
+  return true;
+}
+```
+
+<br />
+
+# 함수 표현식
+
