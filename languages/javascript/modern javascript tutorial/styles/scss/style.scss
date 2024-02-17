@@ -44,13 +44,24 @@ article[role="main"] {
 }
 */
 
-img.icon {
-  color: aliceblue;
-  vertical-align: middle;
-  border-color: red;
-  border-width: 3px;
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 1em;
 }
 
-b {
-  color: red;
+.box {
+  padding: 14px;
+  border-color: #797063;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 10px;
+
+  .title {
+    margin-bottom: 16px;
+    font-weight: 900;
+  }
+}
+
+img.icon {
+  vertical-align: middle;
 }
