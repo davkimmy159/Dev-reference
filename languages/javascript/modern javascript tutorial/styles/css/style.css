@@ -44,11 +44,6 @@ article[role="main"] {
   width: math.div(600px, 960px) * 100%;
 }
 */
-.markdown-body ul,
-.markdown-body ol {
-  padding-left: 1em;
-}
-
 .box {
   padding: 14px;
   border-color: #797063;
