@@ -1,104 +1,104 @@
 display
- - flex
- - inline-flex
+- flex
+- inline-flex
 
 flex-direction
- - row
- - column
- - row-reverse
- - column-reverse
-  
+- row
+- column
+- row-reverse
+- column-reverse
+
 flex-wrap
- - nowrap
- - wrap
- - wrap-reverse
+- nowrap
+- wrap
+- wrap-reverse
 
 flex-flow (flex-direction, flex-wrap)
- - row wrap
+- row wrap
 
 justify-content
- - flex-start
- - flex-end
- - center
- - space-between
- - space-around
- - space-evenly
- 
+- flex-start
+- flex-end
+- center
+- space-between
+- space-around
+- space-evenly
+
 align-items
- - stretch
- - flex-start
- - flex-end
- - center
- - baseline
- 
- align-content
- + 여러행
- - stretch
- - flex-start
- - flex-end
- - center
- - space-between
- - space-around
- - space-evenly
+- stretch
+- flex-start
+- flex-end
+- center
+- baseline
+
+align-content
++ 여러행
+- stretch
+- flex-start
+- flex-end
+- center
+- space-between
+- space-around
+- space-evenly
 
 flex-basis
- + item 기본크기
- + 넘치면 늘어남
- + width 는 넘치지 않음
- - auto
- - 0
- - 50
- - 300px
- - 10rem
- - content
++ item 기본크기
++ 넘치면 늘어남
++ width 는 넘치지 않음
+- auto
+- 0
+- 50
+- 300px
+- 10rem
+- content
 
 flex-grow
- + flex-basis 제외한 여백부분 비율
- - 0 ( = 유연하게 안 늘어남)
- - 1 ( < 유연하게 늘어남)
- - 3.14
- ex) .item:nth-child(1) { flex-grow: 1; }
-     .item:nth-child(2) { flex-grow: 2; }
-     .item:nth-child(3) { flex-grow: 1; }
++ flex-basis 제외한 여백부분 비율
+- 0 ( = 유연하게 안 늘어남)
+- 1 ( < 유연하게 늘어남)
+- 3.14
+ex) .item:nth-child(1) { flex-grow: 1; }
+    .item:nth-child(2) { flex-grow: 2; }
+    .item:nth-child(3) { flex-grow: 1; }
 
 flex-shrink
- + ↔ flex-grow
- + flex-basis 값보다 작아질 수 있는지
- - 1 ( < 유연함, flex-basis보다 작아짐)
- - 0 ( = flex-basis보다 작아지지 않음 → 고정폭 칼럼 with width)
- - 150px
++ ↔ flex-grow
++ flex-basis 값보다 작아질 수 있는지
+- 1 ( < 유연함, flex-basis보다 작아짐)
+- 0 ( = flex-basis보다 작아지지 않음 → 고정폭 칼럼 with width)
+- 150px
 ex) .item:nth-child(1) { flex-shrink: 0; width: 100px; }
     .item:nth-child(2) { flex-grow: 1; }
 
 flex (flex-grow, flex-shrink, flex-basis)
- - flex: 1;
+- flex: 1;
   (flex-grow: 1; flex-shrink: 1; flex-basis: 0%;)
- - flex: 1 1 auto;
+- flex: 1 1 auto;
   (flex-grow: 1; flex-shrink: 1; flex-basis: auto;)
- - flex: 1 500px;
+- flex: 1 500px;
   (flex-grow: 1; flex-shrink: 1; flex-basis: 500px;)
-  
+
 ex) 1:2:1
- .item              { flex: 1 1 0; }
- .item:nth-child(2) { flex: 2 1 0; }
+.item              { flex: 1 1 0; }
+.item:nth-child(2) { flex: 2 1 0; }
 
 ex) 40%면 row에 2개까지만 남고 다음줄
- .container { display: flex; flex-wrap: wrap; }
- .item { flex: 1 1 40%; }
+.container { display: flex; flex-wrap: wrap; }
+.item { flex: 1 1 40%; }
 
 align-self (align-items 상속)
- - auto
- - stretch
- - flex-start
- - flex-end
- - center
- - baseline
+- auto
+- stretch
+- flex-start
+- flex-end
+- center
+- baseline
 
 order
- + 시각적 나열 순서
- + 작은 숫자일 수록 먼저
- + HTML 자체 구조 변형 X (시각적 측면)
++ 시각적 나열 순서
++ 작은 숫자일 수록 먼저
++ HTML 자체 구조 변형 X (시각적 측면)
 
 z-index
- + 숫자가 클수록 위
- + default : 0 (1 설정 : 나머지보다 위)
++ 숫자가 클수록 위
++ default : 0 (1 설정 : 나머지보다 위)
