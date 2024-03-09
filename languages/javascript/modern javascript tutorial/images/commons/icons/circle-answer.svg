@@ -1,6 +1,7 @@
 <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 512 512">
+  width="60"
+  height="32"
+  xmlns="http://www.w3.org/2000/svg">
   <style>
     rect {
       stroke: #d6584f;
@@ -12,7 +13,7 @@
     }
   </style>
   <g>
-    <rect x="2" y="2" width="62" height="30" rx="15" />
-    <text x="17" y="22">해답</text>
+    <rect x="2" y="2" width="56" height="28" rx="15" />
+    <text x="14" y="21">해답</text>
   </g>
 </svg>
