@@ -1,0 +1,18 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 512 512">
+  <style>
+    rect {
+      stroke: #d6584f;
+      stroke-width: 2px;
+      border-radius: 10px;
+    }
+    text {
+      fill: #e37b6c;
+    }
+  </style>
+  <g>
+    <rect x="2" y="2" width="62" height="30" rx="15" />
+    <text x="17" y="22">해답</text>
+  </g>
+</svg>
