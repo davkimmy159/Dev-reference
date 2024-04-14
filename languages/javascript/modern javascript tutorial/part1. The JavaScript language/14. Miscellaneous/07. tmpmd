@@ -48,6 +48,57 @@
       - 다운로드 <sub>(클라우드)</sub>
       - 캐시 삽입
 
+
+### 실무 : `WeakRef` <sub>(객체)</sub> · FinalizationRegistry
+
+##### 실무 시나리오
+- 모바일 · 클라우드 사진 동기화
+  - 타 기기에서 사진 보기
+  - 기타 추가 기능 제공
+
+##### 추가 기능들
+- 사진 편집 · 영상 효과
+- 임시 저장 · 앨범 생성
+- 일련 사진 → 영상 몽타주 변환
+- 기타 등등
+
+##### 예제
+
+![weakref-finalizationregistry-demo-01](../../images/01/14/07/weakref-finalizationregistry-demo-01.png)
+
+##### 좌측
+- 클라우드 사진 라이브러리
+  - 섬네일로 사진 표시
+
+##### 우측
+- "Create collage" 버튼
+  - 사진 선택 · 콜라주 생성
+    - 다운로드 가능
+
+##### 압축
+- 사진 다운로드 · 표시 섬네일
+  - 페이지 로딩 속도 ↑
+
+##### 압축 X
+- 사진 선택 · 콜라주 생성
+
+![weakref-finalizationregistry-demo-02](../../images/01/14/07/weakref-finalizationregistry-demo-02.png)
+
+##### 사이즈
+- 섬네일 고유 사이즈
+  - 240 x 240 <sub>(픽셀)</sub>
+- 미리보기 모드
+  - 전체 사이즈 불필요
+
+##### 콜라주 생성 <sub>(사진 4장)</sub>
+1. 사진 선택
+2. "Create collage" 버튼 클릭
+3. `weakRefCache` <sub>(함수)</sub>
+    - 캐시 내 이미지 존재 여부 확인
+    - 부재 시
+      - 다운로드 <sub>(클라우드)</sub>
+      - 캐시 삽입
+
 -  Let's assume, that we need to create a collage of 4 photos: we select them, and then click the "Create collage" button. At this stage, the already known to us weakRefCache function checks whether the required image is in the cache. If not, it downloads it from the cloud and puts it in the cache for further use. This happens for each selected image:
 
 ![weakref-finalizationregistry-demo-03](../../images/01/14/07/weakref-finalizationregistry-demo-03.gif)
