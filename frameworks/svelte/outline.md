@@ -59,7 +59,7 @@ outline
 - `<select multiple bind:value={a}>`
 - `<textarea bind:value>`
 
-##### Lifecycle
+#### Lifecycle
 ```javascript
 onMount(() => {
   return () => { … };
@@ -73,73 +73,42 @@ afterUpdate(() => { … });
 await tick();
 ```
 
-##### 부모 · 자식
-```javascript
-/* 부모 */
-import { onMount, onDestroy, beforeUpdate, afterUpdate, tick } from 'svelte'
+#### Stores
 
-onMount(async() => { console.log('onMount') });
-onDestroy(async() => { console.log('onDestroy') });
-beforeUpdate(async() => { console.log('beforeUpdate') });
-afterUpdate(async() => { console.log('afterUpdate') });
+##### `writable`
+- set
+- update
+- subscribe
+```javascript
+export const store = writable(…);
+
+const unsubscribe = count.subscribe((v) => { … });
+onDestroy(unsubscribe);
+
+// auto-subscription (top-level scope)
+{$count}
+
+// {$…}
+// - store value 가정
 ```
 
+##### `readable`
+- 인수
+  - 초기값 <sub>(1번째)</sub>
+  - `start` <sub>(2번째 · 함수)</sub>
+      - `set` <sub>(인수 · 콜백)</sub>
+    - 첫 subscribe 시 시작
+- 반환값
+  - `stop` <sub>(함수)</sub>
+    - 끝 subscribe 종료 시 시작
 ```javascript
-/* 자식 */
-import { onMount, onDestroy, beforeUpdate, afterUpdate, tick } from 'svelte'
-
-onMount(async() => { console.log('onMount') });
-onDestroy(async() => { console.log('onDestroy') });
-beforeUpdate(async() => { console.log('beforeUpdate') });
-afterUpdate(async() => { console.log('afterUpdate') });
-```
-
-|순서|개체|생명주기|
-|---|---|---|
-|1|부모|`beforeUpdate`|
-|2|자식|`beforeUpdate`|
-|3|자식|`onMount`|
-|4|자식|`afterUpdate`|
-|5|부모|`onMount`|
-|6|부모|`afterUpdate`|
-
-##### `tick` <sub>(함수)</sub>
-- 모든 돔 렌더링 후 작업
-  - 라이프사이클 함수 상태 별개
-```javascript
-/* 자식 */
-import { onMount, onDestroy, beforeUpdate, afterUpdate, tick } from 'svelte'
-
-onMount(async() => { console.log('onMount') });
-onDestroy(async() => { console.log('onDestroy') });
-beforeUpdate(async() => {
-  console.log('about to update');
-  await tick()
-  console.log('just updated');
+export const store = readable("initialValue", function start(set) {
+  count interval = setInterval(() => {
+    set(…);
+  }, 1000);
 });
-afterUpdate(async() => { console.log('afterUpdate') });
+
+return function stop() {
+  clearInterval(interval);
+}
 ```
-
-##### await tick() X
-
-|순서|개체|생명주기|
-|---|---|---|
-|1|부모|`beforeUpdate`|
-|2|자식|`"about to update"`|
-|3|자식|`"just updated"`|
-|4|자식|`onMount`|
-|5|자식|`afterUpdate`|
-|6|부모|`onMount`|
-|7|부모|`afterUpdate`|
-
-##### await tick() O
-
-|순서|개체|생명주기|
-|---|---|---|
-|1|부모|`beforeUpdate`|
-|2|자식|`"about to update"`|
-|3|자식|`onMount`|
-|4|자식|`afterUpdate`|
-|5|부모|`onMount`|
-|6|부모|`afterUpdate`|
-|7|자식|`"just updated"`|
