@@ -354,8 +354,72 @@ export function func(node, params) {
 
 #### Slot fallbacks
 
+##### 부재 시 기본값
+```html
+<!-- Card.svelte -->
+<div class="card">
+  <slot name="telephone">
+    <i>(telephone)</i>
+  </slot>
+
+  <slot name="company">
+    <i>(company name)</i>
+  </slot>
+
+  <slot>
+    <i>(name)</i>
+  </slot>
+
+  <slot name="address">
+    <i>(address)</i>
+  </slot>
+</div>
+```
+```html
+<!-- App.svelte -->
+<Card />
+```
+
+#### Slot props
+```html
+<!-- Child.svelte -->
+{#each items as item}
+  <slot {item} />
+  <slot item={item} />
+{/each}
+```
+```html
+<!-- App.svelte -->
+<Child let:item={row}>
+  <span>{row.a}</span>
+  <span>{row.b}</span>
+  <span>{row.c}</span>
+  <span>{row.d}</span>
+</Child>
+```
+
+#### Checking for slot content
+
+##### `$$slots`
+```html
+<!-- Child.svelte -->
+{#if $$slots.slot1}
+  <div>
+    <slot name="slot1"></slot>
+  </div>
+{/if}
+<div>
+  <slot name="slot2"></slot>
+</div>
+```
+```html
+<!-- App.svelte -->
+<div slot="slot2">…</div>
+```
 
 ### Context API
+
+#### \[s·g\]etContext
 
 
 ### Special elements
