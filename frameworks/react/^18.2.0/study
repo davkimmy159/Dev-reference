@@ -19,7 +19,7 @@
  - "what the user did" rather than "how you want the state to change"
 
 Passing Data Deeply with Context
- - Before using context, try 
+ - Before using context, try
    - passing props
    - passing JSX as children
  - Use cases for context

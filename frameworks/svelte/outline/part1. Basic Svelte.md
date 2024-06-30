@@ -1,13 +1,11 @@
-outline
-========
+Basic Svelte
+=============
 
-### Part1 <sub>(Basic Svelte)</sub>
-
-#### Introduction
+### Introduction
 - `{src}`
 - `{@html … }`
 
-#### Reactivity
+### Reactivity
 - `$: doubled = …`
 - `$: console.log( … )`
 - `$: { … }`
@@ -15,17 +13,17 @@ outline
 - 할당 반응
   - 배열 메서드 X
 
-#### Props
+### Props
 - `export (default)`
 - `{...props}`
 - `$$props`
 
-#### Logic
+### Logic
 - `{#if … }`
 - `{:else if … }`
 - `{:else}`
 - `{/if}`
-- `{#each a as b, i ((b.id)}`
+- `{#each b as a, i ((a.id)}`
 - `{/each}`
 - `{#await promise}`
 - `{:then … }`
@@ -34,7 +32,7 @@ outline
 - `{#await promise then … }`
 - `{/await}`
 
-#### DOM events
+### DOM events
 - `<div on:click={ … }>`
 - `<div on:click={(e) => { … }}>`
 - `<div on:click|once|capture={ … }>`
@@ -50,7 +48,7 @@ outline
 - `<Inner on:message />`
 - `<button on:click>`
 
-#### Bindings
+### Bindings
 - `<input bind:value={a}>`
 - `<input type="[number|range]" bind:value={a} />`
 - `<input type="checkbox" bind:checked={a} />`
@@ -59,7 +57,7 @@ outline
 - `<select multiple bind:value={a}>`
 - `<textarea bind:value>`
 
-#### Lifecycle
+### Lifecycle
 ```javascript
 onMount(() => {
   return () => { … };
@@ -73,14 +71,16 @@ afterUpdate(() => { … });
 await tick();
 ```
 
-#### Stores
+### Stores
 
-##### `writable`
-- set
-- update
-- subscribe
+#### `writable`
+
+##### 메서드
+- `set`
+- `update`
+- `subscribe`
 ```javascript
-export const store = writable(…);
+export const store = writable('initial');
 
 const unsubscribe = count.subscribe((v) => { … });
 onDestroy(unsubscribe);
@@ -92,15 +92,17 @@ onDestroy(unsubscribe);
 // - store value 가정
 ```
 
-##### `readable`
-- 인수
-  - 초기값 <sub>(1번째)</sub>
-  - `start` <sub>(2번째 · 함수)</sub>
-      - `set` <sub>(인수 · 콜백)</sub>
-    - 첫 subscribe 시 시작
-- 반환값
-  - `stop` <sub>(함수)</sub>
-    - 끝 subscribe 종료 시 시작
+#### `readable`
+
+##### 인수
+- 초기값 <sub>(1번째)</sub>
+- `start` <sub>(2번째 · 함수)</sub>
+    - `set` <sub>(인수 · 콜백)</sub>
+  - 첫 subscribe 시 시작
+
+##### 반환값
+- `stop` <sub>(함수)</sub>
+  - 마지막 subscribe 종료 시 시작
 ```javascript
 export const store = readable("initial", function start(set) {
   count interval = setInterval(() => {
@@ -113,12 +115,13 @@ return function stop() {
 }
 ```
 
-##### `derived`
-- 인수
-  - store <sub>(1번째)</sub>
-  - 함수 <sub>(2번째)</sub>
-    - 값 조작
-    - store <sub>(`$…`)</sub> 전달
+#### `derived`
+
+##### 인수
+- store <sub>(1번째)</sub>
+- 함수 <sub>(2번째)</sub>
+  - 값 조작
+  - store <sub>(`$…`)</sub> 전달
 ```javascript
 export const derived = derived(
 	time,
@@ -126,8 +129,9 @@ export const derived = derived(
 );
 ```
 
-##### Custom stores
-- `subscribe` <sub>(메서드)</sub> 구현
+#### Custom stores
+
+##### `subscribe` <sub>(메서드)</sub> 구현
 ```javascript
 function createCount() {
 	const { subscribe, set, update } = writable(0);
@@ -141,8 +145,9 @@ function createCount() {
 }
 ```
 
-##### Store bindings
-- `writable`
+#### Store bindings
+
+##### `writable`
 ```javascript
 export const wStore = writable(…);
 export const dStore = derived(store, ($store) => …);
@@ -152,40 +157,3 @@ export const dStore = derived(store, ($store) => …);
 <input bind:value={$wStore} />
 <button on:click={() => wStore …}></button>
 ```
-
-### Part2 <sub>(Advanced Svelte)</sub>
-
-#### Motion
-
-#### Transitions
-
-#### Animations
-
-#### Actions
-
-##### The use directive
-- element-level lifecycle 함수
-  - 서드파티 라이브러리 접속기
-  - lazy-loaded 이미지
-  - 툴팁
-  - 커스텀 이벤트 핸들러 추가
-
-#### Advanced bindings
-
-#### Classes and styles
-
-#### Component composition
-
-#### Context API
-
-#### Special elements
-
-#### Module context
-
-#### Miscellaneous
-
-#### Next steps
-
-### Part3 <sub>(Basic SvelteKit)</sub>
-
-### Part4 <sub>(Advanced SvelteKit)</sub>
