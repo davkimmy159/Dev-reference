@@ -419,10 +419,149 @@ export function func(node, params) {
 
 ### Context API
 
-#### \[s·g\]etContext
+#### `[s·g]etContext`
 
+##### 컴포넌트간 대화
+- 프로퍼티 <sub>(데이터 · 함수)</sub> 전달 X
+- 이벤트 디스패치 X
+
+##### 호출 시점
+- 컴포넌트 초기화
+
+##### ex\) 1
+```html
+<!-- A.svelte -->
+<script>
+  setContext('context', {
+    func: (a) => { … },
+    b: 'b'
+  });
+</script>
+```
+```html
+<!-- B.svelte -->
+<script>
+  getContext('context').func(…);
+  let b = getContext('context').b;
+</script>
+```
+
+##### ex\) 2
+```html
+<!-- Parent.svelte -->
+<script>
+  setContext('context', {
+    wStore: writable(0)
+  });
+</script>
+```
+```html
+<!-- Child.svelte -->
+<script>
+  const { wStore } = getContext('context');
+</script>
+```
 
 ### Special elements
+
+#### `<svelte:self>`
+```html
+<!-- Folder.svelte -->
+
+<!-- 자신 import X -->
+{#if file.files}
+  <Folder {...props} />
+{:else}
+  <File {...props} />
+{/if}
+
+↓↓↓
+
+{#if file.files}
+  <svelte:self {...props} />
+{:else}
+  <File {...props} />
+{/if}
+```
+
+#### `<svelte:component>`
+```html
+<script>
+  const options = [
+    { color: 'red', component: RedThing },
+    { color: 'green', component: GreenThing },
+    { color: 'blue', component: BlueThing }
+  ];
+  let selected = options[0];
+</script>
+
+{#if selected.color === 'red'}
+  <RedThing/>
+{:else if selected.color === 'green'}
+  <GreenThing/>
+{:else if selected.color === 'blue'}
+  <BlueThing/>
+{/if}
+
+↓↓↓
+
+<!-- falsy 값 렌더링 X -->
+<svelte:component this={selected.component} />
+```
+
+#### `<svelte:element>`
+```html
+<script>
+  const options = ['h1', 'h2', 'h3', 'p', 'marquee'];
+  let selected = options[0];
+</script>
+
+{#if selected === 'h1'}
+  <h1>I'm a <code>&lt;h1&gt;</code> element</h1>
+{:else}
+  <p>TODO others</p>
+{/if}
+
+↓↓↓
+
+<!-- falsy 값 렌더링 X -->
+<svelte:element this={selected}>
+  I'm a <code>&lt;{selected}&gt;</code> element
+</svelte:element>
+```
+
+#### `<svelte:window>`
+
+##### `window` <sub>(전역 객체)</sub> 이벤트 리스너 설정
+```html
+<svelte:window on:keydown={handler} />
+```
+
+#### `<svelte:window>` bindings
+
+##### `window` <sub>(전역 객체)</sub> 프로퍼티 바인딩
+- `inner[Width·Height]` <sub>(readonly)</sub>
+- `outer[Width·Height]` <sub>(readonly)</sub>
+- `scroll[X·Y]`
+- `online` <sub>(readonly)</sub>
+  - `window.navigator.onLine` <sub>(별칭)</sub>
+```html
+<svelte:window bind:scrollY={y} />
+```
+
+#### `<svelte:body>`
+
+
+#### `<svelte:document>`
+
+
+#### `<svelte:head>`
+
+
+#### `<svelte:options>`
+
+
+#### `<svelte:fragment>`
 
 
 ### Module context

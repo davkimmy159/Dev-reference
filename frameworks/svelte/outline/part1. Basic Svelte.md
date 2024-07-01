@@ -23,7 +23,7 @@ Basic Svelte
 - `{:else if … }`
 - `{:else}`
 - `{/if}`
-- `{#each b as a, i ((a.id)}`
+- `{#each b as a, i (a.id)}`
 - `{/each}`
 - `{#await promise}`
 - `{:then … }`
