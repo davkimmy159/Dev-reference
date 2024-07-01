@@ -543,23 +543,68 @@ export function func(node, params) {
 - `inner[Width·Height]` <sub>(readonly)</sub>
 - `outer[Width·Height]` <sub>(readonly)</sub>
 - `scroll[X·Y]`
-- `online` <sub>(readonly)</sub>
-  - `window.navigator.onLine` <sub>(별칭)</sub>
+- `online` <sub>(readonly · 별칭)</sub>
+  - `window.navigator.onLine`
 ```html
 <svelte:window bind:scrollY={y} />
 ```
 
 #### `<svelte:body>`
 
+##### `body` <sub>(요소)</sub> 이벤트 리스너 설정
+- `mouse[enter·leave]` <sub>(이벤트)</sub> 유용
+  - `window` <sub>(전역 객체)</sub> 대상 발생 X
+  - `document` <sub>(요소)</sub> 대상 발생 X
+```html
+<svelte:body
+	on:mouseenter={handler1}
+	on:mouseleave={handler2}
+/>
+```
 
 #### `<svelte:document>`
 
+##### `document` <sub>(요소)</sub> 이벤트 리스너 설정
+- `selectionchange` <sub>(이벤트)</sub> 유용
+  - `window` <sub>(전역 객체)</sub> 대상 발생 X
+```html
+<svelte:document on:selectionchange={handler} />
+```
 
 #### `<svelte:head>`
 
+##### `<head>` <sub>(태그)</sub> 내 태그 삽입
+- `<title>`
+- `<meta>`
+- 기타 등등
+```html
+<svelte:head>
+	<link rel="stylesheet" href="/styles/{selected}.css" />
+</svelte:head>
+```
 
 #### `<svelte:options>`
 
+##### 컴파일러 옵션 설정
+```html
+<svelte:options immutable={true} />
+<svelte:options immutable />
+```
+- `immutable={true}`
+  - 변경 가능 데이터 사용 X
+  - 컴파일러 참조 비교 단순화
+- `immutable={false}` <sub>(기본값)</sub>
+  - 변경 가능 객체 변경 가능성
+    - 보수적 접근
+- `accessors={true}`
+  - 프로퍼티 \[g·s\]etter 설정
+- `accessors={false}` <sub>(기본값)</sub>
+  - 프로퍼티 \[g·s\]etter 미설정
+- `namespace="…"`
+  - 해당 컴포넌트 사용 네임스페이스
+    - ex\) `"svg"`
+- `customElement="…"`
+  - 이름 <sub>(해당 컴포넌트 → 커스텀 요소)</sub>
 
 #### `<svelte:fragment>`
 
