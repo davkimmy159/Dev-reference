@@ -608,8 +608,33 @@ export function func(node, params) {
 
 #### `<svelte:fragment>`
 
+##### `slot` 컨테이너 DOM 제거
+```html
+<!-- Child.svelte -->
+<div>
+	<slot name="slot1" />
+</div>
+```
+```html
+<!-- App.svelte -->
+<Child>
+
+  <div slot="slot1">
+    …
+  </div>
+
+  ↓↓↓
+
+  <svelte:fragment slot="slot1">
+    …
+  </svelte:fragment>
+
+</Child>
+```
 
 ### Module context
+
+#### Sharing code
 
 
 ### Miscellaneous
