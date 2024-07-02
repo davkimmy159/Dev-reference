@@ -1,15 +1,15 @@
 Advanced Svelte
 ================
 
-### Motion
+## Motion
 
-### Transitions
+## Transitions
 
-### Animations
+## Animations
 
-### Actions
+## Actions
 
-#### `use` <sub>(directive)</sub>
+### `use` <sub>(directive)</sub>
 
 ##### element-level lifecycle 함수
 - 서드파티 라이브러리 접속기
@@ -32,7 +32,7 @@ export function func(node) {
 <div class="menu" use:func>…</div>
 ```
 
-#### Adding parameters
+### Adding parameters
 
 ##### 추가 인수 <sub>(2번째)</sub>
 ```javascript
@@ -54,16 +54,16 @@ export function func(node, params) {
 <button use:func={{ a, b: 'B', … }}>…</button>
 ```
 
-### Advanced bindings
+## Advanced bindings
 
-#### Contenteditable bindings
+### Contenteditable bindings
 
 ##### `textContent` · `innerHTML` <sub>(속성)</sub>
 ```html
 <div bind:innerHTML={html} contenteditable></div>
 ```
 
-#### Each block bindings
+### Each block bindings
 
 ##### `input` <sub>(요소)</sub>
 - mutable
@@ -85,7 +85,7 @@ export function func(node, params) {
 {/each}
 ```
 
-#### Media elements
+### Media elements
 
 ##### `<audio>` · `<video>` <sub>(요소)</sub>
 ```html
@@ -138,7 +138,7 @@ export function func(node, params) {
 |volume|`0` ~ `1`|
 |muted|`boolean`|
 
-#### Dimensions
+### Dimensions
 
 ##### block-level 요소 <sub>(readonly · 값 변경 영향 X)</sub>
 - `client[Width·Height]`
@@ -153,7 +153,7 @@ export function func(node, params) {
 ##### `display: inline` · 단일 <sub>(요소)</sub>
 - 레퍼 요소 필요
 
-#### `this`
+### `this`
 ```html
 <script>
   let canvas;
@@ -162,7 +162,7 @@ export function func(node, params) {
 <canvas bind:this={canvas}>…</canvas>
 ```
 
-#### Component bindings
+### Component bindings
 - 자주 사용 X
   - 데이터 흐름 추적 어려움
 ```html
@@ -179,7 +179,7 @@ export function func(node, params) {
 </script>
 ```
 
-#### Binding to component instances
+### Binding to component instances
 ```html
 <!-- App -->
 <script>
@@ -196,9 +196,9 @@ export function func(node, params) {
 </script>
 ```
 
-### Classes and styles
+## Classes and styles
 
-#### Ths class directive
+### Ths class directive
 ```html
 <script>
   let flipped = false;
@@ -222,7 +222,7 @@ export function func(node, params) {
 >
 ```
 
-#### The style directive
+### The style directive
 ```html
 <button
   style="transform: {flipped ? 'rotateY(0)' : ''}; --bg-1: palegoldenrod; --bg-2: black; --bg-3: goldenrod"
@@ -235,7 +235,7 @@ export function func(node, params) {
 >
 ```
 
-#### Component styles
+### Component styles
 
 ##### 전역
 - 비효율
@@ -266,9 +266,9 @@ export function func(node, params) {
 </div>
 ```
 
-### Component composition
+## Component composition
 
-#### Slots
+### Slots
 
 ##### Default slot
 ```html
@@ -285,7 +285,7 @@ export function func(node, params) {
 </Card>
 ```
 
-#### Named slots
+### Named slots
 ```html
 <!-- Card.svelte -->
 <div class="card">
@@ -352,7 +352,7 @@ export function func(node, params) {
 </style>
 ```
 
-#### Slot fallbacks
+### Slot fallbacks
 
 ##### 부재 시 기본값
 ```html
@@ -380,7 +380,7 @@ export function func(node, params) {
 <Card />
 ```
 
-#### Slot props
+### Slot props
 ```html
 <!-- Child.svelte -->
 {#each items as item}
@@ -398,7 +398,7 @@ export function func(node, params) {
 </Child>
 ```
 
-#### Checking for slot content
+### Checking for slot content
 
 ##### `$$slots`
 ```html
@@ -417,9 +417,9 @@ export function func(node, params) {
 <div slot="slot2">…</div>
 ```
 
-### Context API
+## Context API
 
-#### `[s·g]etContext`
+### `[s·g]etContext`
 
 ##### 컴포넌트간 대화
 - 프로퍼티 <sub>(데이터 · 함수)</sub> 전달 X
@@ -462,9 +462,9 @@ export function func(node, params) {
 </script>
 ```
 
-### Special elements
+## Special elements
 
-#### `<svelte:self>`
+### `<svelte:self>`
 ```html
 <!-- Folder.svelte -->
 
@@ -484,7 +484,7 @@ export function func(node, params) {
 {/if}
 ```
 
-#### `<svelte:component>`
+### `<svelte:component>`
 ```html
 <script>
   const options = [
@@ -509,7 +509,7 @@ export function func(node, params) {
 <svelte:component this={selected.component} />
 ```
 
-#### `<svelte:element>`
+### `<svelte:element>`
 ```html
 <script>
   const options = ['h1', 'h2', 'h3', 'p', 'marquee'];
@@ -530,14 +530,14 @@ export function func(node, params) {
 </svelte:element>
 ```
 
-#### `<svelte:window>`
+### `<svelte:window>`
 
 ##### `window` <sub>(전역 객체)</sub> 이벤트 리스너 설정
 ```html
 <svelte:window on:keydown={handler} />
 ```
 
-#### `<svelte:window>` bindings
+### `<svelte:window>` bindings
 
 ##### `window` <sub>(전역 객체)</sub> 프로퍼티 바인딩
 - `inner[Width·Height]` <sub>(readonly)</sub>
@@ -549,7 +549,7 @@ export function func(node, params) {
 <svelte:window bind:scrollY={y} />
 ```
 
-#### `<svelte:body>`
+### `<svelte:body>`
 
 ##### `body` <sub>(요소)</sub> 이벤트 리스너 설정
 - `mouse[enter·leave]` <sub>(이벤트)</sub> 유용
@@ -562,7 +562,7 @@ export function func(node, params) {
 />
 ```
 
-#### `<svelte:document>`
+### `<svelte:document>`
 
 ##### `document` <sub>(요소)</sub> 이벤트 리스너 설정
 - `selectionchange` <sub>(이벤트)</sub> 유용
@@ -571,7 +571,7 @@ export function func(node, params) {
 <svelte:document on:selectionchange={handler} />
 ```
 
-#### `<svelte:head>`
+### `<svelte:head>`
 
 ##### `<head>` <sub>(태그)</sub> 내 태그 삽입
 - `<title>`
@@ -583,7 +583,7 @@ export function func(node, params) {
 </svelte:head>
 ```
 
-#### `<svelte:options>`
+### `<svelte:options>`
 
 ##### 컴파일러 옵션 설정
 ```html
@@ -606,7 +606,7 @@ export function func(node, params) {
 - `customElement="…"`
   - 이름 <sub>(해당 컴포넌트 → 커스텀 요소)</sub>
 
-#### `<svelte:fragment>`
+### `<svelte:fragment>`
 
 ##### `slot` 컨테이너 DOM 제거
 ```html
@@ -632,9 +632,9 @@ export function func(node, params) {
 </Child>
 ```
 
-### Module context
+## Module context
 
-#### Sharing code
+### Sharing code
 
 ##### 컴포넌트 내 `<script>` 블록
 - 컴포넌트 인스턴스 초기화 시 실행
@@ -663,7 +663,7 @@ export function func(node, params) {
 <audio on:play={handler} />
 ```
 
-#### Exports
+### Exports
 
 ##### `<script context="module">` `export`
 - 모듈 자체 `export`
@@ -692,9 +692,9 @@ export function func(node, params) {
 </div>
 ```
 
-### Miscellaneous
+## Miscellaneous
 
-#### `@debug` <sub>(태그)</sub>
+### `@debug` <sub>(태그)</sub>
 
 ##### 데이터 흐름 검사
 - 디버거 실행

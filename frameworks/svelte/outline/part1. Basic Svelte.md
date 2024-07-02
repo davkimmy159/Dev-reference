@@ -1,11 +1,11 @@
 Basic Svelte
 =============
 
-### Introduction
+## Introduction
 - `{src}`
 - `{@html … }`
 
-### Reactivity
+## Reactivity
 - `$: doubled = …`
 - `$: console.log( … )`
 - `$: { … }`
@@ -13,12 +13,12 @@ Basic Svelte
 - 할당 반응
   - 배열 메서드 X
 
-### Props
+## Props
 - `export (default)`
 - `{...props}`
 - `$$props`
 
-### Logic
+## Logic
 - `{#if … }`
 - `{:else if … }`
 - `{:else}`
@@ -32,7 +32,7 @@ Basic Svelte
 - `{#await promise then … }`
 - `{/await}`
 
-### DOM events
+## DOM events
 - `<div on:click={ … }>`
 - `<div on:click={(e) => { … }}>`
 - `<div on:click|once|capture={ … }>`
@@ -48,7 +48,7 @@ Basic Svelte
 - `<Inner on:message />`
 - `<button on:click>`
 
-### Bindings
+## Bindings
 - `<input bind:value={a}>`
 - `<input type="[number|range]" bind:value={a} />`
 - `<input type="checkbox" bind:checked={a} />`
@@ -57,7 +57,7 @@ Basic Svelte
 - `<select multiple bind:value={a}>`
 - `<textarea bind:value>`
 
-### Lifecycle
+## Lifecycle
 ```javascript
 onMount(() => {
   return () => { … };
@@ -71,9 +71,9 @@ afterUpdate(() => { … });
 await tick();
 ```
 
-### Stores
+## Stores
 
-#### `writable`
+### `writable`
 
 ##### 메서드
 - `set`
@@ -92,7 +92,7 @@ onDestroy(unsubscribe);
 // - store value 가정
 ```
 
-#### `readable`
+### `readable`
 
 ##### 인수
 - 초기값 <sub>(1번째)</sub>
@@ -115,7 +115,7 @@ return function stop() {
 }
 ```
 
-#### `derived`
+### `derived`
 
 ##### 인수
 - store <sub>(1번째)</sub>
@@ -129,7 +129,7 @@ export const derived = derived(
 );
 ```
 
-#### Custom stores
+### Custom stores
 
 ##### `subscribe` <sub>(메서드)</sub> 구현
 ```javascript
@@ -145,7 +145,7 @@ function createCount() {
 }
 ```
 
-#### Store bindings
+### Store bindings
 
 ##### `writable`
 ```javascript
