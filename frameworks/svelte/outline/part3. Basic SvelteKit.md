@@ -16,6 +16,8 @@ Basic SvelteKit
 - Deploying to different hosting providers
 - 기타 등등
 
+<br />
+
 ## Routing
 
 ### Pages
@@ -96,22 +98,36 @@ src/routes/
   - 구분 <sub>(글자 1개)</sub> 필수
     - ex\) `…/[bar]x[baz]/…`
 
+<br />
+
 ## Loading data
 
+
+<br />
 
 ## Headers · Cookies
 
 
+<br />
+
 ## Shared modules
 
+
+<br />
 
 ## Forms
 
 
+<br />
+
 ## API routes
 
 
+<br />
+
 ## Stores
 
+
+<br />
 
 ## Errors · redirects

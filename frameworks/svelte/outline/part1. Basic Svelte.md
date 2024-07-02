@@ -5,6 +5,8 @@ Basic Svelte
 - `{src}`
 - `{@html … }`
 
+<br />
+
 ## Reactivity
 - `$: doubled = …`
 - `$: console.log( … )`
@@ -13,10 +15,14 @@ Basic Svelte
 - 할당 반응
   - 배열 메서드 X
 
+<br />
+
 ## Props
 - `export (default)`
 - `{...props}`
 - `$$props`
+
+<br />
 
 ## Logic
 - `{#if … }`
@@ -31,6 +37,8 @@ Basic Svelte
 - `{/await}`
 - `{#await promise then … }`
 - `{/await}`
+
+<br />
 
 ## DOM events
 - `<div on:click={ … }>`
@@ -48,6 +56,8 @@ Basic Svelte
 - `<Inner on:message />`
 - `<button on:click>`
 
+<br />
+
 ## Bindings
 - `<input bind:value={a}>`
 - `<input type="[number|range]" bind:value={a} />`
@@ -56,6 +66,8 @@ Basic Svelte
 - `<input	type="[radio·checkbox]" bind:group={a} />`
 - `<select multiple bind:value={a}>`
 - `<textarea bind:value>`
+
+<br />
 
 ## Lifecycle
 ```javascript
@@ -70,6 +82,8 @@ afterUpdate(() => { … });
 ```javascript
 await tick();
 ```
+
+<br />
 
 ## Stores
 

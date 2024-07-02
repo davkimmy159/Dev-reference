@@ -3,9 +3,15 @@ Advanced Svelte
 
 ## Motion
 
+<br />
+
 ## Transitions
 
+<br />
+
 ## Animations
+
+<br />
 
 ## Actions
 
@@ -53,6 +59,8 @@ export function func(node, params) {
 <button use:func={params}>…</button>
 <button use:func={{ a, b: 'B', … }}>…</button>
 ```
+
+<br />
 
 ## Advanced bindings
 
@@ -196,6 +204,8 @@ export function func(node, params) {
 </script>
 ```
 
+<br />
+
 ## Classes and styles
 
 ### Ths class directive
@@ -265,6 +275,8 @@ export function func(node, params) {
   <Box --color="blue" />
 </div>
 ```
+
+<br />
 
 ## Component composition
 
@@ -417,6 +429,8 @@ export function func(node, params) {
 <div slot="slot2">…</div>
 ```
 
+<br />
+
 ## Context API
 
 ### `[s·g]etContext`
@@ -461,6 +475,8 @@ export function func(node, params) {
   const { wStore } = getContext('context');
 </script>
 ```
+
+<br />
 
 ## Special elements
 
@@ -632,6 +648,8 @@ export function func(node, params) {
 </Child>
 ```
 
+<br />
+
 ## Module context
 
 ### Sharing code
@@ -691,6 +709,8 @@ export function func(node, params) {
 	</button>
 </div>
 ```
+
+<br />
 
 ## Miscellaneous
 
