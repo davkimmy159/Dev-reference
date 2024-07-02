@@ -636,8 +636,70 @@ export function func(node, params) {
 
 #### Sharing code
 
+##### 컴포넌트 내 `<script>` 블록
+- 컴포넌트 인스턴스 초기화 시 실행
+- 종종 컴포넌트 외부에서 실행 필요
+
+##### `<script context="module">`
+- 별도 `<script>` <sub>(태그)</sub>
+- 단 한번만 실행 <sub>(모듈 평가 시)</sub>
+```html
+<!-- Child.svelte -->
+<script context="module">
+	let current;
+</script>
+
+<script>
+  fnction handler(e) {
+    const audio = e.currentTarget;
+
+    if (audio !== current) {
+      current?.pause();
+      current = audio;
+    }
+  }
+</script>
+
+<audio on:play={handler} />
+```
+
+#### Exports
+
+##### `<script context="module">` `export`
+- 모듈 자체 `export`
+- `default` X
+  - 컴포넌트 == `default export`
+```html
+<!-- Child.svelte -->
+<script context="module">
+  let current;
+
+	export function stopAll() {
+		current?.pause();
+	}
+</script>>
+```
+```html
+<!-- App.svelte -->
+<script>
+	import { stopAll } from './Child.svelte';
+</script>
+
+<div>
+	<button on:click={stopAll}>
+		stop all
+	</button>
+</div>
+```
 
 ### Miscellaneous
 
+#### `@debug` <sub>(태그)</sub>
 
-### Next steps
+##### 데이터 흐름 검사
+- 디버거 실행
+```html
+{@debug user}
+
+<h1>Hello {user.firstname}!</h1>
+```
