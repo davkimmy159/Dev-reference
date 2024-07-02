@@ -573,8 +573,8 @@ export function func(node, params) {
   - `document` <sub>(요소)</sub> 대상 발생 X
 ```html
 <svelte:body
-	on:mouseenter={handler1}
-	on:mouseleave={handler2}
+  on:mouseenter={handler1}
+  on:mouseleave={handler2}
 />
 ```
 
@@ -595,7 +595,7 @@ export function func(node, params) {
 - 기타 등등
 ```html
 <svelte:head>
-	<link rel="stylesheet" href="/styles/{selected}.css" />
+  <link rel="stylesheet" href="/styles/{selected}.css" />
 </svelte:head>
 ```
 
@@ -628,7 +628,7 @@ export function func(node, params) {
 ```html
 <!-- Child.svelte -->
 <div>
-	<slot name="slot1" />
+  <slot name="slot1" />
 </div>
 ```
 ```html
@@ -664,7 +664,7 @@ export function func(node, params) {
 ```html
 <!-- Child.svelte -->
 <script context="module">
-	let current;
+  let current;
 </script>
 
 <script>
@@ -692,21 +692,21 @@ export function func(node, params) {
 <script context="module">
   let current;
 
-	export function stopAll() {
-		current?.pause();
-	}
+  export function stopAll() {
+    current?.pause();
+  }
 </script>>
 ```
 ```html
 <!-- App.svelte -->
 <script>
-	import { stopAll } from './Child.svelte';
+  import { stopAll } from './Child.svelte';
 </script>
 
 <div>
-	<button on:click={stopAll}>
-		stop all
-	</button>
+  <button on:click={stopAll}>
+    stop all
+  </button>
 </div>
 ```
 

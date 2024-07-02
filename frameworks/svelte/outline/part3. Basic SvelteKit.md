@@ -36,8 +36,8 @@ src/routes/
 ```html
 <!-- src/routes/+page.svelte -->
 <nav>
-	<a href="/">home</a>
-	<a href="/about">about</a>
+  <a href="/">home</a>
+  <a href="/about">about</a>
 </nav>
 
 <h1>home</h1>
@@ -46,8 +46,8 @@ src/routes/
 ```html
 <!-- src/routes/about/+page.svelte -->
 <nav>
-	<a href="/">home</a>
-	<a href="/about">about</a>
+  <a href="/">home</a>
+  <a href="/about">about</a>
 </nav>
 
 <h1>about</h1>
@@ -72,8 +72,8 @@ src/routes/
 ```html
 <!-- src/routes/+layout.svelte -->
 <nav>
-	<a href="/">home</a>
-	<a href="/about">about</a>
+  <a href="/">home</a>
+  <a href="/about">about</a>
 </nav>
 
 <slot></slot>
