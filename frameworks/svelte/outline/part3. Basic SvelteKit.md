@@ -577,22 +577,186 @@ src/routes/+page.svelte
 <br />
 
 ## API routes
+- `+server.js`
+  - API routes
 
 ### `GET` handlers
+```javascript
+/* src/routes/roll/+server.js */
+export function GET() {
+  const number = Math.floor(Math.random() * 6) + 1;
 
+  /*
+  return new Response(number, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  */
+  return json(number);
+}
+```
+```html
+<script>
+  let number;
 
+  async function roll() {
+    const response = await fetch('/roll');
+    number = await response.json();
+  }
+</script>
+
+<button on:click={roll}>Roll the dice</button>
+
+```
 ### `POST` handlers
 
+##### `<input>` <sub>(요소)</sub> `keydown` 핸들러
+```html
+<!-- src/routes/+page.svelte -->
+<script>
+  function async handler(e) {
+    if (e.key !== 'Enter') return;
+
+    const input = e.currentTarget;
+    const description = input.value;
+
+    const response = await fetch('/todo', {
+      method: 'POST',
+      body: JSON.stringify({ description }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const { id } = await response.json();
+
+    data.todos = [...data.todos, {
+      id,
+      description
+    }];
+
+    input.value = '';
+  }
+</script>
+…
+<input
+  type="text"
+  on:keydown={handler}
+/>
+```
+```javascript
+/* src/routes/todo/+server.js */
+import { json } from '@sveltejs/kit';
+import * as database from '$lib/server/database.js';
+
+export async function POST({ request, cookies }) {
+  const { description } = await request.json();
+
+  const userid = cookies.get('userid');
+  const { id } = await database.createTodo({ userid, description });
+
+  return json({ id }, { status: 201 });
+}
+```
+##### `data` <sub>(프로퍼티)</sub> 변경 방식
+- 페이지 재로드 시 동일 결과
 
 ### `Other` handlers
+```javascript
+/* src/routes/todo/[id]/+server.js */
+import * as database from '$lib/server/database.js';
 
+export async function PUT({ params, request, cookies }) {
+  const { done } = await request.json();
+  const userid = cookies.get('userid');
+
+  await database.toggleTodo({ userid, id: params.id, done });
+  return new Response(null, { status: 204 });
+}
+
+export async function DELETE({ params, cookies }) {
+  const userid = cookies.get('userid');
+
+  await database.deleteTodo({ userid, id: params.id });
+  return new Response(null, { status: 204 });
+}
+```
+```html
+<!-- src/routes/+page.svelte -->
+<script>
+  async function onChange(e) {
+    const done = e.currentTarget.checked;
+
+    await fetch(`/todo/${todo.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ done }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
+  async function onClick(e) {
+    await fetch(`/todo/${todo.id}`, {
+      method: 'DELETE'
+    });
+
+    data.todos = data.todos.filter((t) => t !== todo);
+  }
+</script>
+
+<label>
+  <input
+    type="checkbox"
+    checked={todo.done}
+    on:change={onChange}
+  />
+  <span>{todo.description}</span>
+  <button on:click={onClick} ></button>
+</label>
+```
 
 <br />
 
-## Stores
+## Stores <sub>(`readonly`)</sub>
 
-### page
+### page <sub>(자주 사용)</sub>
 
+##### 현재 페이지 정보 제공
+- `url`
+  - URL
+- `params`
+  - 파라미터
+- `route`
+  - 객체 <sub>(`id` 프로퍼티 有)</sub>
+    - 현재 라우터
+- `status`
+  - HTTP 상태 코드
+- `error`
+  - 에러 객체
+- `data`
+  - 데이터
+  - `load` <subP>(함수)</subP> 반환값 포함
+- `form`
+  - `form` 액션 반환값
+```html
+<!-- src/routes/+layout.svelte -->
+<script>
+  import { page } from '$app/stores';
+</script>
+
+<nav>
+  <a href="/" aria-current={$page.url.pathname === '/'}>
+    home
+  </a>
+  <a href="/about" aria-current={$page.url.pathname === '/about'}>
+    about
+  </a>
+</nav>
+
+<slot></slot>
+```
 
 ### navigating
 
