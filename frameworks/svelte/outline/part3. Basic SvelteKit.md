@@ -760,9 +760,70 @@ export async function DELETE({ params, cookies }) {
 
 ### navigating
 
+##### 현재 네비게이션
+- 객체 <sub>(네비게이션 시작 시)</sub>
+  - 링크 클릭
+  - 앞 · 뒤 이동
+  - `goto` <sub>(프로그래밍)</sub>
+  - 기타 등등
 
-### updated
+##### 객체 프로퍼티
+- `from` · `to` <sub>(객체)</sub>
+```javascript
+{
+  params,
+  route,
+  url
+}
+```
+- `type` <sub>(네비게이션 타입)</sub>
+  - `'link'`
+  - `'popstate'`
+  - `'goto'`
+  - 기타 등등
 
+##### 로딩 인디케이터 표시
+```html
+<!-- src/routes/+layout.svelte -->
+<script>
+  import { page, navigating } from '$app/stores';
+</script>
+
+<nav>
+  <a href="/" aria-current={$page.url.pathname === '/'}>
+    home
+  </a>
+  <a href="/about" aria-current={$page.url.pathname === '/about'}>
+    about
+  </a>
+
+  {#if $navigating}
+    navigating to {$navigating.to.url.pathname}
+  {/if}
+</nav>
+
+<slot></slot>
+```
+
+### updated <sub>(`boolean`)</sub>
+
+##### 앱 버전 배포 여부
+- 페이지 처음 열기 이후
+
+##### 설정 <sub>(`svelte.config.js`)</sub>
+- `kit.version.pollInterval`
+```html
+<!-- src/routes/+layout.svelte -->
+<script>
+  import { page, navigating, updated } from '$app/stores';
+</script>
+
+{#if $updated}
+  …
+{/if}
+```
+##### `check()` <sub>(메서드)</sub>
+- 앱 버전 체크
 
 <br />
 
