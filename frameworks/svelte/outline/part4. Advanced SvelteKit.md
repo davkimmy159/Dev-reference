@@ -279,9 +279,25 @@ export const csr = true · false;
 ##### 빌드 시 페이지 HTML 생성
 - 요청 시 생성 X
 - 부하 ↓ · 성능 ↑
-- 다수 사용자 처리
+- 다수 사용자 처리 시
   - `cache-control` <sub>(헤더)</sub> 걱정 X
     - 까다로운 사용법
+
+##### 단점
+- 빌드 시간 ↑
+- 무거운 업데이트 적용
+  - 새 버전 빌드 · 배포
+
+##### 기본 규칙
+- 아무 두 사용자 접근 시
+  - 동일 콘텐츠 얻기
+- 
+Not all pages can be prerendered. The basic rule is this: for content to be prerenderable, any two users hitting it directly must get the same content from the server, and the page must not contain form actions. Pages with dynamic route parameters can be prerendered as long as they are specified in the prerender.entries configuration or can be reached by following links from pages that are in prerender.entries.
+
+```javascript
+/* src/routes/+page.server.js */
+export const prerender = true · false;
+```
 
 ### `trailingSlash`
 
