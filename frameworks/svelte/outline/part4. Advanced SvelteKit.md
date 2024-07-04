@@ -119,12 +119,18 @@ export function load(event) {
 - 일반 `fetch` <sub>(메서드)</sub> 동작
 - 강력한 추가 기능 有
 
-##### 추가 기능
-- 자격 有 요청 생성 <sub>(서버)</sub>
-  - 쿠키 · 인증 헤더 <sub>(수신 요청)</sub> 상속
-- it can be used to make credentialed requests on the server, as it inherits the cookie and authorization headers from the incoming request
-- it can make relative requests on the server (ordinarily, fetch requires a URL with an origin when used in a server context)
-- internal requests (e.g. for +server.js routes) go directly to the handler function when running on the server, without the overhead of an HTTP call
+#### 추가 기능
+
+##### 자격 증명 요청 생성 <sub>(서버)</sub>
+- 쿠키 · 인증 헤더 <sub>(수신 요청)</sub> 상속
+
+##### 상대적 요청 생성
+- 대개 URL <sub>(오리진 포함)</sub> 요구
+  - 서버 컨텍스트 내 사용 시
+
+##### 내부 요청 <sub>(`+server.js routes` 등)</sub> → 핸들러 함수 <sub>(직행)</sub>
+- 서버 내 실행 시
+  - HTTP 호출 오버헤드 X
 
 ### `handleError`
 
