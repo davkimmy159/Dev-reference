@@ -79,7 +79,7 @@ export async function handle({ event, resolve }) {
 - 임의 데이터 보관 위치
 
 ##### `params`
-- 라우터 파라미터
+- 라우터 매개변수
 
 ##### `request`
 - `Request` <sub>(객체)</sub>
@@ -288,11 +288,19 @@ export const csr = true · false;
 - 무거운 업데이트 적용
   - 새 버전 빌드 · 배포
 
-##### 기본 규칙
-- 아무 두 사용자 접근 시
-  - 동일 콘텐츠 얻기
-- 
-Not all pages can be prerendered. The basic rule is this: for content to be prerenderable, any two users hitting it directly must get the same content from the server, and the page must not contain form actions. Pages with dynamic route parameters can be prerendered as long as they are specified in the prerender.entries configuration or can be reached by following links from pages that are in prerender.entries.
+#### 기본 규칙
+
+##### 아무 두 사용자 접근 시
+- 서버로부터 동일 콘텐츠 얻기
+
+##### 페이지 내
+- 폼 액션 X
+
+##### 동적 라우터 매개변수 有 페이지
+- `prerender.entries` <sub>(설정)</sub>
+  - 명시
+  - 명시 페이지 링크 따라 도달 가능
+- Not all pages can be prerendered. The basic rule is this: for content to be prerenderable, any two users hitting it directly must get the same content from the server, and the page must not contain form actions. Pages with dynamic route parameters can be prerendered as long as they are specified in the prerender.entries configuration or can be reached by following links from pages that are in prerender.entries.
 
 ```javascript
 /* src/routes/+page.server.js */

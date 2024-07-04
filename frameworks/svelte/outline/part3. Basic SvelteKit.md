@@ -98,7 +98,7 @@ src/routes/
   - `/blog/three`
   - 기타 등등
 
-##### `[]` <sub>(대괄호)</sub> 내 다수 파라미터 가능
+##### `[]` <sub>(대괄호)</sub> 내 다수 매개변수 가능
 - 구분 <sub>(글자 1개)</sub> 필수
   - ex\) `…/[bar]x[baz]/…`
 
@@ -742,7 +742,7 @@ export async function DELETE({ params, cookies }) {
 - `url`
   - URL
 - `params`
-  - 파라미터
+  - 매개변수
 - `route`
   - 객체 <sub>(`id` 프로퍼티 有)</sub>
     - 현재 라우터
