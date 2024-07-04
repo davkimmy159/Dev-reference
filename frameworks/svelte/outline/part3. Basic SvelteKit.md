@@ -106,6 +106,21 @@ src/routes/
 
 ## Loading data
 
+#### `load` <sub>(함수)</sub> 실행 위치 구분
+
+##### `+[page·layout].js`
+- 서버 · 클라이언트
+```javascript
+// 서버 실행 X (옵션)
+export const ssr = false;
+```
+
+##### `+[page·layout].server.js`
+- 서버
+  - 내부 환경 변수 사용
+  - DB 접근
+  - 기타 등등
+
 ### Page data
 
 ##### `+page.server.js`

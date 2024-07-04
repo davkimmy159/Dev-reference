@@ -165,22 +165,85 @@ export async function handleFetch({ event, request, fetch }) {
 ```javascript
 /* src/hooks.server.js */
 export function handleError({ event, error }) {
-	console.error(error.stack);
+  console.error(error.stack);
 }
 ```
 
 ##### `/the-bad-place` <sub>(부재 페이지)</sub> 이동 시
 - 에러 페이지 출력
-- 터미널 내 메시지
-  - `src/routes/the-bad-place/+page.server.js`
+- 터미널 내 메시지 출력 개체
+```javascript
+/* src/routes/the-bad-place/+page.server.js */
+```
 
+##### 에러 메시지 전송 X
+- 민감한 정보 有
+- 사용자 혼동
+- 악의적 사용자 이용 가능
 
+##### 에러 객체
+- `$page.error`
+  - `+error.svelte`
+- `%sveltekit.error%`
+  - `src/error.html` fallback
+```javascript
+/* 기본값 */
+{
+  message: 'Internal Error' // 500
+//message: 'Not Found'      // 404
+}
+```
+
+##### 커스터마이징
+- `handleError` 내 에러 객체 반환
+```javascript
+/* src/hooks.server.js */
+export function handleError({ event, error }) {
+	console.error(error.stack);
+
+	return {
+		message: 'everything is fine',
+		code: 'JEREMYBEARIMY'
+	};
+}
+```
+- 에러 객체 프로퍼티 접근
+```html
+<!-- src/routes/+error.svelte -->
+<script>
+	import { page } from '$app/stores';
+</script>
+
+<h1>{$page.status}</h1>
+<p>{$page.error.message}</p>
+<p>error code: {$page.error.code}</p>
+```
 
 <br />
 
 ## Page options
 
 ### Basics
+
+|옵션|설명 <sub>(여부)</sub>|
+|---|---|
+|`ssr`|페이지 서버 렌더링|
+|`csr`|SvelteKit 클라이언트 로드|
+|`prerender`|페이지 선렌더링 시점<br />- 빌드<br />- 요청 <sub>(X)</sub>|
+|`trailingSlash`|URL 내 꼬다리 `/` <sub>(슬래시)</sub> 처리|
+
+
+##### `ssr`
+- 페이지 서버 렌더링 여부
+
+##### `csr`
+- SvelteKit 클라이언트 로드 여부
+
+##### `prerender`
+- whether to prerender pages at build time, instead of per-request
+
+##### `trailingSlash`
+- whether to strip, add, or ignore trailing slashes in URLs
 
 
 ### `ssr`
