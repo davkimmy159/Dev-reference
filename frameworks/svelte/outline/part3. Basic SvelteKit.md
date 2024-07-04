@@ -807,7 +807,7 @@ export async function DELETE({ params, cookies }) {
 
 ### updated <sub>(`boolean`)</sub>
 
-##### 앱 버전 배포 여부
+##### 새 버전 앱 배포 여부
 - 페이지 처음 열기 이후
 
 ##### 설정 <sub>(`svelte.config.js`)</sub>
@@ -822,6 +822,7 @@ export async function DELETE({ params, cookies }) {
   …
 {/if}
 ```
+
 ##### `check()` <sub>(메서드)</sub>
 - 앱 버전 체크
 
@@ -831,9 +832,51 @@ export async function DELETE({ params, cookies }) {
 
 ### Basics
 
+#### 에러 종류 <sub>(2가지)</sub>
+
+##### ① 예상 가능 에러
+- `error` <sub>(헬퍼)</sub> 생성 에러
+- SvelteKit 인지
+```javascript
+/* src/routes/expected/+page.server.js */
+import { error } from '@sveltejs/kit';
+
+export function load() {
+	throw error(420, 'Enhance your calm');
+}
+```
+
+##### ② 예상 불가능 에러
+- 이외 에러
+- 앱 내 버그 취급
+  - 메시지 · 스택 트레이스 출력
+- 민감한 에러 메시지 제거 · 대체
+  - `'Internal Error'`
+```javascript
+/* src/routes/unexpected/+page.server.js */
+export function load() {
+	throw new Error('Kaboom!');
+}
+```
 
 ### Error pages
 
+##### 에러 페이지 커스터마이징
+- 밋밋한 기본 에러 페이지 보완
+- `+error.svelte`
+  - 최상위 `+layout.svelte` 내 렌더링
+```html
+<!-- src/routes/+error.svelte -->
+<script>
+	import { page } from '$app/stores';
+	import { emojis } from './emojis.js';
+</script>
+
+<h1>{$page.status} {$page.error.message}</h1>
+<span style="font-size: 10em">
+	{emojis[$page.status] ?? emojis[500]}
+</span>
+```
 
 ### Fallback errors
 
