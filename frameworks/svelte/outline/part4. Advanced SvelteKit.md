@@ -229,7 +229,7 @@ export function handleError({ event, error }) {
 |---|---|
 |`ssr`|페이지 서버 렌더링|
 |`csr`|SvelteKit 클라이언트 로드|
-|`prerender`|페이지 선렌더링 시점<br />- 빌드<br />- 요청 <sub>(X)</sub>|
+|`prerender`|페이지 선렌더링 <sub>(prerendering)</sub> 시점<br />- 빌드<br />- 요청 <sub>(X)</sub>|
 |`trailingSlash`|URL 내 꼬다리 `/` <sub>(슬래시)</sub> 처리|
 
 ##### 옵션 적용
@@ -290,17 +290,16 @@ export const csr = true · false;
 
 #### 기본 규칙
 
-##### 아무 두 사용자 접근 시
+##### 1. 아무 두 사용자 접근 시
 - 서버로부터 동일 콘텐츠 얻기
 
-##### 페이지 내
+##### 2. 페이지 내
 - 폼 액션 X
 
-##### 동적 라우터 매개변수 有 페이지
+##### 3. 동적 라우터 매개변수 有 페이지
 - `prerender.entries` <sub>(설정)</sub>
   - 명시
   - 명시 페이지 링크 따라 도달 가능
-- Not all pages can be prerendered. The basic rule is this: for content to be prerenderable, any two users hitting it directly must get the same content from the server, and the page must not contain form actions. Pages with dynamic route parameters can be prerendered as long as they are specified in the prerender.entries configuration or can be reached by following links from pages that are in prerender.entries.
 
 ```javascript
 /* src/routes/+page.server.js */
@@ -309,6 +308,39 @@ export const prerender = true · false;
 
 ### `trailingSlash`
 
+##### `/foo` vs `/foo/`
+- `./foo` <sub>(상대경로)</sub>
+  - `/foo`&nbsp;&nbsp; → `/foo`
+  - `/foo/` → `/foo/bar`
+- 검색엔진
+  - 별개 취급 <sub>(SEO ↓)</sub>
+
+##### SvelteKit 기본 설정
+- 제거
+  - `/foo/` → `/foo`
+```javascript
+/* 기본값 */
+/* src/routes/always/+page.server.js */
+export const trailingSlash = 'never';
+```
+
+##### 제거 방지 설정
+```javascript
+/* src/routes/always/+page.server.js */
+export const trailingSlash = 'always';
+```
+
+##### SvelteKit 관여 방지 설정 <sub>(권장 X)</sub>
+```javascript
+/* src/routes/ignore/+page.server.js */
+export const trailingSlash = 'ignore';
+```
+
+##### 선렌더링 <sub>(prerendering)</sub> 영향 끼침
+- `/always/`
+  - `always/index.html`
+- `/never`
+  - `never.html`
 
 <br />
 
