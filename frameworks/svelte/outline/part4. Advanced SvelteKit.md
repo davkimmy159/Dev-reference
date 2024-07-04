@@ -160,6 +160,21 @@ export async function handleFetch({ event, request, fetch }) {
   - 에러 로깅 서비스에 데이터 전송
   - 기타 등등
 
+##### 기본 기능
+- 에러 로깅
+```javascript
+/* src/hooks.server.js */
+export function handleError({ event, error }) {
+	console.error(error.stack);
+}
+```
+
+##### `/the-bad-place` <sub>(부재 페이지)</sub> 이동 시
+- 에러 페이지 출력
+- 터미널 내 메시지
+  - `src/routes/the-bad-place/+page.server.js`
+
+
 
 <br />
 
