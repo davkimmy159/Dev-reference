@@ -232,19 +232,15 @@ export function handleError({ event, error }) {
 |`prerender`|페이지 선렌더링 시점<br />- 빌드<br />- 요청 <sub>(X)</sub>|
 |`trailingSlash`|URL 내 꼬다리 `/` <sub>(슬래시)</sub> 처리|
 
-
-##### `ssr`
-- 페이지 서버 렌더링 여부
-
-##### `csr`
-- SvelteKit 클라이언트 로드 여부
-
-##### `prerender`
-- whether to prerender pages at build time, instead of per-request
-
-##### `trailingSlash`
-- whether to strip, add, or ignore trailing slashes in URLs
-
+##### 옵션 적용
+- 개별 페이지
+  - `+page.js`
+  - `+page.server.js`
+- 페이지 그룹
+  - `+layout.js`
+  - `+layout.server.js`
+- 앱 전체
+  - 최상위 `+layout[.server].js`
 
 ### `ssr`
 
