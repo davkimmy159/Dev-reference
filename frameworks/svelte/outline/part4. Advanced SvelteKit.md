@@ -246,7 +246,7 @@ export function handleError({ event, error }) {
 
 ### `ssr`
 
-##### 서버측 HTML 렌더링 실행
+##### 서버측 HTML 렌더링
 - sveltekit 기본 설정
 
 ##### 일부 컴포넌트 X
@@ -256,15 +256,32 @@ export function handleError({ event, error }) {
   - 수정 불가능 시 `false` 설정
 ```javascript
 /* src/routes/+page.server.js */
-export const ssr = false;
+export const ssr = true · false;
 ```
-
 
 ### `csr`
 
+##### 클라이언트측 HTML 렌더링
+- 페이지 상호작용 강화
+  - 버튼 클릭 시 카운터 증가
+  - 기타 등등
+- 이동 시 페이지 즉시 업데이트
+  - 페이지 전체 로드 X
+- `false` 설정 시
+  - 해당 페이지 JS 동작 X
+```javascript
+/* src/routes/+page.server.js */
+export const csr = true · false;
+```
 
 ### `prerender`
 
+##### 빌드 시 페이지 HTML 생성
+- 요청 시 생성 X
+- 부하 ↓ · 성능 ↑
+- 다수 사용자 처리
+  - `cache-control` <sub>(헤더)</sub> 걱정 X
+    - 까다로운 사용법
 
 ### `trailingSlash`
 
