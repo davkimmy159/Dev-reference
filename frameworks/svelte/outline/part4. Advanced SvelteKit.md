@@ -69,10 +69,11 @@ export async function handle({ event, resolve }) {
 - 클라이언트 IP 주소 얻기
 
 ##### `isDataRequest`
-- `true`
-  - if the browser is requesting data for a page during client-side navigation
-- `false`
-  - if a page/route is being requested directly
+- 페이지 데이터 요청 <sub>(브라우저)</sub>
+  - 클라이언트측 네비게이션 도중
+    - `true`
+- 페이지 · 라우터 직접 요청되어짐
+  - `false`
 
 ##### `locals`
 - 임의 데이터 보관 위치
@@ -96,7 +97,21 @@ export async function handle({ event, resolve }) {
 ##### 유용한 패턴
 - `event.locals` <sub>(`handle` hook 내)</sub>
   - 특정 데이터 추가 <sub>(`load` 함수 접근)</sub>
-- A useful pattern is to add some data to event.locals in handle so that it can be read in subsequent load functions:
+```javascript
+/* src/hooks.server.js */
+export async function handle({ event, resolve }) {
+	event.locals.answer = 42;
+	return await resolve(event);
+}
+```
+```javascript
+/* src/routes/+page.server.js */
+export function load(event) {
+	return {
+		message: `the answer is ${event.locals.answer}`
+	};
+}
+```
 
 ### `handleFetch`
 
