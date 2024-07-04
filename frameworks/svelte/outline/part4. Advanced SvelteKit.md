@@ -69,11 +69,11 @@ export async function handle({ event, resolve }) {
 - 클라이언트 IP 주소 얻기
 
 ##### `isDataRequest`
-- 페이지 데이터 요청 <sub>(브라우저)</sub>
-  - 클라이언트측 네비게이션 도중
-    - `true`
-- 페이지 · 라우터 직접 요청되어짐
-  - `false`
+- `true`
+  - 페이지 데이터 요청 <sub>(브라우저)</sub>
+    - 클라이언트측 네비게이션 도중
+- `false`
+  - 페이지 · 라우터 직접 요청되어짐
 
 ##### `locals`
 - 임의 데이터 보관 위치
