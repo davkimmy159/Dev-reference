@@ -100,16 +100,16 @@ export async function handle({ event, resolve }) {
 ```javascript
 /* src/hooks.server.js */
 export async function handle({ event, resolve }) {
-	event.locals.answer = 42;
-	return await resolve(event);
+  event.locals.answer = 42;
+  return await resolve(event);
 }
 ```
 ```javascript
 /* src/routes/+page.server.js */
 export function load(event) {
-	return {
-		message: `the answer is ${event.locals.answer}`
-	};
+  return {
+    message: `the answer is ${event.locals.answer}`
+  };
 }
 ```
 
@@ -132,7 +132,33 @@ export function load(event) {
 - 서버 내 실행 시
   - HTTP 호출 오버헤드 X
 
+##### `fetch` <sub>(메서드)</sub> 동작 조작
+```javascript
+/* src/hooks.server.js */
+export async function handleFetch({ event, request, fetch }) {
+  return await fetch(request);
+}
+```
+
+##### `src/routes/a/+server.js` 대상 요청
+- `src/routes/b/+server.js` 응답
+```javascript
+/* src/hooks.server.js */
+export async function handleFetch({ event, request, fetch }) {
+  const url = new URL(request.url);
+  if (url.pathname === '/a') {
+    return await fetch('/b');
+  }
+
+  return await fetch(request);
+}
+```
+
 ### `handleError`
+- 예상 불가능 에러 가로채기
+- 특정 동작 발생
+  - 에러 로깅 서비스에 데이터 전송
+  - 기타 등등
 
 
 <br />
