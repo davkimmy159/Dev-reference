@@ -842,7 +842,7 @@ export async function DELETE({ params, cookies }) {
 import { error } from '@sveltejs/kit';
 
 export function load() {
-	throw error(420, 'Enhance your calm');
+  throw error(420, 'Enhance your calm');
 }
 ```
 
@@ -855,7 +855,7 @@ export function load() {
 ```javascript
 /* src/routes/unexpected/+page.server.js */
 export function load() {
-	throw new Error('Kaboom!');
+  throw new Error('Kaboom!');
 }
 ```
 
@@ -863,22 +863,74 @@ export function load() {
 
 ##### 에러 페이지 커스터마이징
 - 밋밋한 기본 에러 페이지 보완
-- `+error.svelte`
-  - 최상위 `+layout.svelte` 내 렌더링
 ```html
 <!-- src/routes/+error.svelte -->
+<!-- 최상위 +layout.svelte 내 렌더링 -->
+<!-- 범용 에러 담당 -->
 <script>
-	import { page } from '$app/stores';
-	import { emojis } from './emojis.js';
+  import { page } from '$app/stores';
+  import { emojis } from './emojis.js';
 </script>
 
 <h1>{$page.status} {$page.error.message}</h1>
 <span style="font-size: 10em">
-	{emojis[$page.status] ?? emojis[500]}
+  {emojis[$page.status] ?? emojis[500]}
 </span>
+```
+```html
+<!-- src/routes/expected/+error.svelte -->
+<!-- /expected 내 렌더링 -->
+<!-- 특정 에러 담당 -->
+<h1>this error was expected</h1>
 ```
 
 ### Fallback errors
 
+##### 심각한 에러
+- 최상위 layout 데이터 로드 중
+- 에러 페이지 렌더링 중
+- 기타 등등
+```javascript
+/* src/routes/+layout.server.js */
+export function load() {
+  throw new Error('yikes');
+}
+```
+
+##### fallback error page <sub>(정적 에러 페이지)</sub>
+- `%sveltekit.status%`
+  - HTTP 상태 코드
+- `%sveltekit.error.message%`
+  - 에러 메시지
+```html
+<!-- src/error.html -->
+<h1>Game over</h1>
+<p>Code %sveltekit.status%</p>
+<p>%sveltekit.error.message%</p>
+```
 
 ### Redirects
+
+##### `throw redirect(...)`
+- `load` <sub>(함수)</sub>
+- 폼 액션
+- API 라우터
+- `handle` hook
+
+```javascript
+/* src/routes/a/+page.server.js */
+// /a (이동) → /b (리다이렉트)
+import { redirect } from '@sveltejs/kit';
+
+export function load() {
+  throw redirect(307, '/b');
+}
+```
+
+##### 자주 사용되는 상태 코드
+- `303`
+  - 폼 액션 <sub>(제출 성공 후)</sub>
+- `307`
+  - 임시 리다이렉트
+- `308`
+  - 영구 리다이렉트
