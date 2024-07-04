@@ -95,7 +95,7 @@ export async function handle({ event, resolve }) {
 - 현재 요청
 
 ##### 유용한 패턴
-- `event.locals` <sub>(`handle` hook 내)</sub>
+- `event.locals` <sub>(`handle` hook 안)</sub>
   - 특정 데이터 추가 <sub>(`load` 함수 접근)</sub>
 ```javascript
 /* src/hooks.server.js */
@@ -115,6 +115,16 @@ export function load(event) {
 
 ### `handleFetch`
 
+##### `RequestEvent` <sub>(객체)</sub> 내 `fetch` <sub>(메서드)</sub>
+- 일반 `fetch` <sub>(메서드)</sub> 동작
+- 강력한 추가 기능 有
+
+##### 추가 기능
+- 자격 有 요청 생성 <sub>(서버)</sub>
+  - 쿠키 · 인증 헤더 <sub>(수신 요청)</sub> 상속
+- it can be used to make credentialed requests on the server, as it inherits the cookie and authorization headers from the incoming request
+- it can make relative requests on the server (ordinarily, fetch requires a URL with an origin when used in a server context)
+- internal requests (e.g. for +server.js routes) go directly to the handler function when running on the server, without the overhead of an HTTP call
 
 ### `handleError`
 
