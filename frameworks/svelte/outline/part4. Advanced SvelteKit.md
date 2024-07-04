@@ -240,9 +240,24 @@ export function handleError({ event, error }) {
   - `+layout.js`
   - `+layout.server.js`
 - 앱 전체
-  - 최상위 `+layout[.server].js`
+  - 최상위 `layout[.server].js`
+- 자식 `layout` · `page` 설정
+  - 부모 `layout` 설정 override
 
 ### `ssr`
+
+##### 서버측 HTML 렌더링 실행
+- sveltekit 기본 설정
+
+##### 일부 컴포넌트 X
+- `window` <sub>(전역 객체)</sub> 필요
+  - 수정 필요 <sub>(서버 렌더링 가능하게)</sub>
+- 기타 등등
+  - 수정 불가능 시 `false` 설정
+```javascript
+/* src/routes/+page.server.js */
+export const ssr = false;
+```
 
 
 ### `csr`
