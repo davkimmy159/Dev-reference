@@ -199,19 +199,19 @@ export function handleError({ event, error }) {
 ```javascript
 /* src/hooks.server.js */
 export function handleError({ event, error }) {
-	console.error(error.stack);
+  console.error(error.stack);
 
-	return {
-		message: 'everything is fine',
-		code: 'JEREMYBEARIMY'
-	};
+  return {
+    message: 'everything is fine',
+    code: 'JEREMYBEARIMY'
+  };
 }
 ```
 - 에러 객체 프로퍼티 접근
 ```html
 <!-- src/routes/+error.svelte -->
 <script>
-	import { page } from '$app/stores';
+  import { page } from '$app/stores';
 </script>
 
 <h1>{$page.status}</h1>
@@ -348,6 +348,59 @@ export const trailingSlash = 'ignore';
 
 ### Preloading
 
+##### `data-sveltekit-preload-data` <sub>(속성)</sub>
+- 네비게이션 시작 시점
+  - 마우스 위 이동 <sub>(hover)</sub>
+  - 탭 <sub>(터치)</sub> <sub>(모바일)</sub>
+
+##### `<a>` <sub>(요소)</sub>
+```html
+<!-- src/routes/+layout.svelte -->
+<nav>
+  <a href="/">home</a>
+  <a href="/slow-a" data-sveltekit-preload-data>slow-a</a>
+  <a href="/slow-b">slow-b</a>
+</nav>
+```
+
+##### 링크 포함 요소
+```html
+<!-- 기본 프로젝트 템플릿 -->
+<body data-sveltekit-preload-data>
+  %sveltekit.body%
+</body>
+```
+
+##### 값 <sub>(커스터마이징)</sub>
+- `'hover'` <sub>(기본값)</sub>
+  - 모바일 → `'tap'`
+- `'tap'`
+  - 탭 <sub>(터치)</sub>
+- `'off'`
+  - 미작동
+
+Using `data-sveltekit-preload-data` may sometimes result in false positives - i.e. loading data in anticipation of a navigation that doesn't then happen — which might be undesirable. As an alternative, `data-sveltekit-preload-code` allows you to preload the JavaScript needed by a given route without eagerly loading its data. This attribute can have the following values:
+- `'eager'`
+- preload everything on the page following a navigation
+- `'viewport'`
+- preload everything as it appears in the viewport
+- `'hover'`
+- (default) as above
+- `'tap'`
+- as above
+- `'off'`
+- as above
+
+You can also initiate preloading programmatically with preloadCode and preloadData imported from $app/navigation:
+```javascript
+import { preloadCode, preloadData } from '$app/navigation';
+
+// preload the code and data needed to navigate to /foo
+preloadData('/foo');
+
+// preload the code needed to navigate to /bar, but not the data
+preloadCode('/bar');
+```
 
 ### Reloading the page
 
