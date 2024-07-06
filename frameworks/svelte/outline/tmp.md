@@ -102,17 +102,20 @@ export async function load({ parent }) {
 }
 ```
 
+#### universal vs 서버 함수
+
 ##### 하위 universal `load` <sub>(함수)</sub>
 - 상위 `load` <sub>(서버 함수)</sub> 데이터 접근 가능
 
 ##### 하위 `load` <sub>(서버 함수)</sub>
 - 상위 universal `load` <sub>(함수)</sub> 데이터 접근 X
-- 
-Notice that a universal `load` <sub>(함수)</sub> can get data from a parent server load function. The reverse is not true — a server `load` <sub>(함수)</sub> can only get parent data from another server load function.
+- 상위 `load` <sub>(서버 함수)</sub> 데이터 접근 가능
 
-Finally, `in src/routes/sum/+page.js`, get parent data from both `load` <sub>(함수)</sub>:
+##### `src/routes/sum/+page.js` 부모 데이터 접근
+- `src/routes/+layout.server.js`
+- `src/routes/sum/+layout.js`
 ```javascript
-src/routes/sum/+page.js
+/* src/routes/sum/+page.js */
 export async function load({ parent }) {
   const { a, b } = await parent();
   return { c: a + b };
