@@ -467,7 +467,7 @@ src/routes/
 │ ├ animal/
 │ ├ mineral/
 │ ├ vegetable/
-│ ├ [...catchall]/    *
+│ ├ [...catchall]/     *
 │ │ ├ +error.svelte   *
 │ │ └ +page.server.js *
 ```
