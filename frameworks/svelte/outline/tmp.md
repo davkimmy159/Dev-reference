@@ -1,9 +1,14 @@
 ## Advanced loading
 
 ### Universal `load` <sub>(함수)</sub>
-In the previous section on loading we loaded data from the server using `+page.server.js` and `+layout.server.js` files. This is very convenient if you need to do things like getting data directly from a database, or reading cookies.
 
-Sometimes it doesn't make sense to load data from the server when doing a client-side navigation. For example:
+##### `+[page·layout].server.js`
+- 서버 데이터 로드
+  - DB 직접 접근
+  - 쿠키 읽기
+  - 기타 등등
+
+##### 클라이언트측 탐색 시 서버 데이터 불필요 경우
 - You're loading data from an external API
 - You want to use in-memory data if it's available
 - You want to delay navigation until an image has been preloaded, to avoid pop-in
