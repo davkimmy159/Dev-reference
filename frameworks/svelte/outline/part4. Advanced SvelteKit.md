@@ -388,10 +388,9 @@ export const trailingSlash = 'ignore';
 
 ##### 값 <sub>(커스터마이징)</sub>
 - `'eager'`
-  - 탐색 후 페이지 내 모든 내용 미리 로드
-  - preload everything on the page following a navigation
+  - 탐색 후 미리 로드 <sub>(모든 내용)</sub>
 - `'viewport'`
-  - preload everything as it appears in the viewport
+  - 뷰 포트 등장 시 미리 로드 <sub>(모드 내용)</sub>
 - `'hover'` <sub>(기본값)</sub>
   - 모바일 → `'tap'`
 - `'tap'`
@@ -399,20 +398,33 @@ export const trailingSlash = 'ignore';
 - `'off'`
   - 미작동
 
-
-You can also initiate preloading programmatically with preloadCode and preloadData imported from $app/navigation:
+##### `preload[Code·Data]`
+- 코드 이용해 미리 로딩
 ```javascript
 import { preloadCode, preloadData } from '$app/navigation';
 
-// preload the code and data needed to navigate to /foo
+// 라우터 데이터 · 코드 미리 로드
 preloadData('/foo');
 
-// preload the code needed to navigate to /bar, but not the data
+// 라우터 코드 미리 로드
 preloadCode('/bar');
 ```
 
 ### Reloading the page
 
+##### 라우터 간 기본적 이동
+- 페이지 재로드 X
+
+##### `data-sveltekit-reload` <sub>(속성)</sub>
+- `<a>` <sub>(속성)</sub>
+- 링크 포함 속성
+``` html
+<!-- src/routes/+layout.svelte -->
+<nav data-sveltekit-reload>
+  <a href="/">home</a>
+  <a href="/about">about</a>
+</nav>
+```
 
 <br />
 
