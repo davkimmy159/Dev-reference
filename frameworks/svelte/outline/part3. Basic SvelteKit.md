@@ -111,7 +111,7 @@ src/routes/
 ##### `+[page·layout].js`
 - 서버 · 클라이언트
 ```javascript
-// 서버 실행 X (옵션)
+// 서버 미실행 (옵션)
 export const ssr = false;
 ```
 

@@ -438,15 +438,15 @@ preloadCode('/bar');
 ```javascript
 /* src/routes/[[lang]]/+page.server.js */
 const greetings = {
-	en: 'hello!',
-	de: 'hallo!',
-	fr: 'bonjour!'
+  en: 'hello!',
+  de: 'hallo!',
+  fr: 'bonjour!'
 };
 
 export function load({ params }) {
-	return {
-		greeting: greetings[params.lang ?? 'en']
-	};
+  return {
+    greeting: greetings[params.lang ?? 'en']
+  };
 }
 ```
 
@@ -488,10 +488,10 @@ src/routes/
 ```javascript
 /* src/params/hex.js */
 export function match(value) {
-	return /^[0-9a-f]{6}$/.test(value);
+  return /^[0-9a-f]{6}$/.test(value);
 }
 ```
-1. match 함수 `export`
+1. 함수 `export`
 2. url 변경
 ```
 src/routes/colors/[color]
@@ -501,41 +501,59 @@ src/routes/colors/[color=hex] (파일명)
 
 ### Route groups
 
+##### `…/(…)/…` <sub>(layout)</sub>
+- 라우터 영향 X
+- ex\) 접근 통제
+
+##### `…/(authed)/`
+- `…/(authed)/account`
+- `…/(authed)/app`
+- `…/(authed)/+layout[.server].js`
+```javascript
+/* src/routes/(authed)/+layout.server.js */
+import { redirect } from '@sveltejs/kit';
+
+export function load({ cookies, url }) {
+  if (!cookies.get('logged_in')) {
+    throw redirect(303, `/login?redirectTo=${url.pathname}`);
+  }
+}
+```
+
+##### 공통 UI 추가
+- `…/(authed)/+layout.svelte`
+```html
+<!-- src/routes/(authed)/+layout.svelte -->
+<slot></slot>
+
+<form method="POST" action="/logout">
+  <button>log out</button>
+</form>
+```
 
 ### Breaking out of layouts
 
+##### 일반적 라우터 상속
+- 모든 상위 layout 상속
+
+##### `src/routes/a/b/c/+page.svelte`
+- `src/routes/+layout.svelte`
+- `src/routes/a/+layout.svelte`
+- `src/routes/a/b/+layout.svelte`
+- `src/routes/a/b/c/+layout.svelte`
+
+##### `@…`
+- 상속 규칙 깨기
+
+##### `/a/b/c` 상속 위치 변경
+- `+page@b.svelte`
+  - `src/routes/a/b/+layout.svelte`
+- `+page@a.svelte`
+  - `src/routes/a/+layout.svelte`
+
+Let's reset it all the way to the root layout, by renaming it to `+page@.svelte`.
+
+##### 참고
+The root layout applies to every page of your app, you cannot break out of it.
 
 <br />
-
-## Advanced loading
-
-### Universal `load` <sub>(함수)</sub>
-
-
-### Using both `load` <sub>(함수)</sub>
-
-
-### Invalidation
-
-
-### Custom dependencies
-
-
-### `invalidateAll`
-
-
-<br />
-
-## Environment variables
-
-### `$env/static/private`
-
-
-### `$env/dynamic/private`
-
-
-### `$env/static/public`
-
-
-### `$env/dynamic/public`
-
