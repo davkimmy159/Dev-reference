@@ -19,9 +19,22 @@
 ##### `component` 생성자 반환
 - 직렬화 불가능
   - 에러 발생
-- `src/routes/[red·green·blue]/+page.server.js`
-- `src/routes/green/+page.server.js`
-- `src/routes/blue/+page.server.js`
+
+##### `+page.server.js` → `+page.js`
+- `load` <sub>(함수)</sub> → universal `load` <sub>(함수)</sub>
+- 서버측 실행
+  - SSR
+- 브라우저측 실행
+  - 앱 hydrate
+  - 클라이언트측 탐색 수행
+
+##### hydrate
+- HTML 마크업 <sub>(SSR)</sub>
+  - JS 이벤트 · 상태 연결 <sub>(클라이언트측)</sub>
+
+
+To turn the server `load` <sub>(함수)</sub> into universal `load` <sub>(함수)</sub>, rename each `+page.server.js` file to `+page.js`. Now, the functions will run on the server during server-side rendering, but will also run in the browser when the app hydrates or the user performs a client-side navigation.
+
 - In this exercise, we're dealing with the latter case. The server `load` <sub>(함수)</sub> in `src/routes/red/+page.server.js`, `src/routes/green/+page.server.js` and `src/routes/blue/+page.server.js` return a `component` constructor, which can't be serialized like data. If you navigate to `/red`, `/green` or `/blue`, you'll see a 'Data returned from `load` ... is not serializable' error in the terminal.
 
 To turn the server `load` <sub>(함수)</sub> into universal `load` <sub>(함수)</sub>, rename each `+page.server.js` file to `+page.js`. Now, the functions will run on the server during server-side rendering, but will also run in the browser when the app hydrates or the user performs a client-side navigation.
