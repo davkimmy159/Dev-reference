@@ -288,7 +288,7 @@ export async function load(/* { depends } */) {
 }
 ```
 
-##### `invalidateAll` · `invalidate(() => true)`
+##### `invalidateAll` vs `invalidate(() => true)`
 - `invalidateAll`
   - `url` 의존성 무관
 - `invalidate(() => true)`
@@ -298,8 +298,99 @@ export async function load(/* { depends } */) {
 
 ## Environment variables
 
+##### 환경 변수
+- `.env` <sub>(파일)</sub>
+  - API keys
+  - DB 자격 정보
+  - 기타 등등
+- 앱 내 사용
+- 추가 형식
+  - `.env.local`
+  - `.env.[mode]`
+- `.gitignore` <sub>(파일 · 앱 내 제외 목록)</sub>
+  - 민감한 정보
+  - 기타 등등
+- `process.env` 사용
+  - `$env/static/private`
+
 ### `$env/static/private`
 
+##### 사용자 웹사이트 입장 자격 확인
+- 사용자 암호 확인
+  - 환경 변수 사용
+
+##### `.env` <sub>(파일)</sub> 생성
+- 환경 변수 추가
+```javascript
+/* .env */
+PASSPHRASE="open sesame"
+```
+
+##### `src/routes/+page.server.js`
+- `PASSPHRASE`
+  - `$env/static/private` 에서 가져오기
+  - 폼 액션 내 사용
+```javascript
+/* src/routes/+page.server.js */
+import { redirect, fail } from '@sveltejs/kit';
+import { PASSPHRASE } from '$env/static/private';
+
+export function load({ cookies }) {
+  if (cookies.get('allowed')) {
+    throw redirect(307, '/welcome');
+  }
+}
+
+export const actions = {
+  default: async ({ request, cookies }) => {
+    const data = await request.formData();
+
+    if (data.get('passphrase') === PASSPHRASE) {
+      cookies.set('allowed', 'true', {
+        path: '/'
+      });
+
+      throw redirect(303, '/welcome');
+    }
+
+    return fail(403, {
+      incorrect: true
+    });
+  }
+};
+```
+The website is now accessible to anyone who knows the correct passphrase.
+
+#### Keeping secrets
+It's important that sensitive data doesn't accidentally end up being sent to the browser, where it could easily be stolen by hackers and scoundrels.
+
+SvelteKit makes it easy to prevent this from happening. Notice what happens if we try to import `PASSPHRASE` into `src/routes/+page.svelte`:
+```html
+<!-- src/routes/+page.svelte -->
+<script>
+  import { PASSPHRASE } from '$env/static/private';
+  export let form;
+</script>
+```
+An error overlay pops up, telling us that `$env/static/private` cannot be imported into client-side code. It can only be imported into server modules:
+- `+page.server.js`
+- `+layout.server.js`
+- `+server.js`
+- any modules ending with `.server.js`
+- any modules inside `src/lib/server`
+In turn, these modules can only be imported by other server modules.
+
+#### Static vs dynamic
+The `static` in `$env/static/private` indicates that these values are known at build time, and can be statically replaced. This enables useful optimisations:
+```javascript
+import { FEATURE_FLAG_X } from '$env/static/private';
+
+if (FEATURE_FLAG_X === 'enabled') {
+  // code in here will be removed from the build output
+  // if FEATURE_FLAG_X is not enabled
+}
+```
+In some cases you might need to refer to environment variables that are dynamic — in other words, not known until we run the app. We'll cover this case in the next exercise.
 
 ### `$env/dynamic/private`
 
