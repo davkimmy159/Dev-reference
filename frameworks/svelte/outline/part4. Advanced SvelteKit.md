@@ -550,10 +550,7 @@ export function load({ cookies, url }) {
   - `src/routes/a/b/+layout.svelte`
 - `+page@a.svelte`
   - `src/routes/a/+layout.svelte`
-
-Let's reset it all the way to the root layout, by renaming it to `+page@.svelte`.
-
-##### 참고
-The root layout applies to every page of your app, you cannot break out of it.
+- `+page@.svelte`
+  - `src/routes/+layout.svelte` <sub>(최상위)</sub>
 
 <br />
