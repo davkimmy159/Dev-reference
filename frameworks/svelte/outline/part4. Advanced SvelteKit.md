@@ -545,12 +545,12 @@ export function load({ cookies, url }) {
 ##### `@…`
 - 상속 규칙 깨기
 
-##### `/a/b/c` 상속 위치 변경
+##### `/a/b/c` <sub>(폴더 그룹)</sub> 상속 위치 변경
 - `+page@b.svelte`
   - `src/routes/a/b/+layout.svelte`
 - `+page@a.svelte`
   - `src/routes/a/+layout.svelte`
 - `+page@.svelte`
-  - `src/routes/+layout.svelte` <sub>(최상위)</sub>
-
+  - `src/routes/+layout.svelte`
+    - 최상위
 <br />
