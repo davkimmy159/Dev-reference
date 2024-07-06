@@ -123,16 +123,35 @@ export async function load({ parent }) {
 ```
 
 ##### 부모 데이터 의존 주의
-- 비의존 데이터 `fetch` 가능 시 우선 사용
+- 비의존 데이터 `fetch` 가능 시 사용 지양
 
 ### Invalidation
-When the user navigates from one page to another, SvelteKit calls your load functions, but only if it thinks something has changed.
 
-In this example, navigating between timezones causes the `load` <sub>(함수)</sub> in `src/routes/[...timezone]/+page.js` to re-run because `params.timezone` is invalid. But the `load` <sub>(함수)</sub> in `src/routes/+layout.js` does not re-run, because as far as SvelteKit is concerned it wasn't invalidated by the navigation.
+##### 사용자 페이지 이동 시
+- `load` <sub>(함수)</sub> 호출 기준
+  - 어떤 변화 발생
 
-We can fix that by manually invalidating it using the invalidate(...) function, which takes a URL and re-runs any `load` <sub>(함수)</sub> that depend on it. Because the `load` <sub>(함수)</sub> in `src/routes/+layout.js` calls `fetch('/api/now')`, it depends on `/api/now.`
+##### `src/routes/[...timezone]/+page.js` <sub>(timezone 탐색)</sub>
+- `load` <sub>(함수)</sub> 재실행
+  - `params.timezone` 무효
+- 상위 layout 데이터 사용 · 변경 시
+  - 함수 재실행 X
 
-In `src/routes/[...timezone]/+page.svelte`, add an `onMount` callback that calls `invalidate('/api/now')` once a second:
+##### `src/routes/+layout.js` <sub>(최상위 layout)</sub>
+- `load` <sub>(함수)</sub> 재실행 X
+  - 탐색 의해 무효 X
+
+##### `invalidate(url)` <sub>(함수)</sub>
+- `url` <sub>(문자열)</sub>
+  - `load` <sub>(함수)</sub> 재실행 기준
+
+##### `src/routes/+layout.js`
+- `load` <sub>(함수)</sub>
+  - `fetch('/api/now')`
+
+##### `src/routes/[...timezone]/+page.svelte`
+- `onMount` <sub>(콜백)</sub> 추가
+  - `invalidate('/api/now')` 1초마다 호출
 ```html
 <!-- src/routes/[...timezone]/+page.svelte -->
 <script>
