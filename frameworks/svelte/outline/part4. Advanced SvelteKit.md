@@ -388,7 +388,7 @@ export const trailingSlash = 'ignore';
 
 ##### 값 <sub>(커스터마이징)</sub>
 - `'eager'`
-  - 탐색 후 페이지 내 모든 내용 선로드
+  - 탐색 후 페이지 내 모든 내용 미리 로드
   - preload everything on the page following a navigation
 - `'viewport'`
   - preload everything as it appears in the viewport
