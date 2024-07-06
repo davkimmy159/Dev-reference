@@ -146,8 +146,19 @@ export async function load({ parent }) {
   - `load` <sub>(함수)</sub> 재실행 기준
 
 ##### `src/routes/+layout.js`
-- `load` <sub>(함수)</sub>
-  - `fetch('/api/now')`
+- `load` <sub>(함수)</sub> 내
+  - `fetch('/api/now')` 호출
+```javascript
+/* src/routes/+layout.js */
+export async function load({ fetch }) {
+  const response = await fetch('/api/now');
+  const now = await response.json();
+
+  return {
+    now
+  };
+}
+```
 
 ##### `src/routes/[...timezone]/+page.svelte`
 - `onMount` <sub>(콜백)</sub> 추가
@@ -159,6 +170,8 @@ export async function load({ parent }) {
   import { onMount } from 'svelte';
   import { invalidate } from '$app/navigation';
 
+  // 상위 요소 데이터 변경 시
+  // - load (함수) 재실행 X
   export let data;
 
   onMount(() => {
@@ -180,17 +193,30 @@ export async function load({ parent }) {
 </h1>
 ```
 
-##### 참고
-You can also pass a function to `invalidate`, in case you want to invalidate based on a pattern and not specific URLs
+##### 함수 전달 가능
+- URL 기반 X
+- 패턴 기반
 
 ### `Custom dependencies`
-Calling `fetch(url)` inside a load function registers `url` as a dependency. Sometimes it's not appropriate to use `fetch`, in which case you can specify a dependency manually with the depends(url) function.
 
-Since any string that begins with an `[a-z]+:` pattern is a valid URL, we can create custom invalidation keys like `data:now`.
+##### `load` <sub>(함수)</sub> 내 `fetch(url)` 호출 시
+- `url` 의존성 등록
 
-Update `src/routes/+layout.js` to return a value directly rather than making a `fetch` call, and add the `depends`:
+##### `depends(url)`
+- `url` 의존성 수동 등록
+  - `fetch` 불필요
+
+##### `[a-z]+:` <sub>(문자열 시작 패턴)</sub>
+- 유효 URL
+- 커스텀 무효화
+  - ex\) `data:now`
+
+##### `src/routes/+layout.js`
+- `fetch` 호출 X
+- 값 직접 반환
+  - `depends` 호출
 ```javascript
-src/routes/+layout.js
+/* src/routes/+layout.js */
 export async function load({ depends }) {
   depends('data:now');
 
@@ -200,7 +226,8 @@ export async function load({ depends }) {
 }
 ```
 
-Now, update the `invalidate` call in `src/routes/[...timezone]/+page.svelte`:
+##### `src/routes/[...timezone]/+page.svelte`
+- `invalidate` 호출 수정
 ```html
 <!-- src/routes/[...timezone]/+page.svelte -->
 <script>
@@ -222,11 +249,14 @@ Now, update the `invalidate` call in `src/routes/[...timezone]/+page.svelte`:
 ```
 
 ### `invalidateAll`
-Finally, there's the nuclear option — `invalidateAll()`. This will indiscriminately re-run all `load` <sub>(함수)</sub> for the current page, regardless of what they depend on.
 
-Update `src/routes/[...timezone]/+page.svelte` from the previous exercise:
+##### 모든 `load` <sub>(함수)</sub> 재실행
+- 현재 페이지 적용 함수 전부
+- 의존성 무관
+
+##### `src/routes/[...timezone]/+page.svelte`
 ```html
-src/routes/[...timezone]/+page.svelte
+<!-- src/routes/[...timezone]/+page.svelte -->
 <script>
   import { onMount } from 'svelte';
   import { invalidateAll } from '$app/navigation';
@@ -245,7 +275,8 @@ src/routes/[...timezone]/+page.svelte
 </script>
 ```
 
-The `depends` call in `src/routes/+layout.js` is no longer necessary:
+##### `src/routes/+layout.js`
+- `depends` 호출 불필요
 ```javascript
 /* src/routes/+layout.js */
 export async function load(/* { depends } */) {
@@ -257,8 +288,11 @@ export async function load(/* { depends } */) {
 }
 ```
 
-##### 참고
-`invalidate(() => true)` and `invalidateAll` are not the same. `invalidateAll` also re-runs `load` <sub>(함수)</sub> without any `url` dependencies, which `invalidate(() => true)` does not.
+#####  `invalidateAll` vs `invalidate(() => true)`
+- `invalidateAll`
+  - `url` 의존성 무관
+- `invalidate(() => true)`
+  - `url` 의존성 有
 
 <br />
 
