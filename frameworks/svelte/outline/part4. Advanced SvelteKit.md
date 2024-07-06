@@ -493,9 +493,10 @@ export function match(value) {
 ```
 1. match 함수 `export`
 2. url 변경
-    - `src/routes/colors/[color]`
-    - `src/routes/colors/[color=hex]`
-      - 파일명
+```
+src/routes/colors/[color]
+src/routes/colors/[color=hex] (파일명)
+```
 - 서버 · 브라우저 작동
 
 ### Route groups
