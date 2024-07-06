@@ -83,26 +83,29 @@ return {
 ##### `+[page·layout].svelte` <sub>(컴포넌트)</sub>
 - 상위 `load` <sub>(함수)</sub> 반환값 접근 가능
 
-Occasionally it's useful for the `load` <sub>(함수)</sub> themselves to access data from their parents. This can be done with `await parent()`.
-
-To show how it works, we'll sum two numbers that come from different `load` <sub>(함수)</sub>. First, return some data from `src/routes/+layout.server.js`:
+##### `await parent()`
+- 하위 `load` <sub>(함수)</sub>
+  - 상위 `load` <sub>(함수)</sub> 데이터 접근
 ```javascript
 /* src/routes/+layout.server.js */
 export function load() {
   return { a: 1 };
 }
 ```
-
-Then, get that data in `src/routes/sum/+layout.js`:
 ```javascript
-src/routes/sum/+layout.js
+/* src/routes/sum/+layout.js */
 export async function load({ parent }) {
   const { a } = await parent();
   return { b: a + 1 };
 }
 ```
 
-##### 참고
+##### 하위 universal `load` <sub>(함수)</sub>
+- 상위 `load` <sub>(함수)</sub> 데이터 접근 가능
+
+##### 하위 `load` <sub>(함수)</sub>
+- 상위 universal `load` <sub>(함수)</sub> 데이터 접근 X
+- 
 Notice that a universal `load` <sub>(함수)</sub> can get data from a parent server load function. The reverse is not true — a server `load` <sub>(함수)</sub> can only get parent data from another server load function.
 
 Finally, `in src/routes/sum/+page.js`, get parent data from both `load` <sub>(함수)</sub>:
