@@ -456,18 +456,17 @@ export function load({ params }) {
 - `src/routes/[path]`
 - `src/routes/[...path]`
 
-##### 참고
-- 더 구체적인 라우터 먼저 테스트
+##### 더 구체적인 라우터 먼저 테스트
 - 'catch-all' 라우터
   - ex\) 커스텀 에러 <sub>(`404`)</sub> 페이지
-    - `/categories/…`
+    - `/categories/…` <sub>(하위 폴더)</sub> 적용
 ```
 src/routes/
 ├ categories/
 │ ├ animal/
 │ ├ mineral/
 │ ├ vegetable/
-│ ├ [...catchall]/     *
+│ ├ [...catchall]/    *
 │ │ ├ +error.svelte   *
 │ │ └ +page.server.js *
 ```
