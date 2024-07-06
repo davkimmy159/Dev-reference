@@ -553,4 +553,5 @@ export function load({ cookies, url }) {
 - `+page@.svelte`
   - `src/routes/+layout.svelte`
     - 최상위
+
 <br />
