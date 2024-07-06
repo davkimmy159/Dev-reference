@@ -436,7 +436,7 @@ preloadCode('/bar');
 - `src/routes/+page.svelte` <sub>(`/`)</sub>
 - `src/routes/[[lang]]/+page.svelte` <sub>(`/`)</sub>
 ```javascript
-src/routes/[[lang]]/+page.server.js
+/* src/routes/[[lang]]/+page.server.js */
 const greetings = {
 	en: 'hello!',
 	de: 'hallo!',
@@ -451,6 +451,27 @@ export function load({ params }) {
 ```
 
 ### Rest parameters
+
+##### `[...rest]`
+- `src/routes/[path]`
+- `src/routes/[...path]`
+
+##### 참고
+- 더 구체적인 라우터 먼저 테스트
+- 'catch-all' 라우터
+  - ex\) 커스텀 에러 <sub>(`404`)</sub> 페이지
+    - `/categories/…`
+```
+src/routes/
+├ categories/
+│ ├ animal/
+│ ├ mineral/
+│ ├ vegetable/
+│ ├ [...catchall]/    *
+│ │ ├ +error.svelte   *
+│ │ └ +page.server.js *
+```
+Inside the +page.server.js file, throw error(404) inside load.
 
 
 ### Param matchers
