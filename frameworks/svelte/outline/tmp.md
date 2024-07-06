@@ -112,8 +112,8 @@ export async function load({ parent }) {
 - 상위 `load` <sub>(서버 함수)</sub> 데이터 접근 가능
 
 ##### `src/routes/sum/+page.js` 부모 데이터 접근
-- `src/routes/+layout.server.js`
 - `src/routes/sum/+layout.js`
+- `src/routes/+layout.server.js`
 ```javascript
 /* src/routes/sum/+page.js */
 export async function load({ parent }) {
@@ -122,8 +122,8 @@ export async function load({ parent }) {
 }
 ```
 
-##### 참고
-Take care not to introduce waterfalls when using `await parent()`. If you can `fetch` other data that is not dependent on parent data, do that first.
+##### 부모 데이터 의존 주의
+- 비의존 데이터 `fetch` 가능 시 우선 사용
 
 ### Invalidation
 When the user navigates from one page to another, SvelteKit calls your load functions, but only if it thinks something has changed.
