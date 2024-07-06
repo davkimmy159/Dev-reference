@@ -61,7 +61,6 @@
 ##### 데이터 따라 상이 컴포넌트 반환
 - `data` <sub>(`+page.js` 프로퍼티)</sub>
   - 서버 데이터 <sub>(`+page.server.js`)</sub> 접근
-  
 ```javascript
 /* src/routes/+page.js */
 export async function load({ data }) {
@@ -76,11 +75,13 @@ return {
 }
 ```
 
-##### 참고
-Note that the data isn't merged — we must explicitly return `message` from the universal `load` <sub>(함수)</sub>.
+##### 데이터 결합 X
+- 반환값 <sub>(`message`)</sub> 필수
 
 ### Using parent data
-As we saw in the introduction to layout data, `+page.svelte` and `+layout.svelte` components have access to everything returned from their parent `load` <sub>(함수)</sub>.
+
+##### `+[page·layout].svelte` <sub>(컴포넌트)</sub>
+- 상위 `load` <sub>(함수)</sub> 반환값 접근 가능
 
 Occasionally it's useful for the `load` <sub>(함수)</sub> themselves to access data from their parents. This can be done with `await parent()`.
 
