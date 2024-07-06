@@ -16,6 +16,12 @@
 - 직렬화 불가능 데이터 반환 <sub>(`load` 함수)</sub>
   - SvelteKit 서버 데이터 이스케이프
 
+##### `component` 생성자 반환
+- 직렬화 불가능
+  - 에러 발생
+- `src/routes/[red·green·blue]/+page.server.js`
+- `src/routes/green/+page.server.js`
+- `src/routes/blue/+page.server.js`
 - In this exercise, we're dealing with the latter case. The server `load` <sub>(함수)</sub> in `src/routes/red/+page.server.js`, `src/routes/green/+page.server.js` and `src/routes/blue/+page.server.js` return a `component` constructor, which can't be serialized like data. If you navigate to `/red`, `/green` or `/blue`, you'll see a 'Data returned from `load` ... is not serializable' error in the terminal.
 
 To turn the server `load` <sub>(함수)</sub> into universal `load` <sub>(함수)</sub>, rename each `+page.server.js` file to `+page.js`. Now, the functions will run on the server during server-side rendering, but will also run in the browser when the app hydrates or the user performs a client-side navigation.
