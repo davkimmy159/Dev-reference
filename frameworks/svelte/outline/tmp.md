@@ -288,7 +288,7 @@ export async function load(/* { depends } */) {
 }
 ```
 
-#####  `invalidateAll` vs `invalidate(() => true)`
+##### `invalidateAll` · `invalidate(() => true)`
 - `invalidateAll`
   - `url` 의존성 무관
 - `invalidate(() => true)`
