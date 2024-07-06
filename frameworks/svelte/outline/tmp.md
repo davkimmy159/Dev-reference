@@ -21,7 +21,8 @@
   - 에러 발생
 
 ##### `+page.server.js` → `+page.js`
-- `load` <sub>(함수)</sub> → universal `load` <sub>(함수)</sub>
+- `load` <sub>(서버 함수)</sub>
+  - universal `load` <sub>(함수)</sub>
 - 서버측 실행
   - SSR
 - 브라우저측 실행
@@ -52,7 +53,8 @@
 ```
 
 ### Using both `load` <sub>(함수)</sub>
-- \[universal\] `load` <sub>(함수)</sub> 함께 사용
+- `load` <sub>(서버 함수)</sub>
+- universal `load` <sub>(함수)</sub>
 
 ##### 두 종류 데이터 반환
 - 서버 데이터
@@ -81,11 +83,11 @@ return {
 ### Using parent data
 
 ##### `+[page·layout].svelte` <sub>(컴포넌트)</sub>
-- 상위 `load` <sub>(함수)</sub> 반환값 접근 가능
+- 상위 `load` <sub>(서버 함수)</sub> 반환값 접근 가능
 
 ##### `await parent()`
-- 하위 `load` <sub>(함수)</sub>
-  - 상위 `load` <sub>(함수)</sub> 데이터 접근
+- 하위 `load` <sub>(서버 함수)</sub>
+  - 상위 `load` <sub>(서버 함수)</sub> 데이터 접근
 ```javascript
 /* src/routes/+layout.server.js */
 export function load() {
