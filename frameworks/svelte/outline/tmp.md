@@ -22,7 +22,7 @@
 
 ##### `+page.server.js` → `+page.js`
 - `load` <sub>(서버 함수)</sub>
-  - universal `load` <sub>(함수)</sub>
+  - → universal `load` <sub>(함수)</sub>
 - 서버측 실행
   - SSR
 - 브라우저측 실행
@@ -103,9 +103,9 @@ export async function load({ parent }) {
 ```
 
 ##### 하위 universal `load` <sub>(함수)</sub>
-- 상위 `load` <sub>(함수)</sub> 데이터 접근 가능
+- 상위 `load` <sub>(서버 함수)</sub> 데이터 접근 가능
 
-##### 하위 `load` <sub>(함수)</sub>
+##### 하위 `load` <sub>(서버 함수)</sub>
 - 상위 universal `load` <sub>(함수)</sub> 데이터 접근 X
 - 
 Notice that a universal `load` <sub>(함수)</sub> can get data from a parent server load function. The reverse is not true — a server `load` <sub>(함수)</sub> can only get parent data from another server load function.
