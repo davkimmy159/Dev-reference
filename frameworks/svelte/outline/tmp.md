@@ -151,7 +151,8 @@ export async function load({ parent }) {
 
 ##### `src/routes/[...timezone]/+page.svelte`
 - `onMount` <sub>(콜백)</sub> 추가
-  - `invalidate('/api/now')` 1초마다 호출
+  - `invalidate('/api/now')`
+    - 1초마다 호출
 ```html
 <!-- src/routes/[...timezone]/+page.svelte -->
 <script>
