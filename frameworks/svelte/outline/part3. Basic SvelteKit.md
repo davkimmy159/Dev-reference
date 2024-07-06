@@ -127,7 +127,7 @@ export const ssr = false;
 - `load` <sub>(함수)</sub>
 - 실행
   - 서버측
-  - 클라이언트측 네비게이션
+  - 클라이언트측 탐색
 - 하위 라우터 적용 X
 - `data` <sub>(프로퍼티)</sub>
 ```
@@ -775,8 +775,8 @@ export async function DELETE({ params, cookies }) {
 
 ### navigating
 
-##### 현재 네비게이션
-- 객체 <sub>(네비게이션 시작 시)</sub>
+##### 현재 탐색
+- 객체 <sub>(탐색 시작 시)</sub>
   - 링크 클릭
   - 앞 · 뒤 이동
   - `goto` <sub>(프로그래밍)</sub>
@@ -791,7 +791,7 @@ export async function DELETE({ params, cookies }) {
   url
 }
 ```
-- `type` <sub>(네비게이션 타입)</sub>
+- `type` <sub>(탐색 타입)</sub>
   - `'link'`
   - `'popstate'`
   - `'goto'`

@@ -71,7 +71,7 @@ export async function handle({ event, resolve }) {
 ##### `isDataRequest`
 - `true`
   - 페이지 데이터 요청 <sub>(브라우저)</sub>
-    - 클라이언트측 네비게이션 도중
+    - 클라이언트측 탐색 도중
 - `false`
   - 페이지 · 라우터 직접 요청되어짐
 
@@ -348,10 +348,11 @@ export const trailingSlash = 'ignore';
 
 ### Preloading
 
-##### `data-sveltekit-preload-data` <sub>(속성)</sub>
-- 네비게이션 시작 시점
-  - 마우스 위 이동 <sub>(hover)</sub>
-  - 탭 <sub>(터치)</sub> <sub>(모바일)</sub>
+#### `data-sveltekit-preload-data` <sub>(속성)</sub>
+
+##### 탐색 시작 시점
+- 마우스 위 이동 <sub>(hover)</sub>
+- 탭 <sub>(터치)</sub> <sub>(모바일)</sub>
 
 ##### `<a>` <sub>(요소)</sub>
 ```html
@@ -379,17 +380,25 @@ export const trailingSlash = 'ignore';
 - `'off'`
   - 미작동
 
-Using `data-sveltekit-preload-data` may sometimes result in false positives - i.e. loading data in anticipation of a navigation that doesn't then happen — which might be undesirable. As an alternative, `data-sveltekit-preload-code` allows you to preload the JavaScript needed by a given route without eagerly loading its data. This attribute can have the following values:
+##### 부작용
+- 해당 링크 이동 미발생
+
+#### `data-sveltekit-preload-data` <sub>(속성)</sub>
+- 라우터 필요 JS 코드만 로드
+
+##### 값 <sub>(커스터마이징)</sub>
 - `'eager'`
-- preload everything on the page following a navigation
+  - 탐색 후 페이지 내 모든 내용 선로드
+  - preload everything on the page following a navigation
 - `'viewport'`
-- preload everything as it appears in the viewport
-- `'hover'`
-- (default) as above
+  - preload everything as it appears in the viewport
+- `'hover'` <sub>(기본값)</sub>
+  - 모바일 → `'tap'`
 - `'tap'`
-- as above
+  - 탭 <sub>(터치)</sub>
 - `'off'`
-- as above
+  - 미작동
+
 
 You can also initiate preloading programmatically with preloadCode and preloadData imported from $app/navigation:
 ```javascript
