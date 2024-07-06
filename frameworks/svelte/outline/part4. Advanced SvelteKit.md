@@ -456,7 +456,7 @@ export function load({ params }) {
 - `src/routes/[path]`
 - `src/routes/[...path]`
 
-##### 더 구체적인 라우터 먼저 테스트
+##### 더 구체적인 타 라우터 먼저 테스트
 - 'catch-all' 라우터
   - ex\) 커스텀 에러 <sub>(`404`)</sub> 페이지
     - `/categories/…` <sub>(하위 폴더)</sub>
@@ -469,9 +469,15 @@ src/routes/
 │ ├ [...catchall]/    *
 │ │ ├ +error.svelte   *
 │ │ └ +page.server.js *
-```
-Inside the +page.server.js file, throw error(404) inside load.
 
++page.server.js
+- load (함수) 내 error(404) 던짐
+```
+
+##### 끝쪽 위치 필수 X
+- `/items/[...path]/edit`
+- `/items/[...path].json`
+- 기타 등등
 
 ### Param matchers
 
