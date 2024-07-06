@@ -9,12 +9,14 @@
   - 기타 등등
 
 ##### 클라이언트측 탐색 시 서버 데이터 불필요 경우
-- You're loading data from an external API
-- You want to use in-memory data if it's available
-- You want to delay navigation until an image has been preloaded, to avoid pop-in
-- You need to return something from load that can't be serialized (SvelteKit uses devalue to turn server data into JSON), such as a component or a store
+- 외부 API 데이터 로드
+- 메모리 데이터 사용
+- 탐색 지연 <sub>(이미지 미리 로드전까지)</sub>
+  - 깜짝 발생 방지
+- 직렬화 불가능 데이터 반환 <sub>(`load` 함수)</sub>
+  - SvelteKit 서버 데이터 이스케이프
 
-In this exercise, we're dealing with the latter case. The server `load` <sub>(함수)</sub> in `src/routes/red/+page.server.js`, `src/routes/green/+page.server.js` and `src/routes/blue/+page.server.js` return a `component` constructor, which can't be serialized like data. If you navigate to `/red`, `/green` or `/blue`, you'll see a 'Data returned from `load` ... is not serializable' error in the terminal.
+- In this exercise, we're dealing with the latter case. The server `load` <sub>(함수)</sub> in `src/routes/red/+page.server.js`, `src/routes/green/+page.server.js` and `src/routes/blue/+page.server.js` return a `component` constructor, which can't be serialized like data. If you navigate to `/red`, `/green` or `/blue`, you'll see a 'Data returned from `load` ... is not serializable' error in the terminal.
 
 To turn the server `load` <sub>(함수)</sub> into universal `load` <sub>(함수)</sub>, rename each `+page.server.js` file to `+page.js`. Now, the functions will run on the server during server-side rendering, but will also run in the browser when the app hydrates or the user performs a client-side navigation.
 
