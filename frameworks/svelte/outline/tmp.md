@@ -328,7 +328,7 @@ PASSPHRASE="open sesame"
 
 ##### `src/routes/+page.server.js`
 - `PASSPHRASE`
-  - `$env/static/private` 에서 가져오기
+  - `$env/static/private` 가져오기
   - 폼 액션 내 사용
 ```javascript
 /* src/routes/+page.server.js */
@@ -359,44 +359,133 @@ export const actions = {
   }
 };
 ```
-The website is now accessible to anyone who knows the correct passphrase.
 
 #### Keeping secrets
-It's important that sensitive data doesn't accidentally end up being sent to the browser, where it could easily be stolen by hackers and scoundrels.
 
-SvelteKit makes it easy to prevent this from happening. Notice what happens if we try to import `PASSPHRASE` into `src/routes/+page.svelte`:
+##### 민감한 정보
+- 브라우저 전송 X
+
+##### SvelteKit 기본 방지 기능
+- 클라이언트측 코드 내 `import` 방지
 ```html
 <!-- src/routes/+page.svelte -->
 <script>
+  // 에러 발생
   import { PASSPHRASE } from '$env/static/private';
   export let form;
 </script>
 ```
-An error overlay pops up, telling us that `$env/static/private` cannot be imported into client-side code. It can only be imported into server modules:
+
+##### 서버 모듈만 `import` 허용
 - `+page.server.js`
 - `+layout.server.js`
 - `+server.js`
-- any modules ending with `.server.js`
-- any modules inside `src/lib/server`
-In turn, these modules can only be imported by other server modules.
+- `[*].server.js`
+- `src/lib/server/[*]`
+
+##### 서버 모듈
+- 타 서버 모듈로만 `import` 가능
 
 #### Static vs dynamic
-The `static` in `$env/static/private` indicates that these values are known at build time, and can be statically replaced. This enables useful optimisations:
+
+##### `…/static/…`
+- 빌드 타임 내 결정
+  - 정적 코드 변환
+
+##### 최적화 유용
 ```javascript
 import { FEATURE_FLAG_X } from '$env/static/private';
 
 if (FEATURE_FLAG_X === 'enabled') {
-  // code in here will be removed from the build output
-  // if FEATURE_FLAG_X is not enabled
+  // FEATURE_FLAG_X 기능 미실행 시
+  // - 빌드 시 코드 제거
 }
 ```
-In some cases you might need to refer to environment variables that are dynamic — in other words, not known until we run the app. We'll cover this case in the next exercise.
+
+##### `…/dynamic/…`
+- 앱 실행 전까지 확정 X
 
 ### `$env/dynamic/private`
 
+##### 앱 구동 시작 시 환경 변수 읽기
+```javascript
+/* src/routes/+page.server.js */
+import { redirect, fail } from '@sveltejs/kit';
+import { env } from '$env/dynamic/private';
+
+export function load({ cookies }) {
+  if (cookies.get('allowed')) {
+    throw redirect(307, '/welcome');
+  }
+}
+
+export const actions = {
+  default: async ({ request, cookies }) => {
+    const data = await request.formData();
+
+    if (data.get('passphrase') === env.PASSPHRASE) {
+      cookies.set('allowed', 'true', {
+        path: '/'
+      });
+
+      throw redirect(303, '/welcome');
+    }
+
+    return fail(403, {
+      incorrect: true
+    });
+  }
+};
+```
 
 ### `$env/static/public`
 
+##### 브라우저 노출
+- `PUBLIC_…`
+
+##### public 환경 변수 2개 추가
+```javascript
+/* .env */
+PUBLIC_THEME_BACKGROUND="steelblue"
+PUBLIC_THEME_FOREGROUND="bisque"
+```
+
+##### `src/routes/+page.svelte` import
+```html
+<!-- src/routes/+page.svelte -->
+<script>
+  const PUBLIC_THEME_BACKGROUND = 'white';
+  const PUBLIC_THEME_FOREGROUND = 'black';
+  import {
+    PUBLIC_THEME_BACKGROUND,
+    PUBLIC_THEME_FOREGROUND
+  } from '$env/static/public';
+</script>
+```
 
 ### `$env/dynamic/public`
 
+##### 미공개 환경 변수
+- `static` 권장
+
+##### 필요시 `dynamic` 사용
+```html
+<!-- src/routes/+page.svelte -->
+<script>
+  import { env } from '$env/dynamic/public';
+</script>
+
+<main
+  style:background={env.PUBLIC_THEME_BACKGROUND}
+  style:color={env.PUBLIC_THEME_FOREGROUND}
+>
+  {env.PUBLIC_THEME_FOREGROUND} on {env.PUBLIC_THEME_BACKGROUND}
+</main>
+```
+
+## Conclusion
+
+### Next steps
+```
+pnpm create svelte@latest
+```
