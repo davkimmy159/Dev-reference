@@ -432,6 +432,23 @@ preloadCode('/bar');
 
 ### Optional parameters
 
+##### `[[…]]` <sub>(쌍대괄호)</sub>
+- `src/routes/+page.svelte` <sub>(`/`)</sub>
+- `src/routes/[[lang]]/+page.svelte` <sub>(`/`)</sub>
+```javascript
+src/routes/[[lang]]/+page.server.js
+const greetings = {
+	en: 'hello!',
+	de: 'hallo!',
+	fr: 'bonjour!'
+};
+
+export function load({ params }) {
+	return {
+		greeting: greetings[params.lang ?? 'en']
+	};
+}
+```
 
 ### Rest parameters
 
