@@ -481,6 +481,22 @@ src/routes/
 
 ### Param matchers
 
+##### 잘못된 입력 방지
+- ex\) `/colors/[value]` <sub>(16진수)</sub>
+  - `/colors/ff3e00` (O)
+  - `/colors/orange` (X)
+```javascript
+/* src/params/hex.js */
+export function match(value) {
+	return /^[0-9a-f]{6}$/.test(value);
+}
+```
+1. match 함수 `export`
+2. url 변경
+    - `src/routes/colors/[color]`
+    - `src/routes/colors/[color=hex]`
+      - 파일명
+- 서버 · 브라우저 작동
 
 ### Route groups
 
