@@ -1,3 +1,17 @@
+##### `declare [function·namespace]`
+- 알 수 없는 뭔가 <sub>(라이브러리 등)</sub>
+  - 컴파일러에 정보 전달
+```ts
+declare function MathFn(a: number, b: number): number;
+
+declare namespace MathFn {
+  let operator: '+';
+}
+
+const sum: typeof MathFn = (a, b) => a + b;
+sum.operator = '+';
+```
+
 ##### 제너레이터
 필자는 프로덕션 코드에서는 제너레이터를 한 번도 써보지 않았다... 하지만 타입스크립트로 이것저것 테스트해 보았을 때, 간단한 예제라도 간단한 것이 없었다.
 ```ts
