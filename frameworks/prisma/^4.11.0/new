@@ -1,2 +1,0 @@
-* install
- - pnpm add -D prisma @prisma/client
