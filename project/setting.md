@@ -14,7 +14,8 @@ pnpm run
 
 ##### prisma
 ```
-prisma db push
+prisma init
+prisma db pull [--force]
 ```
 
 #### commonJS
