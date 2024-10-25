@@ -1,4 +1,4 @@
-##### `corepack`
+##### corepack
 ```
 install -g corepack
 corepack enable
