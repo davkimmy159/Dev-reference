@@ -9,6 +9,7 @@ corepack enable
 pnpm init
 pnpm add [-D]
 pnpm tsc --init
+pnpm run
 ```
 
 #### VSCode
