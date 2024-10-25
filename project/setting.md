@@ -10,3 +10,7 @@ pnpm init
 pnpm add [-D]
 pnpm tsc --init
 ```
+
+#### VSCode
+- `.prettierignore`
+  - Top-level
