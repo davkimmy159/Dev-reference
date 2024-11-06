@@ -1,3 +1,3 @@
 singleton pattern
-==================
+====
 
